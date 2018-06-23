@@ -1,0 +1,88 @@
+<% include ../../partials/layout.ejs %>
+<div class="container-fluid">
+  <div class="col-md-12">
+      <h1 class="text-center pacifico"> Panel de administración Bodega Principal</h1>
+      <hr class="cust-hr">
+      <ul class="nav nav-tabs nav-justified">
+        <li class="nav-item">
+          <a class="nav-link active" href="/app/inventario?bodega=principal">Materia prima</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/app/inOut?tipo=entrada">Entradas</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link " href="/app/inOut?tipo=salida">Salidas</a>
+        </li>
+      </ul>
+    </div>
+
+    <br>
+    <a href="/app/inventario/new" class="btn btn-primary btn-lg active"><i class="fas fa-plus"></i> Nueva Materia Prima</a>
+    <br>
+    <br>
+    <caption>Inventario actual</caption>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Producto</th>
+          <th>Bodega Principal</th>
+          <th>Presentacion(G)</th>
+          <th>Valor Unitario(S)</th>
+          <th>Valor/Gramo(S)</th>
+          <th>Stock</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% if(inventarios.length > 0){ %>
+          <% inventarios.forEach(function(inventario){ %>
+    				<tr>
+              <td><%= inventario.mp %> </td>
+              <td><%= inventario.cantidadTotal %></td>
+              <td><%= inventario.presentacion %></td>
+              <td><%= inventario.valorUni %></td>
+              <td><%= inventario.valorG %></td>
+              <td><%= inventario.stock %></td>
+              <td>
+                <!--historial button-->
+                <form action="/app/historial/<%= inventario._id %>" method="GET" class="link">
+                  <button type="submit" class="btn btn-success btn-sm right-space"><i class="fas fa-clipboard-list"></i></button><!--edit button-->
+                </form>
+                <!--Edit button-->
+                 <form action="/app/inventario/<%= inventario._id %>/edit" method="GET" class="link">
+                   <button type="submit" class="btn btn-warning btn-sm right-space"><i class="fas fa-pencil-alt"></i></button>
+                 </form>
+                <!--delete button-->
+                <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#myModal<%= inventario._id %>"><i class="far fa-trash-alt"></i></button>
+
+                <div class="modal fade" id="myModal<%= inventario._id %>" tabindex="-1" role="dialog" arialabelledby="myModalLabel">
+                    <div class="modal-dialog" role="document">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h4 class="modal-title" id="myModalLabel">Materia Prima:<%inventario.name %></h4>
+                          <button type="button" class="close" data-dismiss="modal" arial-label="Close">
+                            <span aria-hidden="true"> &times;</span>
+                          </button>
+                        </div>
+                        <div class="modal-body"><p class="modal-title" id="myModalLabel"> Está seguro de que quiere eliminar esta materia prima?</h4></div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                          <form action="/app/inventario/<%= inventario._id%>?_method=delete" class="link" method="POST">
+                            <input type="hidden" name="mp" value="<%= inventario.mp %>">
+                            <input type="hidden" name="bodega" value="principal">
+                            <button type="submit" class="btn btn-primary"> Confirmar</button>
+                          </form>
+                        </div>
+                      </div>
+                    </div>
+                </div>
+              </td>
+            </tr>
+    			<% }); %>
+        <% } else{ %>
+          <td colspan="7" class="text-center"> No hay materia prima para mostrar</td>
+        <% } %>
+      </tbody>
+    </table>
+  </div>
+</div>

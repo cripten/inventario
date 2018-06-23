@@ -1,0 +1,58 @@
+<% include ../../partials/layout.ejs %>
+<div class="container-fluid">
+  <div class="col-md-12">
+      <h1 class="text-center pacifico"> Panel de administración Bodega Auxiliar </h1>
+      <hr class="cust-hr">
+      <ul class="nav nav-tabs nav-justified">
+        <li class="nav-item">
+          <a class="nav-link active" href="/app/inventario?bodega=auxiliar">Materia prima</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/app/inOut?tipo=entrada">Entradas</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link " href="/app/inOut?tipo=salida">Salidas</a>
+        </li>
+      </ul>
+    </div>
+
+    <br>
+    <br>
+    <caption>Inventario actual</caption>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Producto</th>
+          <th>Bodega Principal</th>
+          <th>Presentacion(G)</th>
+          <th>Valor Unitario(S)</th>
+          <th>Valor/Gramo(S)</th>
+          <th>Stock</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% if(inventarios.length > 0){ %>
+          <% inventarios.forEach(function(inventario){ %>
+    				<tr>
+              <td><%= inventario.mp %> </td>
+              <td><%= inventario.cantidadTotal %></td>
+              <td><%= inventario.presentacion %></td>
+              <td><%= inventario.valorUni %></td>
+              <td><%= inventario.valorG %></td>
+              <td><%= inventario.stock %></td>
+              <td>
+                <!--historial button-->
+                <form action="/app/historial/<%= inventario._id %>" method="GET" class="link">
+                  <button type="submit" class="btn btn-success btn-sm right-space"><i class="fas fa-clipboard-list"></i></button><!--edit button-->
+                </form>
+              </td>
+            </tr>
+    			<% }); %>
+        <% } else{ %>
+          <td colspan="6" class="text-center"> No hay materia prima para mostrar</td>
+        <% } %>
+      </tbody>
+    </table>
+  </div>
+</div>

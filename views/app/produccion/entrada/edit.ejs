@@ -1,0 +1,53 @@
+<% include ../../partials/layout.ejs %>
+<div class="row">
+  <div class="col-sm-6 col-sm-offset-3 mx-auto">
+
+  	<h1><i class="fas fa-sign-in-alt"></i>Editar producto</h1>
+
+  	<% if(messages.length > 0) { %>
+  		<div class="alert alert-danger">
+  			<% messages.forEach(function(message) { %>
+  				<p><%= message %></p>
+  			<% }); %>
+  		</div>
+  	<% } %>
+      	<!-- Edit FORM -->
+    <form action="/app/inOut/<%= inOut._id %>?_method=PUT" method="post" enctype="multipart/form-data">
+      <div class="form-group">
+        <label>Producto</label>
+        <select name="inv">
+          <% inventarios.forEach(function(inventario){ %>
+            <option value="<%= inventario._id %>" class="form-control"><%= inventario.mp %>
+          <% }); %>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Marca</label>
+        <input type="text" class="form-control" name="marca" value="<%= inOut.marca %>">
+      </div>
+      <div class="form-group">
+        <label>Cantidad</label>
+        <input type="number" class="form-control" name="cantidad" value="<%= inOut.cantidad %>">
+      </div>
+      <div class="form-group">
+        <label>Presentacion</label>
+        <input type="number" class="form-control" name="presentacion" value="<%= inOut.presentacion %>">
+      </div>
+      <div class="form-group">
+        <label>Valor Unitario</label>
+        <input type="number" class="form-control" name="valorUni" value="<%= inOut.presentacion %>">
+      </div>
+      <div class="form-group">
+        <label>Numero de factura</label>
+        <input type="number" class="form-control" name="numFact" value="<%= inOut.numFact %>">
+      </div>
+      <input type="hidden" name="tipo" value="entrada">
+      <input type="hidden" name="resetIn" value="si">
+
+      <button type="submit" class="btn btn-success btn-lg">Guardar </button>
+    </form>
+
+
+  </div>
+</div>
+</div>

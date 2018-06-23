@@ -1,0 +1,108 @@
+<% include ../../../partials/layout.ejs %>
+<div class="container">
+    <div class="col-md-12">
+      <h1 class="text-center pacifico"> Entradas bodega principal </h1>
+      <hr class="cust-hr">
+      <ul class="nav nav-tabs nav-justified">
+        <li class="nav-item">
+          <a class="nav-link" href="/app/inventario?bodega=principal">Materia prima</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" href="/app/inOut?tipo=entrada">Entradas</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link " href="/app/inOut?tipo=salida">Salidas</a>
+        </li>
+      </ul>
+    </div>
+
+    <br>
+    <a href="/app/inOut/new?tipo=entrada" class="btn btn-primary btn-lg active"><i class="fas fa-plus"></i> Nueva Entrada</a>
+    <br>
+    <% if(messages.length > 0) { %>
+      <br>
+      <div class="alert alert-danger">
+        <% messages.forEach(function(message) { %>
+          <p><%= message %></p>
+        <% }); %>
+      </div>
+    <% } %>
+    <br>
+    <caption>Entradas actuales</caption>
+    <div class="table-responsive">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Fecha</th>
+            <th>Numero de factura</th>
+            <th>Producto</th>
+            <th>marca</th>
+            <th>Cantidad</th>
+            <th>Presentacion</th>
+            <th>Valor Unitario(S)</th>
+            <th>Valor/Gramo(S)</th>
+            <th>Tipo</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% var cont = 1; if(inOut.length > 0){ %>
+            <% inOut.forEach(function(entrada){ %>
+      				<tr>
+                <td><%= cont %> </td>
+                <td><%= entrada.hora %></td>
+                <td><%= entrada.numFact %></td>
+                <td><%= entrada.inv.mp %></td>
+                <td><%= entrada.marca %></td>
+                <td><%= entrada.cantidad %></td>
+                <td><%= entrada.presentacion %></td>
+                <td><%= entrada.valorUni %></td>
+                <td><%= entrada.valorG %></td>
+                <td><%= entrada.tipo %></td>
+                <td>
+                  <!--Edit button-->
+                  <form action="/app/inOut/<%= entrada._id %>/edit" method="GET" class="link">
+                    <input type="hidden" class="form-control" name="tipo" value="entrada">
+                    <button type="submit" class="btn btn-warning btn-sm right-space"><i class="fas fa-pencil-alt"></i></button><!--edit button-->
+                  </form>
+                  <!--delete and back stock to inventary button-->
+                  <button type="button" class="btn btn-danger btn-sm right-space" data-toggle="modal" data-target="#myModal<%= entrada._id %>"><i class="far fa-trash-alt"></i></button>
+
+                  <div class="modal fade" id="myModal<%= entrada._id %>" tabindex="-1" role="dialog" arialabelledby="myModalLabel">
+                      <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <h4 class="modal-title" id="myModalLabel">Entrada:<%= entrada.inv.nombre %></h4>
+                            <button type="button" class="close" data-dismiss="modal" arial-label="Close">
+                              <span aria-hidden="true"> &times;</span>
+                            </button>
+                          </div>
+                          <div class="modal-body"><p class="modal-title" id="myModalLabel"> Está seguro que de que quiere eliminar esta entrada?</h4></div>
+                          <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                            <form action="/app/inOut/<%= entrada._id%>?_method=delete" class="link" method="POST">
+                              <input type="hidden" class="form-control" name="dev" value="devolucion">
+                              <input type="hidden" class="form-control" name="tipo" value="entrada">
+                              <input type="hidden" class="form-control" name="inv" value="<%= entrada.inv._id %>">
+                              <input type="hidden" class="form-control" name="bodega" value="<%= entrada.inv.bodega %>">
+                              <input type="hidden" class="form-control" name="cantidad" value="<%= entrada.cantidad %>">
+                              <input type="hidden" class="form-control" name="presentacion" value="<%= entrada.presentacion %>">
+                              <button type="submit" class="btn btn-primary"> Confirmar</button>
+                            </form>
+                          </div>
+                        </div>
+                      </div>
+                  </div>
+                </td>
+              </tr>
+      			<% cont++; }); %>
+          <% } else{ %>
+            <td colspan="11" class="text-center"> No hay entradas para mostrar</td>
+          <% } %>
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+</div>
