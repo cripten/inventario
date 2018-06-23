@@ -1,20 +1,20 @@
 var express = require("express");
 var router = express.Router();
-var Inventario = require("../models/inventario");
+var Producto = require("../models/producto");
 var InOut= require("../models/inOut");
 var flash = require("connect-flash");
 var find_inOut = require("../middlewares/find_inOut");
 var dateFormat = require("dateformat");
 //InOut =========================
 // Nueva entrada o salida
-router.get("/inOut/new",function(req,res,next){
-  Inventario.find({bodega:"principal"},function(err,inventarios){
+router.get("/ingrediente/new",function(req,res,next){
+  Producto.find({},function(err,productos){
     if(err){ console.log(err); return; }
-    res.render("app/inventarioprincipal/"+req.query.tipo+"/new.ejs",{ messages: req.flash("error"), inventarios:inventarios });
+    res.render("app/produccion/ingrediente/new.ejs",{ messages: req.flash("error"), productos:productos });
   });
 });
 //Consultar historial de producto
-router.get("/historial/:inv",function(req,res,next){
+/*router.get("/historial/:inv",function(req,res,next){
   InOut.find({"inv":req.params.inv,tipo:"entrada"})
   .populate("inv")
   .exec(function(err,inOut){
@@ -84,9 +84,9 @@ router.route("/inOut/:id")
     }
   });
 });
-
+*/
 //ENTRADAS Y SALIDAS COLLECTION ================
-router.get("/inOut",function(req,res,next){
+/*router.get("/inOut",function(req,res,next){
   InOut.find({"tipo": req.query.tipo})
   .populate("inv")
   .exec(function(err,inOut){
@@ -106,11 +106,11 @@ router.post("/inOut",validaciones,function(req,res,next){
       Regis_InOut(req,res);
     }
   });
-});
+});*/
 
 module.exports = router;
 
-
+/*
 //=============================METODOS====================================================
 // Metodo  para sumar(entradas) y restar(salidas) del stock  de una materia prima
 function SumRest_Stock(req,callback){
@@ -207,4 +207,4 @@ function validaciones(req,res,next){
 		else{
 			return next();
 		}
-};
+};*/

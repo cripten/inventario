@@ -4,6 +4,7 @@ var express  = require('express');
 var app      = express();
 var server = require("http").Server(app);
 app.set('port', (process.env.PORT || 4000));//define el puerto una vez subido a heroku
+var io = require('socket.io')(server);
 
 var mongoose = require('mongoose');
 var flash    = require('connect-flash');
@@ -22,6 +23,7 @@ var indexRoute = require("./routes/index");
 var inventarioRoute = require("./routes/inventario");
 var inOutRoute = require("./routes/inOut");
 var productoRoute = require("./routes/producto");
+var ingredienteRoute = require("./routes/ingrediente");
 
 
 var configDB = require('./config/database.js');
@@ -58,7 +60,7 @@ app.use('/', indexRoute);
 app.use("/app", inventarioRoute);
 app.use("/app", inOutRoute);
 app.use("/app", productoRoute);
-
+app.use("/app", ingredienteRoute);
 
 
 // launch ======================================================================
