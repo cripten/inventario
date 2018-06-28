@@ -1,0 +1,81 @@
+<% include ../../../partials/layout.ejs %>
+<div class="container-fluid">
+  <div class="col-md-12">
+      <h1 class="text-center pacifico"> Entradas bodega auxiliar </h1>
+      <hr class="cust-hr">
+      <ul class="nav nav-tabs nav-justified">
+        <li class="nav-item">
+          <a class="nav-link" href="/app/inventario?bodega=auxiliar">Materia prima</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/app/inOut?tipo=salida&bodega=inventarioauxiliar">Entradas</a>
+        </li>
+      </ul>
+    </div>
+    <br>
+    <a href="/app/inOut/new?tipo=salida" class="btn btn-primary btn-lg active"><i class="fas fa-plus"></i> Nueva Salida</a>
+    <br>
+    <% if(messages.length > 0) { %>
+      <br>
+      <div class="alert alert-danger">
+        <% messages.forEach(function(message) { %>
+          <p><%= message %></p>
+        <% }); %>
+      </div>
+    <% } %>
+    <br>
+    <caption>Salidas actuales</caption>
+    <div class="table-responsive">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Producto</th>
+            <th>Fecha</th>
+            <th>Cantidad</th>
+            <th>Presentacion</th>
+            <th>estado</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% var cont = 1; if(inOut.length > 0){ %>
+            <% inOut.forEach(function(salida){ %>
+                <% if(salida.estado === "pendiente"){ %>
+                  <tr>
+                    <td><%= cont %> </td>
+                    <td><%= salida.inv.mp %></td>
+                    <td><%= salida.hora %></td>
+                    <td><%= salida.cantidad %></td>
+                    <td><%= salida.presentacion %></td>
+                    <td><%= salida.estado %></td>
+                    <td>
+                      <!--Allow button-->
+                      <form action="/app/InOutAux" method="POST" class="link">
+                        <input type="hidden" name="allow" value="<%= salida._id %>">
+                        <button type="submit" class="btn btn-success btn-sm  formu"><i class="fas fa-check"></i> Aprobar</button><!--edit button-->
+                      </form>
+                    </td>
+                  </tr>
+                <% }else{ %>
+                  <tr class="alert-success">
+                    <td><%= cont %> </td>
+                    <td><%= salida.inv.mp %></td>
+                    <td><%= salida.hora %></td>
+                    <td><%= salida.cantidad %></td>
+                    <td><%= salida.presentacion %></td>
+                    <td><%= salida.estado %></td>
+                    <td></td>
+                  </tr>
+                <% } %>
+              </tr>
+      			<% cont++; }); %>
+          <% } else{ %>
+            <td colspan="7" class="text-center"> No hay entradas para mostrar</td>
+          <% } %>
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+</div>

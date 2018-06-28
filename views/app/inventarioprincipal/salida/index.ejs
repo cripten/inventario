@@ -1,5 +1,5 @@
 <% include ../../../partials/layout.ejs %>
-<div class="container">
+<div class="container-fluid">
   <div class="col-md-12">
       <h1 class="text-center pacifico"> Salidas bodega principal </h1>
       <hr class="cust-hr">
@@ -8,10 +8,10 @@
           <a class="nav-link" href="/app/inventario?bodega=principal">Materia prima</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="/app/inOut?tipo=entrada">Entradas</a>
+          <a class="nav-link" href="/app/inOut?tipo=entrada&bodega=inventarioprincipal">Entradas</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link active" href="/app/inOut?tipo=salida">Salidas</a>
+          <a class="nav-link active" href="/app/inOut?tipo=salida&bodega=inventarioprincipal">Salidas</a>
         </li>
       </ul>
     </div>
@@ -37,7 +37,6 @@
             <th>Fecha</th>
             <th>Cantidad</th>
             <th>Presentacion</th>
-            <th>Tipo</th>
             <th>Acciones</th>
           </tr>
         </thead>
@@ -50,7 +49,6 @@
                 <td><%= salida.hora %></td>
                 <td><%= salida.cantidad %></td>
                 <td><%= salida.presentacion %></td>
-                <td><%= salida.tipo %></td>
                 <td>
                   <!--Edit button-->
                   <form action="/app/salida/<%= salida._id %>/edit" method="GET" class="link">

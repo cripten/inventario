@@ -12,6 +12,7 @@ var inOut_schema = new Schema({
   valorUni:{type: Number, required: true},
   valorG:{type: Number, required: true},
   tipo: {type: String, required: true},//entrada o salida
+  estado: {type: String},
   inv: {type: Schema.Types.ObjectId, ref: "Inventario"},//ref al id de la collecion inventario
 
 });

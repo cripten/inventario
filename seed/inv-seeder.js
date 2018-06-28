@@ -8,7 +8,16 @@ const inventarios = [
 {
 	mp : "ACEITE",
 	cantidadTotal : 0,
-	presentacion : 17200,
+	presentacion : 18000,
+	valorUni : 0,
+	valorG : 0,
+	stock : 0,
+	bodega : "auxiliar"
+},
+{
+	mp : "AGUA",
+	cantidadTotal : 0,
+	presentacion : 1000,
 	valorUni : 0,
 	valorG : 0,
 	stock : 0,
@@ -51,7 +60,7 @@ const inventarios = [
   bodega : "auxiliar"
 },
 {
-  mp : "AZUCAR BLANCOL",
+  mp : "AZUCAR BLANCO",
   cantidadTotal : 0,
   presentacion : 50000,
   valorUni : 0,
@@ -152,7 +161,7 @@ const inventarios = [
 {
   mp : "COLMAIZ",
   cantidadTotal : 0,
-  presentacion : 1200,
+  presentacion : 12000,
   valorUni : 0,
   valorG : 0,
   stock : 0,
@@ -359,7 +368,7 @@ const inventarios = [
 {
   mp : "HUEVOS",
   cantidadTotal : 0,
-  presentacion : 50,
+  presentacion : 30,
   valorUni : 0,
   valorG : 0,
   stock : 0,
@@ -593,7 +602,7 @@ const inventarios = [
 {
   mp : "VIDEO JET 55 MM X 700 MTS",
   cantidadTotal : 0,
-  presentacion : 15000,
+  presentacion : 1,
   valorUni : 0,
   valorG : 0,
   stock : 0,
@@ -602,7 +611,7 @@ const inventarios = [
 {
   mp : "VIDEO JET 33 MM",
   cantidadTotal : 0,
-  presentacion : 15000,
+  presentacion : 1,
   valorUni : 0,
   valorG : 0,
   stock : 0,

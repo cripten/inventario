@@ -5,10 +5,13 @@ var InOut= require("../models/inOut");
 var flash = require("connect-flash");
 var find_inOut = require("../middlewares/find_inOut");
 var dateFormat = require("dateformat");
+var mongoose = require('mongoose');
 //InOut =========================
 // Nueva entrada o salida
 router.get("/inOut/new",function(req,res,next){
-  Inventario.find({bodega:"principal"},function(err,inventarios){
+  Inventario.find({bodega:"principal"})
+  .sort({mp:1})
+  .exec(function(err,inventarios){
     if(err){ console.log(err); return; }
     res.render("app/inventarioprincipal/"+req.query.tipo+"/new.ejs",{ messages: req.flash("error"), inventarios:inventarios });
   });
@@ -29,7 +32,9 @@ router.all("/inOut/:id*",find_inOut);
 //-----------------------------------------------------
 // edit materieprime form
 router.get("/inOut/:id/edit",function(req,res,next){
-  Inventario.find({},function(err,inventarios){
+  Inventario.find({})
+  .sort({mp:1})
+  .exec(function(err,inventarios){
     if(err){ console.log(err); return; }
     res.render("app/"+req.query.tipo+"/edit.ejs",{ messages: req.flash("error"), inventarios:inventarios });
   });
@@ -89,10 +94,12 @@ router.route("/inOut/:id")
 router.get("/inOut",function(req,res,next){
   InOut.find({"tipo": req.query.tipo})
   .populate("inv")
+  .sort({estado: -1})
   .exec(function(err,inOut){
     console.log(inOut);
     if(err){ res.redirect("/app"); return; }
-		res.render("app/inventarioprincipal/"+req.query.tipo+"/index.ejs", { messages: req.flash("error"), inOut:inOut });
+
+		res.render("app/"+req.query.bodega+"/"+req.query.tipo+"/index.ejs", { messages: req.flash("error"), inOut:inOut });
   });
 });
 
@@ -100,7 +107,7 @@ router.post("/inOut",validaciones,function(req,res,next){
   SumRest_Stock(req, function(block){
     if(block){
       req.flash("error","no se puede sacar del inventario actual");
-      res.redirect("/app/inOut?tipo="+req.body.tipo);
+      res.redirect("/app/inOut?tipo="+req.body.tipo+"&bodega="+req.body.bodega);
     }
     else{
       Regis_InOut(req,res);
@@ -108,9 +115,54 @@ router.post("/inOut",validaciones,function(req,res,next){
   });
 });
 
+router.post("/InOutAux",function(req,res,next){
+  InOut.findOne({"_id": req.body.allow})
+  .populate("inv")
+  .exec(function(err,inOut){
+    if(err){ res.redirect("/app"); return; }
+    inOut.estado = "Aprobado";
+    inOut.save(function(err){
+      Inventario.findOne({"mp":inOut.inv.mp,"bodega":"auxiliar"},function(err,inventario){
+
+        if(err){ res.redirect("/app"); return; }
+        inventario.stock = inventario.stock + (parseInt(inOut.cantidad) * parseInt(inOut.presentacion));
+        inventario.cantidadTotal = inventario.stock/inOut.presentacion;
+        inventario.save(function(err){
+          res.redirect("/app/inOut?tipo=salida&bodega=inventarioauxiliar");
+        });
+      });
+    });
+  });
+
+  //lo que se llevaba para los checked
+  /*var done = 0;
+  InOut.find({"_id": req.body.allow})
+  .populate("inv")
+  .exec(function(err,inOuts){
+    if(err){ res.redirect("/app"); return; }
+    inOuts.forEach(function(entrada){
+      Inventario.findOne({"mp":entrada.inv.mp,"bodega":"auxiliar"},function(err,inventario){
+        if(err){ res.redirect("/app"); return; }
+        inventario.stock = inventario.stock + (parseInt(entrada.cantidad) * parseInt(entrada.presentacion));
+        inventario.cantidadTotal = inventario.stock/entrada.presentacion;
+        inventario.save(function(err){
+          done++;
+          if(done === inOuts.length){
+            res.redirect("/app/inventario?bodega=auxiliar");
+          }
+        });
+      });
+      entrada.estado = "Aprobado";
+      entrada.save(function(err){
+      });
+    });
+  });*/
+});
 module.exports = router;
 
+function SumStock_Aux(){
 
+}
 //=============================METODOS====================================================
 // Metodo  para sumar(entradas) y restar(salidas) del stock  de una materia prima
 function SumRest_Stock(req,callback){
@@ -172,12 +224,13 @@ function Regis_InOut(req, res){
     valorG: req.body.valorUni/req.body.presentacion,
     numFact: req.body.numFact,
     tipo: req.body.tipo,
+    estado: req.body.tipo == "entrada" ? "permitido" : "pendiente",
     inv: req.body.inv
     }
   var inOut = new InOut(data);
   inOut.save(function(err){
     if(!err){
-      res.redirect("/app/inOut?tipo="+req.body.tipo);
+      res.redirect("/app/inOut?tipo="+req.body.tipo+"&bodega="+req.body.bodega);
     }
     else{
       console.log(err);

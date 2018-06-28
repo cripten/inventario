@@ -1,6 +1,8 @@
 var express = require("express");
 var router = express.Router();
 var Producto = require("../models/producto");
+var Inventario = require("../models/inventario");
+var Ingrediente = require("../models/ingrediente");
 var InOut= require("../models/inOut");
 var flash = require("connect-flash");
 var find_inOut = require("../middlewares/find_inOut");
@@ -10,7 +12,13 @@ var dateFormat = require("dateformat");
 router.get("/ingrediente/new",function(req,res,next){
   Producto.find({},function(err,productos){
     if(err){ console.log(err); return; }
-    res.render("app/produccion/ingrediente/new.ejs",{ messages: req.flash("error"), productos:productos });
+    Inventario.find({bodega:"auxiliar"})
+    .sort({mp:1})
+    .exec(function(err,inventarios){
+      if(err){ console.log(err); return; }
+      console.log(inventarios);
+      res.render("app/produccion/ingrediente/new.ejs",{ messages: req.flash("error"), productos:productos, inventarios:inventarios });
+    });
   });
 });
 //Consultar historial de producto
@@ -86,27 +94,68 @@ router.route("/inOut/:id")
 });
 */
 //ENTRADAS Y SALIDAS COLLECTION ================
-/*router.get("/inOut",function(req,res,next){
-  InOut.find({"tipo": req.query.tipo})
-  .populate("inv")
-  .exec(function(err,inOut){
-    console.log(inOut);
+router.get("/ingrediente",function(req,res,next){
+  Ingrediente.find({prod:req.query.prodid})
+  .populate("prod inv")
+  .exec(function(err,ingredientes){
+    console.log(ingredientes);
     if(err){ res.redirect("/app"); return; }
-		res.render("app/inventarioprincipal/"+req.query.tipo+"/index.ejs", { messages: req.flash("error"), inOut:inOut });
+		res.render("app/produccion/ingrediente/index.ejs", { messages: req.flash("error"), ingredientes:ingredientes });
   });
 });
 
-router.post("/inOut",validaciones,function(req,res,next){
-  SumRest_Stock(req, function(block){
-    if(block){
-      req.flash("error","no se puede sacar del inventario actual");
-      res.redirect("/app/inOut?tipo="+req.body.tipo);
-    }
-    else{
-      Regis_InOut(req,res);
-    }
+router.post("/ingrediente",function(req,res,next){
+  var invs= req.body.inv;
+  var cantidades = req.body.cantidad;
+  var cantidadTotalProm = 0;
+  var cantidadTotalG = 0;
+  var datos = [];
+  var done = 1;
+
+  cantidades.forEach(function(cantidad){
+    cantidadTotalG += parseInt(cantidad);
+    var data=
+    {
+      cantidad : parseInt(cantidad),
+      cantidadG : 0,
+      prod : req.body.prod,
+      inv : 0,
+    };
+    datos.push(data);
   });
-});*/
+  for(var i = 0 ; i < cantidades.length ; i++){
+    datos[i].cantidadG = cantidades[i] / cantidadTotalG ;
+    cantidadTotalProm += parseInt(cantidades[i]) / parseInt(cantidadTotalG);
+    console.log(cantidadTotalProm);
+  }
+  Producto.findById(req.body.prod,function(err,producto){
+    producto.total = cantidadTotalProm;
+    producto.totalG = cantidadTotalG
+    producto.save(function(err,result){
+      if(!err){
+        }
+      else{
+        console.log(err);
+      }
+    });
+  });
+  for(var i = 0 ; i < invs.length ; i++){
+    datos[i].inv = invs[i];
+    //save each product of the array in the model and database
+    var ingrediente = new Ingrediente(datos[i])
+    ingrediente.save(function(err,result){
+      if(!err){
+        done++;
+        if(done === invs.length){
+          res.redirect("/app/ingrediente");
+        }
+      }
+      else{
+        console.log(err);
+      }
+    });
+  }
+});
 
 module.exports = router;
 

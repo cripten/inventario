@@ -53,7 +53,9 @@ router.route("/inventario")
 .get(function(req,res,next){
   //verifica que la colleccion a mostrar cumpla los requisitos el usuario que la creo y y muestre los archivos de la bodega por la que se solicita
   //req.query.nombre_variable_a_mostrar esto enviado por get por el ?nombre_variable_a_mostrar=valor
-  Inventario.find({bodega:req.query.bodega},function(err,inventarios){
+  Inventario.find({bodega:req.query.bodega})
+  .sort({mp:1})
+  .exec(function(err,inventarios){
     if(err){res.redirect("/"); return;}
     res.render("app/inventario"+req.query.bodega+"/index.ejs", { inventarios: inventarios });
   });

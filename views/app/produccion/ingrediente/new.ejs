@@ -3,7 +3,7 @@
   <div class="row">
     <div class="col-sm-6 col-sm-offset-3 mx-auto">
 
-    	<h1><i class="fas fa-sign-in-alt"></i>Nuevo Recurso</h1>
+    	<h1 class="text-center"><i class="fas fa-sign-in-alt"></i>Nuevo Recurso</h1>
 
     	<% if(messages.length > 0) { %>
     		<div class="alert alert-danger">
@@ -14,17 +14,22 @@
     	<% } %>
 
     	<!-- IN FORM -->
-    	<form action="/app/inOut" method="post" class="agg">
-        <div class="form-group">
+    	<form action="/app/ingrediente" method="post">
+        <div class="form-group col-md-6 mx-auto">
           <label>Producto</label>
-          <select name="inv">
+          <select name="prod">
             <% productos.forEach(function(producto){ %>
               <option value="<%= producto._id %>" class="form-control"><%= producto.nombre %>
             <% }); %>
           </select>
         </div>
         <br>
-        <li class="btn btn-primary btn-lg formu"><i class="fas fa-plus"></i> Agregar ingrediente</li>
+        <li class="btn btn-primary btn-lg formu "><i class="fas fa-plus"></i> Agregar ingrediente</li>
+        <br>
+        <br>
+        <div class="ingredientes">
+
+        </div>
         <br>
         <br>
         <button type="submit" class="btn btn-success btn-lg">Guardar </button>
@@ -35,11 +40,30 @@
   </div>
 </div>
 <script>
+var temp = [];
+var nombres = [];
+var cont = 1;
+var cont2 = 0;
 $('.formu').on('click',function(){
   //alert("hola");
-  $('.agg').append($('<li>').text("vamos bien"));
-  //$('#messages').append($('<li>').text(msg));
+  //$('.agg').append($('<li>').text("vamos bien"));
+  //nombre.push();
+  $('.ingredientes').append((' <div class="form-row"><div class="form-group col-md-4"><label>Ingrediente'+cont+'</label><select name="inv"><% inventarios.forEach(function(inventario){ %><option value="<%= inventario._id %>" class="form-control"><%= inventario.mp %><% }); %></select></div><div class="form-group col-md-4"></div><div class="form-group col-md-4"><label>Cantidad en gramos</label><input type="number" class="form-control" name="cantidad"></div></div>'));
+  //temp.push("nombre"+cont);
+  cont++;
   window.scrollTo(0, document.body.scrollHeight);
 
-})
+});
+$('.see').on('click',function(){
+  //for(var i =0; i< temp)
+  temp.forEach(function(nom){
+    //$('.agg').append("<input type='hidden' name='nombre[]' value="+document.getElementById(temp[cont]).value+">");
+  });
+//  alert(document.getElementById(temp[1]).value);
+});
+$("form").submit(function(){
+  //temp.forEach(function(nom){
+    //$('.agg').append("<input type='hidden' name='nombre' value="+document.getElementById(temp[cont2]).value+">");
+  //});
+});
 </script>
