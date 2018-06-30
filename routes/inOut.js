@@ -126,7 +126,7 @@ router.post("/InOutAux",function(req,res,next){
 
         if(err){ res.redirect("/app"); return; }
         inventario.stock = inventario.stock + (parseInt(inOut.cantidad) * parseInt(inOut.presentacion));
-        inventario.cantidadTotal = inventario.stock/inOut.presentacion;
+        inventario.cantidadTotal = inventario.stock/inOut.inv.presentacion;
         inventario.save(function(err){
           res.redirect("/app/inOut?tipo=salida&bodega=inventarioauxiliar");
         });

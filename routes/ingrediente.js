@@ -100,7 +100,7 @@ router.get("/ingrediente",function(req,res,next){
   .exec(function(err,ingredientes){
     console.log(ingredientes);
     if(err){ res.redirect("/app"); return; }
-		res.render("app/produccion/ingrediente/index.ejs", { messages: req.flash("error"), ingredientes:ingredientes });
+		res.render("app/producto/ingrediente/index.ejs", { messages: req.flash("error"), ingredientes:ingredientes });
   });
 });
 

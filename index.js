@@ -22,6 +22,7 @@ var path = require("path");
 var indexRoute = require("./routes/index");
 var inventarioRoute = require("./routes/inventario");
 var inOutRoute = require("./routes/inOut");
+var produccionRoute = require("./routes/produccion");
 var productoRoute = require("./routes/producto");
 var ingredienteRoute = require("./routes/ingrediente");
 
@@ -59,6 +60,7 @@ app.use(function(req,res,next){
 app.use('/', indexRoute);
 app.use("/app", inventarioRoute);
 app.use("/app", inOutRoute);
+app.use("/app", produccionRoute);
 app.use("/app", productoRoute);
 app.use("/app", ingredienteRoute);
 

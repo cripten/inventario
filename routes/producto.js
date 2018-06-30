@@ -53,7 +53,7 @@ router.route("/producto")
   //req.query.nombre_variable_a_mostrar esto enviado por get por el ?nombre_variable_a_mostrar=valor
   Producto.find({},function(err,productos){
     if(err){res.redirect("/"); return;}
-    res.render("app/produccion/index.ejs", { productos: productos });
+    res.render("app/producto/index.ejs", { productos: productos });
   });
 })
 .post(validaciones,function(req,res,next){
