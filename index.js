@@ -67,5 +67,5 @@ app.use("/app", ingredienteRoute);
 
 // launch ======================================================================
 // server.listen(app.get('port'),"10.0.0.102");
-server.listen(app.get('port'),"192.168.0.130");
-// server.listen(app.get('port'));
+// server.listen(app.get('port'),"192.168.0.130");
+server.listen(app.get('port'));

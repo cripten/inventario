@@ -7,14 +7,14 @@ var find_producto = require("../middlewares/find_producto");
 //MATERIEPRIME =========================
 // new materieprime form
 router.get("/producto/new",function(req,res,next){
-  res.render("app/produccion/new.ejs",{ messages: req.flash("error") });
+  res.render("app/producto/new.ejs",{ messages: req.flash("error") });
 });
 //all routes with this path use this middleware for refactor code
 router.all("/producto/:id*",find_producto);
 //-----------------------------------------------------
 // edit materieprime form
 router.get("/producto/:id/edit",function(req,res,next){
-  res.render("app/produccion/edit.ejs",{ messages: req.flash("error") });
+  res.render("app/producto/edit.ejs",{ messages: req.flash("error") });
 });
 
 router.route("/producto/:id")

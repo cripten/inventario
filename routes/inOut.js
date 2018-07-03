@@ -23,10 +23,9 @@ router.get("/historial/:inv",function(req,res,next){
   .exec(function(err,inOut){
     console.log(inOut);
     if(err){ res.redirect("/app"); return; }
-		res.render("app/inventarioprincipal/entrada/index.ejs", {inOut:inOut });
+		res.render("app/inventarioprincipal/entrada/index.ejs", { messages: req.flash("error"), inOut:inOut });
   });
 });
-
 //all routes with this path use this middleware for refactor code
 router.all("/inOut/:id*",find_inOut);
 //-----------------------------------------------------

@@ -28,7 +28,6 @@
           <th>Valor Unitario(S)</th>
           <th>Valor/Gramo(S)</th>
           <th>Stock</th>
-          <th>Acciones</th>
         </tr>
       </thead>
       <tbody>
@@ -41,12 +40,6 @@
               <td><%= inventario.valorUni %></td>
               <td><%= inventario.valorG %></td>
               <td><%= inventario.stock %></td>
-              <td>
-                <!--historial button-->
-                <form action="/app/historial/<%= inventario._id %>" method="GET" class="link">
-                  <button type="submit" class="btn btn-success btn-sm right-space"><i class="fas fa-clipboard-list"></i></button><!--edit button-->
-                </form>
-              </td>
             </tr>
     			<% }); %>
         <% } else{ %>

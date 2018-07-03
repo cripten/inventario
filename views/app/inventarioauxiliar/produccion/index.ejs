@@ -11,10 +11,12 @@
           <a class="nav-link" href="/app/inOut?tipo=salida&bodega=inventarioauxiliar">Entradas</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="/app/inOutAux">Salidas</a>
+          <a class="nav-link" href="/app/produccion">Salidas</a>
         </li>
       </ul>
     </div>
+    <br>
+    <a href="/app/produccion/new" class="btn btn-primary btn-lg active"><i class="fas fa-plus"></i> Nueva Salida</a>
     <br>
     <br>
     <% if(messages.length > 0) { %>
@@ -35,13 +37,13 @@
             <th>Fecha</th>
             <th>Producto</th>
             <th>Cantidad</th>
-            <th>Presentacion</th>
-            <th>estado</th>
+            <th>Peso</th>
+            <th>Peso crudo</th>
             <th>Acciones</th>
           </tr>
         </thead>
         <tbody>
-          <% var cont = 1; if(inOut.length > 0){ %>
+          <% var cont = 1; if(produccion.length > 0){ %>
             <% produccion.forEach(function(salida){ %>
               <tr>
                 <td><%= cont %> </td>
@@ -51,11 +53,7 @@
                 <td><%= salida.peso %></td>
                 <td><%= salida.pesoCrud %></td>
                 <td>
-                  <!--Allow button-->
-                  <form action="/app/InOutAux" method="POST" class="link">
-                    <input type="hidden" name="allow" value="<%= salida._id %>">
-                    <button type="submit" class="btn btn-success btn-sm  formu"><i class="fas fa-check"></i> Aprobar</button><!--edit button-->
-                  </form>
+                  ninguna
                 </td>
               </tr>
       			<% cont++; }); %>

@@ -2,6 +2,7 @@ var express = require("express");
 var router = express.Router();
 var Inventario = require("../models/inventario");
 var InOut = require("../models/inOut");
+var Producto = require("../models/producto");
 var Ingrediente = require("../models/ingrediente");
 var Produccion = require("../models/produccion");
 var flash = require("connect-flash");
@@ -44,22 +45,21 @@ router.route("/produccion/:id")
 
 //ENTRADAS Y SALIDAS COLLECTION ================
 router.get("/produccion",function(req,res,next){
-  InOut.find({"tipo": req.query.tipo})
-  .populate("inv")
-  .sort({estado: -1})
-  .exec(function(err,inOut){
-    console.log(inOut);
+  Produccion.find({"tipo": req.query.tipo})
+  .populate("prod")
+  .sort({hora: -1})
+  .exec(function(err,produccion){
     if(err){ res.redirect("/app"); return; }
-
-		res.render("app/"+req.query.bodega+"/"+req.query.tipo+"/index.ejs", { messages: req.flash("error"), inOut:inOut });
+		res.render("app/inventarioauxiliar/produccion/index.ejs", { messages: req.flash("error"), produccion:produccion });
   });
 });
 router.post("/produccion",function(req,res,next){
   SumRest_Stock(req,function(block){
-    if(block){
+    if(block == true){
       Regis_Out(req,res);
     }else{
-
+      req.flash("error","no se puede realizar la accion debido a que no hay suficiente materia prima en el stock ");
+      res.redirect("/app/produccion/new");//devuelve la cadena de mensajes
     }
   });
 
@@ -69,67 +69,48 @@ module.exports = router;
 //=============================METODOS====================================================
 // Metodo  para sumar(entradas) y restar(salidas) del stock  de una materia prima
 function SumRest_Stock(req,callback){
+  var done = 0;
+  var pase = true;
   Ingrediente.find({"prod": req.body.prod})
   .populate("prod inv")
-  .exec(function(err, ingredientes){
-    console.log(ingredientes);
+  .exec(function(err, ingredientes){//se busca los ingredientes a base del producto a realizar
+    //se recorre los documentos de ingredientes
     ingredientes.forEach(function(ingrediente){
-      console.log("segunda")
-      console.log(ingrediente);
-      console.log(ingrediente.inv._id);
-      Inventario.findOne({"_id": ingrediente.inv._id},function(err,inventario){
-        console.log("tercero")
-        console.log(inventario);
-        console.log(inventario.mp);
-        //callback(true);
+      // se busca el ingrediente en el inventario por el id para hacer operaciones con el stock
+      Inventario.findOne({"_id": ingrediente.inv._id,"bodega":"auxiliar"},function(err,inventario){
+        if(err){ res.redirect("/"); return; }
+        // se calcula la cantidad necesaria de cada ingrediente para hacer el la cantidad del producto
+        var totalProduccion = ingrediente.cantidadG * req.body.cantidad * req.body.pesoCrud;
+        console.log(totalProduccion);
+        console.log(inventario.stock);
+        // si la cantidad a producir es menor a lo que hay en el stock del ingrediente
+        if(inventario.stock > totalProduccion && pase == true){
+          //se resta del stock del ingrediente lo que se va a producir
+          inventario.stock = inventario.stock - totalProduccion;
+          inventario.cantidadTotal = inventario.stock/inventario.presentacion;
+          console.log(inventario.stock);
+          console.log(inventario.cantidadTotal);
+          // se guarda
+          inventario.save(function(err){
+            if(!err){}
+            else{ console.log(err); }
+          });
+        }
+        else{
+          pase = false;
+        }
+        done++;
+        if(done === ingredientes.length){
+          return callback(pase);
+        }
       });
     });
 
   });
-  /*Inventario.findById(req.body.inv,function(err,inventario){
-    if(err){ res.redirect("/"); return; }
-    if((req.body.cantidad * req.body.presentacion) > inventario.stock && req.body.dev == "devolucion"){
-      console.log("epa");
-      return callback(true);
-    }
-    if((req.body.cantidad * req.body.presentacion) > inventario.stock && req.body.tipo == "salida"){
-      return callback(true);
-      //res.redirect("/app/inOut?tipo=salida");
-    }
-    else{
-      if(req.body.tipo == "entrada"){
-        //pasa por aca si se va a editar la entrada
-        if(req.body.dev == "devolucion"){
-          inventario.stock = inventario.stock - (req.body.cantidad * req.body.presentacion);
-        }
-        else{
-          inventario.valorUni = (inventario.presentacion*req.body.valorUni)/req.body.presentacion;
-          inventario.valorG = req.body.valorUni/req.body.presentacion;
-          inventario.stock = inventario.stock + (req.body.cantidad * req.body.presentacion);
-        }
-
-      }
-      else{
-        inventario.stock = inventario.stock - (req.body.cantidad * req.body.presentacion);
-      }
-
-      inventario.cantidadTotal = inventario.stock/inventario.presentacion;
-
-      inventario.save(function(err){
-        if(!err){
-          return callback(false);
-        }
-        else{
-          console.log(err);
-          //res.redirect("/app/entrada/"+req.params.id);
-        }
-      });
-    }
-  });*/
 };
 
 // Metodo  para guardar registros de entradas y salidas
-function Regis_InOut(req, res){
+function Regis_Out(req, res){
   var now = Date.now();
   var date = dateFormat(now, "d/m/yyyy");
   var hora = dateFormat(now, "d/m/yyyy, h:MM:ss TT");
@@ -138,19 +119,15 @@ function Regis_InOut(req, res){
     fecha: date,
     hora: hora,
     cantidad: req.body.cantidad,
-    valorUni: req.body.valorUni,
-    valorG: req.body.valorUni/req.body.presentacion,
+    peso: req.body.peso,
+    pesoCrud: req.body.pesoCrud,
     estado: "pendiente",
-    prod: req.body.inv
+    prod: req.body.prod
     }
   var produccion = new Produccion(data);
   produccion.save(function(err){
-    if(!err){
-      res.redirect("/app/inOut?tipo="+req.body.tipo+"&bodega="+req.body.bodega);
-    }
-    else{
-      console.log(err);
-    }
+    if(!err){ res.redirect("/app/produccion"); }
+    else{ console.log(err); }
   });
 }
 

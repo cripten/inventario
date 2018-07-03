@@ -17,7 +17,7 @@ router.get("/ingrediente/new",function(req,res,next){
     .exec(function(err,inventarios){
       if(err){ console.log(err); return; }
       console.log(inventarios);
-      res.render("app/produccion/ingrediente/new.ejs",{ messages: req.flash("error"), productos:productos, inventarios:inventarios });
+      res.render("app/producto/ingrediente/new.ejs",{ messages: req.flash("error"), productos:productos, inventarios:inventarios });
     });
   });
 });
