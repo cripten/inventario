@@ -16,12 +16,13 @@
     	<!-- IN FORM -->
     	<form action="/app/inOut" method="post">
         <div class="form-group">
-          <label>Numero de factura</label>
-          <input type="number" class="form-control" name="numFact">
+          <label>Numero de factura:</label>
+          <input type="number" placeholder="Numero de factura" class="form-control" name="numFact">
         </div>
         <div class="form-group">
-          <label>Producto</label>
-          <select name="inv">
+          <label>Producto:</label>
+          <select name="inv" required>
+            <option value="" class="form-control">Seleccionar
             <% inventarios.forEach(function(inventario){ %>
               <option value="<%= inventario._id %>" class="form-control"><%= inventario.mp %>
             <% }); %>
@@ -29,22 +30,22 @@
         </div>
         <div class="form-group">
           <label>Marca</label>
-          <input type="text" class="form-control" name="marca">
+          <input type="text" placeholder="Nombre de la marca" class="form-control" name="marca">
         </div>
         <div class="form-group">
           <label>Cantidad</label>
-          <input type="number" class="form-control" name="cantidad">
+          <input type="number" placeholder="Cantidad a ingresar" class="form-control" name="cantidad">
         </div>
         <div class="form-group">
           <label>Presentacion</label>
-          <input type="number" class="form-control" name="presentacion">
+          <input type="number" placeholder="Cantidad en gramos"  class="form-control" name="presentacion">
         </div>
         <div class="form-group">
           <label>Valor Unitario</label>
-          <input type="number" class="form-control" name="valorUni">
+          <input type="number" placeholder="Precio Unitario" class="form-control" name="valorUni">
         </div>
         <input type="hidden" name="tipo" value="entrada">
-        <input type="hidden" name="bodega" value="inventarioprincipal">
+        <input type="hidden" name="bodega" value="principal">
         <button type="submit" class="btn btn-success btn-lg">Guardar </button>
     	</form>
 

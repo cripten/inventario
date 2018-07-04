@@ -8,10 +8,10 @@
           <a class="nav-link" href="/app/inventario?bodega=principal">Materia prima</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link active" href="/app/inOut?tipo=entrada&bodega=inventarioprincipal">Entradas</a>
+          <a class="nav-link active" href="/app/inOut?tipo=entrada&bodega=principal">Entradas</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link " href="/app/inOut?tipo=salida&bodega=inventarioprincipal">Salidas</a>
+          <a class="nav-link " href="/app/inOut?tipo=salida&bodega=principal">Salidas</a>
         </li>
       </ul>
     </div>
@@ -60,8 +60,9 @@
               <td>
                 <!--Edit button-->
                 <form action="/app/inOut/<%= entrada._id %>/edit" method="GET" class="link">
+                  <input type="hidden" class="form-control" name="bodega" value="inventarioprincipal">
                   <input type="hidden" class="form-control" name="tipo" value="entrada">
-                  <button type="submit" class="btn btn-warning btn-sm right-space"><i class="fas fa-pencil-alt"></i></button><!--edit button-->
+                  <button type="submit" class="btn btn-warning btn-sm right-space"><i class="fas fa-pencil-alt"></i></button>
                 </form>
                   <!--delete and back stock to inventary button-->
                 <button type="button" class="btn btn-danger btn-sm right-space" data-toggle="modal" data-target="#myModal<%= entrada._id %>"><i class="far fa-trash-alt"></i></button>
@@ -79,9 +80,9 @@
                         <div class="modal-footer">
                           <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
                           <form action="/app/inOut/<%= entrada._id%>?_method=delete" class="link" method="POST">
-                            <input type="hidden" class="form-control" name="dev" value="devolucion">
-                            <input type="hidden" class="form-control" name="tipo" value="entrada">
                             <input type="hidden" class="form-control" name="inv" value="<%= entrada.inv._id %>">
+                            <input type="hidden" class="form-control" name="tipo" value="entrada">
+                            <input type="hidden" class="form-control" name="dev" value="devolucion">
                             <input type="hidden" class="form-control" name="bodega" value="<%= entrada.inv.bodega %>">
                             <input type="hidden" class="form-control" name="cantidad" value="<%= entrada.cantidad %>">
                             <input type="hidden" class="form-control" name="presentacion" value="<%= entrada.presentacion %>">

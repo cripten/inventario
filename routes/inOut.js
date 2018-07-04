@@ -31,33 +31,27 @@ router.all("/inOut/:id*",find_inOut);
 //-----------------------------------------------------
 // edit materieprime form
 router.get("/inOut/:id/edit",function(req,res,next){
-  Inventario.find({})
-  .sort({mp:1})
-  .exec(function(err,inventarios){
-    if(err){ console.log(err); return; }
-    res.render("app/"+req.query.tipo+"/edit.ejs",{ messages: req.flash("error"), inventarios:inventarios });
-  });
+  res.render("app/"+req.query.bodega+"/"+req.query.tipo+"/edit.ejs",{ messages: req.flash("error") });
 });
 
 router.route("/inOut/:id")
 .get(function(req,res,next){
 })
 .put(validaciones,function(req,res,next){
-  SumRest_Stock(req,res,next);
-
-  var now = Date.now();
+  Edit_Stock(req,res,next);
+  /*var now = Date.now();
   var date = dateFormat(now, "d/m/yyyy");
-  var hora = dateFormat(now, "d/m/yyyy, h:MM:ss TT");
+  var hora = dateFormat(now, "d/m/yyyy, h:MM:ss TT");*/
 
-  res.locals.inOut.fecha = date;
-  res.locals.inOut.hora = hora;
-  res.locals.inOut.numFact = req.body.numFact;
+  //res.locals.inOut.fecha = date;
+  //res.locals.inOut.hora = hora;
+  /*res.locals.inOut.numFact = req.body.numFact;
   res.locals.inOut.marca = req.body.nombre;
   res.locals.inOut.cantidad = req.body.cantidad;
   res.locals.inOut.precio = req.body.precio;
   res.locals.inOut.valorUni = req.body.valorUni;
   res.locals.inOut.valorG = req.body.valorUni/req.body.presentacion;
-  res.locals.inOut.inv = req.body.inv;
+  //res.locals.inOut.inv = req.body.inv;
   res.locals.inOut.save(function(err){
     if(!err){
 			res.redirect("/app/inventario");
@@ -65,15 +59,15 @@ router.route("/inOut/:id")
 		else{
 			console.log(err);
 		}
-  });
+  });*/
 })
 .delete(function(req,res,next){
-  SumRest_Stock(req, function(block){
+  Devolucion_Stock(req, function(block){
     console.log(block);
     if(block){
       console.log("hola");
       req.flash("error","no se puede hacer la devolucion");
-      res.redirect("/app/inOut?tipo="+req.body.tipo);
+      res.redirect("/app/inOut?tipo="+req.body.tipo+"&bodega="+req.body.bodega);
     }
     else{
       InOut.findOneAndRemove({ _id:req.params.id},function(err){
@@ -98,7 +92,7 @@ router.get("/inOut",function(req,res,next){
     console.log(inOut);
     if(err){ res.redirect("/app"); return; }
 
-		res.render("app/"+req.query.bodega+"/"+req.query.tipo+"/index.ejs", { messages: req.flash("error"), inOut:inOut });
+		res.render("app/inventario"+req.query.bodega+"/"+req.query.tipo+"/index.ejs", { messages: req.flash("error"), inOut:inOut });
   });
 });
 
@@ -159,21 +153,20 @@ router.post("/InOutAux",function(req,res,next){
 });
 module.exports = router;
 
-function SumStock_Aux(){
-
-}
-//=============================METODOS====================================================
-// Metodo  para sumar(entradas) y restar(salidas) del stock  de una materia prima
-function SumRest_Stock(req,callback){
+function Edit_Stock(req){
   Inventario.findById(req.body.inv,function(err,inventario){
     if(err){ res.redirect("/"); return; }
+
+  });
+  Inventario.findById(req.body.inv,function(err,inventario){
+    if(err){ res.redirect("/"); return; }
+    //dado el caso que se quiera devolver y no se pueda
     if((req.body.cantidad * req.body.presentacion) > inventario.stock && req.body.dev == "devolucion"){
-      console.log("epa");
       return callback(true);
     }
+      //dado el caso que se quiera hacer una entrada y no haya nada en el stock
     if((req.body.cantidad * req.body.presentacion) > inventario.stock && req.body.tipo == "salida"){
       return callback(true);
-      //res.redirect("/app/inOut?tipo=salida");
     }
     else{
       if(req.body.tipo == "entrada"){
@@ -183,7 +176,7 @@ function SumRest_Stock(req,callback){
         }
         else{
           inventario.valorUni = (inventario.presentacion*req.body.valorUni)/req.body.presentacion;
-          inventario.valorG = req.body.valorUni/req.body.presentacion;
+          inventario.valorG = Number((req.body.valorUni/req.body.presentacion).toFixed(2));
           inventario.stock = inventario.stock + (req.body.cantidad * req.body.presentacion);
         }
 
@@ -205,6 +198,100 @@ function SumRest_Stock(req,callback){
       });
     }
   });
+}
+//=============================METODOS====================================================
+// Metodo  para hacer devoluciones(entradas y salidas) del stock  de una materia prima
+function Devolucion_Stock(req,callback){
+  Inventario.findById(req.body.inv,function(err,inventario){
+    if(err){ res.redirect("/"); return; }
+    if(req.body.tipo == "entrada"){
+      if(inventario.stock >= (req.body.cantidad * req.body.presentacion) && req.body.dev == "devolucion"){
+        inventario.stock = inventario.stock - (req.body.cantidad * req.body.presentacion);
+      }
+    }else{
+      console.log(req.body.cantidad * req.body.presentacion);
+      if((req.body.cantidad * req.body.presentacion) > inventario.stock && req.body.dev == "devolucion"){
+        console.log("hola");
+        inventario.stock = inventario.stock + (req.body.cantidad * req.body.presentacion);
+      }
+    }
+    inventario.cantidadTotal = inventario.stock/inventario.presentacion;
+    console.log(inventario.cantidadTotal);
+    inventario.save(function(err){
+        if(!err){
+          return callback(false);
+        }
+        else{
+          console.log(err);
+        }
+    });
+  });
+
+  /*  if((req.body.cantidad * req.body.presentacion) > inventario.stock && req.body.dev == "devolucion"){
+      return callback(true);
+    }
+    if((req.body.cantidad * req.body.presentacion) > inventario.stock && req.body.tipo == "salida"){
+      return callback(true);
+    }
+    else{
+      if(req.body.tipo == "entrada"){
+        //pasa por aca si se va a editar la entrada
+        if(req.body.dev == "devolucion"){
+          inventario.stock = inventario.stock - (req.body.cantidad * req.body.presentacion);
+        }
+        else{
+          inventario.valorUni = (inventario.presentacion*req.body.valorUni)/req.body.presentacion;
+          inventario.valorG = Number((req.body.valorUni/req.body.presentacion).toFixed(2));
+          inventario.stock = inventario.stock + (req.body.cantidad * req.body.presentacion);
+        }
+
+      }
+      else{
+        inventario.stock = inventario.stock - (req.body.cantidad * req.body.presentacion);
+      }
+
+      inventario.cantidadTotal = inventario.stock/inventario.presentacion;
+
+      inventario.save(function(err){
+        if(!err){
+          return callback(false);
+        }
+        else{
+          console.log(err);
+          //res.redirect("/app/entrada/"+req.params.id);
+        }
+      });
+    }
+  });*/
+};
+
+function SumRest_Stock(req,callback){
+  Inventario.findById(req.body.inv,function(err,inventario){
+    if(err){ res.redirect("/"); return; }
+    //si se quiere hacer una salida pero lo que se quiere sacar es mayor a lo que hay
+    if((req.body.cantidad * req.body.presentacion) > inventario.stock && req.body.tipo == "salida"){
+      return callback(true);
+    }
+    if(req.body.tipo == "entrada"){
+      inventario.valorUni = (inventario.presentacion*req.body.valorUni)/req.body.presentacion;
+      inventario.valorG = Number((req.body.valorUni/req.body.presentacion).toFixed(2));
+      inventario.stock = inventario.stock + (req.body.cantidad * req.body.presentacion);
+    }else{
+
+      inventario.stock = inventario.stock - (req.body.cantidad * req.body.presentacion);
+    }
+
+    inventario.cantidadTotal = inventario.stock/inventario.presentacion;
+
+    inventario.save(function(err){
+      if(!err){
+        return callback(false);
+      }
+      else{
+        console.log(err);
+      }
+    });
+  });
 };
 
 // Metodo  para guardar registros de entradas y salidas
@@ -212,7 +299,7 @@ function Regis_InOut(req, res){
   var now = Date.now();
   var date = dateFormat(now, "d/m/yyyy");
   var hora = dateFormat(now, "d/m/yyyy, h:MM:ss TT");
-
+  var valorG = req.body.valorUni/req.body.presentacion;
   var data = {
     fecha: date,
     hora: hora,
@@ -220,7 +307,7 @@ function Regis_InOut(req, res){
     cantidad: req.body.cantidad,
     presentacion: req.body.presentacion,
     valorUni: req.body.valorUni,
-    valorG: req.body.valorUni/req.body.presentacion,
+    valorG:  Number(valorG.toFixed(2)),
     numFact: req.body.numFact,
     tipo: req.body.tipo,
     estado: req.body.tipo == "entrada" ? "permitido" : "pendiente",

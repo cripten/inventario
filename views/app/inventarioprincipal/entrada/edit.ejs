@@ -1,4 +1,4 @@
-<% include ../../partials/layout.ejs %>
+<% include ../../../partials/layout.ejs %>
 <div class="row">
   <div class="col-sm-6 col-sm-offset-3 mx-auto">
 
@@ -14,11 +14,13 @@
       	<!-- Edit FORM -->
     <form action="/app/inOut/<%= inOut._id %>?_method=PUT" method="post" enctype="multipart/form-data">
       <div class="form-group">
-        <label>Producto</label>
-        <select name="inv">
-          <% inventarios.forEach(function(inventario){ %>
-            <option value="<%= inventario._id %>" class="form-control"><%= inventario.mp %>
-          <% }); %>
+        <label>Numero de factura</label>
+        <input type="number" class="form-control" name="numFact" value="<%= inOut.numFact %>">
+      </div>
+      <div class="form-group">
+        <label>Producto:</label>
+        <select name="inv" readonly="readonly">
+          <option value="<%= inOut.inv._id %>" class="form-control"><%= inOut.inv.mp %>
         </select>
       </div>
       <div class="form-group">
@@ -35,11 +37,7 @@
       </div>
       <div class="form-group">
         <label>Valor Unitario</label>
-        <input type="number" class="form-control" name="valorUni" value="<%= inOut.presentacion %>">
-      </div>
-      <div class="form-group">
-        <label>Numero de factura</label>
-        <input type="number" class="form-control" name="numFact" value="<%= inOut.numFact %>">
+        <input type="number" class="form-control" name="valorUni" value="<%= inOut.valorUni %>">
       </div>
       <input type="hidden" name="tipo" value="entrada">
       <input type="hidden" name="resetIn" value="si">

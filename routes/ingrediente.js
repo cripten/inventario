@@ -129,7 +129,7 @@ router.post("/ingrediente",function(req,res,next){
     console.log(cantidadTotalProm);
   }
   Producto.findById(req.body.prod,function(err,producto){
-    producto.total = cantidadTotalProm;
+    producto.total = Math.round(cantidadTotalProm);
     producto.totalG = cantidadTotalG
     producto.save(function(err,result){
       if(!err){
