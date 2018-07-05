@@ -38,28 +38,33 @@ router.route("/inOut/:id")
 .get(function(req,res,next){
 })
 .put(validaciones,function(req,res,next){
-  Edit_Stock(req,res,next);
-  /*var now = Date.now();
-  var date = dateFormat(now, "d/m/yyyy");
-  var hora = dateFormat(now, "d/m/yyyy, h:MM:ss TT");*/
+  Edit_Stock(req,res,function(block){
+    if(block){
 
-  //res.locals.inOut.fecha = date;
-  //res.locals.inOut.hora = hora;
-  /*res.locals.inOut.numFact = req.body.numFact;
-  res.locals.inOut.marca = req.body.nombre;
-  res.locals.inOut.cantidad = req.body.cantidad;
-  res.locals.inOut.precio = req.body.precio;
-  res.locals.inOut.valorUni = req.body.valorUni;
-  res.locals.inOut.valorG = req.body.valorUni/req.body.presentacion;
-  //res.locals.inOut.inv = req.body.inv;
-  res.locals.inOut.save(function(err){
-    if(!err){
-			res.redirect("/app/inventario");
-		}
-		else{
-			console.log(err);
-		}
-  });*/
+    }else{
+      /*var now = Date.now();
+      var date = dateFormat(now, "d/m/yyyy");
+      var hora = dateFormat(now, "d/m/yyyy, h:MM:ss TT");*/
+
+      //res.locals.inOut.fecha = date;
+      //res.locals.inOut.hora = hora;
+      /*res.locals.inOut.numFact = req.body.numFact;
+      res.locals.inOut.marca = req.body.nombre;
+      res.locals.inOut.cantidad = req.body.cantidad;
+      res.locals.inOut.precio = req.body.precio;
+      res.locals.inOut.valorUni = req.body.valorUni;
+      res.locals.inOut.valorG = req.body.valorUni/req.body.presentacion;
+      //res.locals.inOut.inv = req.body.inv;
+      res.locals.inOut.save(function(err){
+        if(!err){
+    			res.redirect("/app/inventario");
+    		}
+    		else{
+    			console.log(err);
+    		}
+      });*/
+    }
+  });
 })
 .delete(function(req,res,next){
   Devolucion_Stock(req, function(block){
@@ -121,7 +126,7 @@ router.post("/InOutAux",function(req,res,next){
         inventario.stock = inventario.stock + (parseInt(inOut.cantidad) * parseInt(inOut.presentacion));
         inventario.cantidadTotal = inventario.stock/inOut.inv.presentacion;
         inventario.save(function(err){
-          res.redirect("/app/inOut?tipo=salida&bodega=inventarioauxiliar");
+          res.redirect("/app/inOut?tipo=salida&bodega=auxiliar");
         });
       });
     });
@@ -153,49 +158,27 @@ router.post("/InOutAux",function(req,res,next){
 });
 module.exports = router;
 
-function Edit_Stock(req){
+function Edit_Stock(req,res,callback){
   Inventario.findById(req.body.inv,function(err,inventario){
     if(err){ res.redirect("/"); return; }
-
-  });
-  Inventario.findById(req.body.inv,function(err,inventario){
-    if(err){ res.redirect("/"); return; }
-    //dado el caso que se quiera devolver y no se pueda
-    if((req.body.cantidad * req.body.presentacion) > inventario.stock && req.body.dev == "devolucion"){
-      return callback(true);
+    console.log(inventario);
+    if(req.body.tipo == "entrada"){
+      inventario.stock = (inventario.stock - (res.locals.inOut.cantidad * res.locals.inOut.presentacion)) + (req.body.cantidad * req.body.presentacion);
+    }else{
+      inventario.stock = (inventario.stock + (res.locals.inOut.cantidad * res.locals.inOut.presentacion)) - (req.body.cantidad * req.body.presentacion);
     }
-      //dado el caso que se quiera hacer una entrada y no haya nada en el stock
-    if((req.body.cantidad * req.body.presentacion) > inventario.stock && req.body.tipo == "salida"){
-      return callback(true);
+    if(inventario.stock < 0){
+      callback(true);
     }
     else{
-      if(req.body.tipo == "entrada"){
-        //pasa por aca si se va a editar la entrada
-        if(req.body.dev == "devolucion"){
-          inventario.stock = inventario.stock - (req.body.cantidad * req.body.presentacion);
-        }
-        else{
-          inventario.valorUni = (inventario.presentacion*req.body.valorUni)/req.body.presentacion;
-          inventario.valorG = Number((req.body.valorUni/req.body.presentacion).toFixed(2));
-          inventario.stock = inventario.stock + (req.body.cantidad * req.body.presentacion);
-        }
-
-      }
-      else{
-        inventario.stock = inventario.stock - (req.body.cantidad * req.body.presentacion);
-      }
-
-      inventario.cantidadTotal = inventario.stock/inventario.presentacion;
-
-      inventario.save(function(err){
-        if(!err){
-          return callback(false);
-        }
-        else{
-          console.log(err);
-          //res.redirect("/app/entrada/"+req.params.id);
-        }
-      });
+      /*inventario.save(function(err){
+          if(!err){
+            return callback(false);
+          }
+          else{
+            console.log(err);
+          }
+      });*/
     }
   });
 }
@@ -210,7 +193,7 @@ function Devolucion_Stock(req,callback){
       }
     }else{
       console.log(req.body.cantidad * req.body.presentacion);
-      if((req.body.cantidad * req.body.presentacion) > inventario.stock && req.body.dev == "devolucion"){
+      if(req.body.dev == "devolucion"){
         console.log("hola");
         inventario.stock = inventario.stock + (req.body.cantidad * req.body.presentacion);
       }
@@ -226,43 +209,6 @@ function Devolucion_Stock(req,callback){
         }
     });
   });
-
-  /*  if((req.body.cantidad * req.body.presentacion) > inventario.stock && req.body.dev == "devolucion"){
-      return callback(true);
-    }
-    if((req.body.cantidad * req.body.presentacion) > inventario.stock && req.body.tipo == "salida"){
-      return callback(true);
-    }
-    else{
-      if(req.body.tipo == "entrada"){
-        //pasa por aca si se va a editar la entrada
-        if(req.body.dev == "devolucion"){
-          inventario.stock = inventario.stock - (req.body.cantidad * req.body.presentacion);
-        }
-        else{
-          inventario.valorUni = (inventario.presentacion*req.body.valorUni)/req.body.presentacion;
-          inventario.valorG = Number((req.body.valorUni/req.body.presentacion).toFixed(2));
-          inventario.stock = inventario.stock + (req.body.cantidad * req.body.presentacion);
-        }
-
-      }
-      else{
-        inventario.stock = inventario.stock - (req.body.cantidad * req.body.presentacion);
-      }
-
-      inventario.cantidadTotal = inventario.stock/inventario.presentacion;
-
-      inventario.save(function(err){
-        if(!err){
-          return callback(false);
-        }
-        else{
-          console.log(err);
-          //res.redirect("/app/entrada/"+req.params.id);
-        }
-      });
-    }
-  });*/
 };
 
 function SumRest_Stock(req,callback){

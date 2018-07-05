@@ -12,7 +12,7 @@ const inventarios = [
 	valorUni : 0,
 	valorG : 0,
 	stock : 0,
-	bodega : "principal"
+	bodega : "auxiliar"
 },
 {
 	mp : "AGUA",
@@ -21,7 +21,7 @@ const inventarios = [
 	valorUni : 0,
 	valorG : 0,
 	stock : 0,
-	bodega : "principal"
+	bodega : "auxiliar"
 },
 {
   mp : "AJONJOLI",
@@ -30,7 +30,7 @@ const inventarios = [
   valorUni : 0,
   valorG : 0,
   stock : 0,
-  bodega : "principal"
+  bodega : "auxiliar"
 },
 {
   mp : "ALMIDON DE YUCA",
@@ -39,7 +39,7 @@ const inventarios = [
   valorUni : 0,
   valorG : 0,
   stock : 0,
-  bodega : "principal"
+  bodega : "auxiliar"
 },
 {
   mp : "AREQUIPE ARTESANAL",
@@ -48,7 +48,7 @@ const inventarios = [
   valorUni : 0,
   valorG : 0,
   stock : 0,
-  bodega : "principal"
+  bodega : "auxiliar"
 },
 {
   mp : "AREQUIPE INDUSTRIAL",
@@ -57,7 +57,7 @@ const inventarios = [
   valorUni : 0,
   valorG : 0,
   stock : 0,
-  bodega : "principal"
+  bodega : "auxiliar"
 },
 {
   mp : "AZUCAR BLANCO",
@@ -66,7 +66,7 @@ const inventarios = [
   valorUni : 0,
   valorG : 0,
   stock : 0,
-  bodega : "principal"
+  bodega : "auxiliar"
 },
 {
   mp : "CAJAS",
@@ -75,7 +75,7 @@ const inventarios = [
   valorUni : 0,
   valorG : 0,
   stock : 0,
-  bodega : "principal"
+  bodega : "auxiliar"
 },
 {
   mp : "CAPACILLO #2",
@@ -84,7 +84,7 @@ const inventarios = [
   valorUni : 0,
   valorG : 0,
   stock : 0,
-  bodega : "principal"
+  bodega : "auxiliar"
 },
 {
   mp : "CAPACILLO #3",
@@ -93,7 +93,7 @@ const inventarios = [
   valorUni : 0,
   valorG : 0,
   stock : 0,
-  bodega : "principal"
+  bodega : "auxiliar"
 },
 {
   mp : "CAPACILLO #4",
@@ -102,7 +102,7 @@ const inventarios = [
   valorUni : 0,
   valorG : 0,
   stock : 0,
-  bodega : "principal"
+  bodega : "auxiliar"
 },
 {
   mp : "CAPACILLO #5",
@@ -111,7 +111,7 @@ const inventarios = [
   valorUni : 0,
   valorG : 0,
   stock : 0,
-  bodega : "principal"
+  bodega : "auxiliar"
 },
 {
   mp : "CAPACILLO #6",
@@ -120,7 +120,7 @@ const inventarios = [
   valorUni : 0,
   valorG : 0,
   stock : 0,
-  bodega : "principal"
+  bodega : "auxiliar"
 },
 {
   mp : "CHIPS DE CHOCOLATE",
@@ -129,7 +129,7 @@ const inventarios = [
   valorUni : 0,
   valorG : 0,
   stock : 0,
-  bodega : "principal"
+  bodega : "auxiliar"
 },
 {
   mp : "CINTA TRANSPARENTE 100 MTS",
@@ -138,7 +138,7 @@ const inventarios = [
   valorUni : 0,
   valorG : 0,
   stock : 0,
-  bodega : "principal"
+  bodega : "auxiliar"
 },
 {
   mp : "CINTA TRANSPARENTE 200 MTS",
@@ -147,7 +147,7 @@ const inventarios = [
   valorUni : 0,
   valorG : 0,
   stock : 0,
-  bodega : "principal"
+  bodega : "auxiliar"
 },
 {
   mp : "COCO DESHIDRATADO",
@@ -156,7 +156,7 @@ const inventarios = [
   valorUni : 0,
   valorG : 0,
   stock : 0,
-  bodega : "principal"
+  bodega : "auxiliar"
 },
 {
   mp : "COLMAIZ",
@@ -165,7 +165,7 @@ const inventarios = [
   valorUni : 0,
   valorG : 0,
   stock : 0,
-  bodega : "principal"
+  bodega : "auxiliar"
 },
 {
   mp : "COLOR AMARILLO",
@@ -174,7 +174,7 @@ const inventarios = [
   valorUni : 0,
   valorG : 0,
   stock : 0,
-  bodega : "principal"
+  bodega : "auxiliar"
 },
 {
   mp : "DIVISIONES GRANDES",
@@ -183,7 +183,7 @@ const inventarios = [
   valorUni : 0,
   valorG : 0,
   stock : 0,
-  bodega : "principal"
+  bodega : "auxiliar"
 },
 {
   mp : "DIVISIONES LARGAS",
@@ -192,7 +192,7 @@ const inventarios = [
   valorUni : 0,
   valorG : 0,
   stock : 0,
-  bodega : "principal"
+  bodega : "auxiliar"
 },
 {
   mp : "DIVISIONES PEQUEÑAS",
@@ -201,7 +201,7 @@ const inventarios = [
   valorUni : 0,
   valorG : 0,
   stock : 0,
-  bodega : "principal"
+  bodega : "auxiliar"
 },
 {
   mp : "ESENCIA DE BANANO",
@@ -210,7 +210,7 @@ const inventarios = [
   valorUni : 0,
   valorG : 0,
   stock : 0,
-  bodega : "principal"
+  bodega : "auxiliar"
 },
 {
   mp : "ESENCIA DE CHOCOLATE",
@@ -219,7 +219,7 @@ const inventarios = [
   valorUni : 0,
   valorG : 0,
   stock : 0,
-  bodega : "principal"
+  bodega : "auxiliar"
 },
 {
   mp : "ESENCIA DE COCO",
@@ -228,7 +228,7 @@ const inventarios = [
   valorUni : 0,
   valorG : 0,
   stock : 0,
-  bodega : "principal"
+  bodega : "auxiliar"
 },
 {
   mp : "ESENCIA DE AREQUIPE",
@@ -237,7 +237,7 @@ const inventarios = [
   valorUni : 0,
   valorG : 0,
   stock : 0,
-  bodega : "principal"
+  bodega : "auxiliar"
 },
 {
   mp : "ESENCIA DE FRESA",
@@ -246,7 +246,7 @@ const inventarios = [
   valorUni : 0,
   valorG : 0,
   stock : 0,
-  bodega : "principal"
+  bodega : "auxiliar"
 },
 {
   mp : "ESENCIA DE LIMON",
@@ -255,7 +255,7 @@ const inventarios = [
   valorUni : 0,
   valorG : 0,
   stock : 0,
-  bodega : "principal"
+  bodega : "auxiliar"
 },
 {
   mp : "ESENCIA DE NARANJA",
@@ -264,7 +264,7 @@ const inventarios = [
   valorUni : 0,
   valorG : 0,
   stock : 0,
-  bodega : "principal"
+  bodega : "auxiliar"
 },
 {
   mp : "ESENCIA DE QUESO",
@@ -273,7 +273,7 @@ const inventarios = [
   valorUni : 0,
   valorG : 0,
   stock : 0,
-  bodega : "principal"
+  bodega : "auxiliar"
 },
 {
   mp : "ESENCIA DE VAINILLA",
@@ -282,7 +282,7 @@ const inventarios = [
   valorUni : 0,
   valorG : 0,
   stock : 0,
-  bodega : "principal"
+  bodega : "auxiliar"
 },
 {
   mp : "FECULA DE MAIZ",
@@ -291,7 +291,7 @@ const inventarios = [
   valorUni : 0,
   valorG : 0,
   stock : 0,
-  bodega : "principal"
+  bodega : "auxiliar"
 },
 {
   mp : "GLASSE DE FRESA",
@@ -300,7 +300,7 @@ const inventarios = [
   valorUni : 0,
   valorG : 0,
   stock : 0,
-  bodega : "principal"
+  bodega : "auxiliar"
 },
 {
   mp : "GLASSE DE KIWI",
@@ -309,7 +309,7 @@ const inventarios = [
   valorUni : 0,
   valorG : 0,
   stock : 0,
-  bodega : "principal"
+  bodega : "auxiliar"
 },
 {
   mp : "GRAGEAS",
@@ -318,7 +318,7 @@ const inventarios = [
   valorUni : 0,
   valorG : 0,
   stock : 0,
-  bodega : "principal"
+  bodega : "auxiliar"
 },
 {
   mp : "GUAYABA INDUSTRIAL",
@@ -327,7 +327,7 @@ const inventarios = [
   valorUni : 0,
   valorG : 0,
   stock : 0,
-  bodega : "principal"
+  bodega : "auxiliar"
 },
 {
   mp : "GUAYABA ARTESANAL",
@@ -336,7 +336,7 @@ const inventarios = [
   valorUni : 0,
   valorG : 0,
   stock : 0,
-  bodega : "principal"
+  bodega : "auxiliar"
 },
 {
   mp : "HARINA DE TRIGO ARTESANAL",
@@ -345,7 +345,7 @@ const inventarios = [
   valorUni : 0,
   valorG : 0,
   stock : 0,
-  bodega : "principal"
+  bodega : "auxiliar"
 },
 {
   mp : "HARINA DE TRIGO PARA PAN",
@@ -354,7 +354,7 @@ const inventarios = [
   valorUni : 0,
   valorG : 0,
   stock : 0,
-  bodega : "principal"
+  bodega : "auxiliar"
 },
 {
   mp : "HARINA DE TRIGO PARA GALLETA/PONQUE",
@@ -363,7 +363,7 @@ const inventarios = [
   valorUni : 0,
   valorG : 0,
   stock : 0,
-  bodega : "principal"
+  bodega : "auxiliar"
 },
 {
   mp : "HUEVOS",
@@ -372,7 +372,7 @@ const inventarios = [
   valorUni : 0,
   valorG : 0,
   stock : 0,
-  bodega : "principal"
+  bodega : "auxiliar"
 },
 {
   mp : "LAMINA TRANSPARENTE 22 CM",
@@ -381,7 +381,7 @@ const inventarios = [
   valorUni : 0,
   valorG : 0,
   stock : 0,
-  bodega : "principal"
+  bodega : "auxiliar"
 },
 {
   mp : "LAMINA TRANSPARENTE 26 CM",
@@ -390,7 +390,7 @@ const inventarios = [
   valorUni : 0,
   valorG : 0,
   stock : 0,
-  bodega : "principal"
+  bodega : "auxiliar"
 },
 {
   mp : "LAMINA TRANSPARENTE 28 CM",
@@ -399,7 +399,7 @@ const inventarios = [
   valorUni : 0,
   valorG : 0,
   stock : 0,
-  bodega : "principal"
+  bodega : "auxiliar"
 },
 {
   mp : "LAMINA TRANSPARENTE 30 CM",
@@ -408,7 +408,7 @@ const inventarios = [
   valorUni : 0,
   valorG : 0,
   stock : 0,
-  bodega : "principal"
+  bodega : "auxiliar"
 },
 {
   mp : "LAMINA TRANSPARENTE 32 CM",
@@ -417,7 +417,7 @@ const inventarios = [
   valorUni : 0,
   valorG : 0,
   stock : 0,
-  bodega : "principal"
+  bodega : "auxiliar"
 },
 {
   mp : "LAMINA TRANSPARENTE 34 CM",
@@ -426,7 +426,7 @@ const inventarios = [
   valorUni : 0,
   valorG : 0,
   stock : 0,
-  bodega : "principal"
+  bodega : "auxiliar"
 },
 {
   mp : "LECHE EN POLVO",
@@ -435,7 +435,7 @@ const inventarios = [
   valorUni : 0,
   valorG : 0,
   stock : 0,
-  bodega : "principal"
+  bodega : "auxiliar"
 },
 {
   mp : "LEVADURA",
@@ -444,7 +444,7 @@ const inventarios = [
   valorUni : 0,
   valorG : 0,
   stock : 0,
-  bodega : "principal"
+  bodega : "auxiliar"
 },
 {
   mp : "MARGARINA INDUSTRIAL",
@@ -453,7 +453,7 @@ const inventarios = [
   valorUni : 0,
   valorG : 0,
   stock : 0,
-  bodega : "principal"
+  bodega : "auxiliar"
 },
 {
   mp : "MARGARINA INDUSTRIAL EXCELENCIA",
@@ -462,7 +462,7 @@ const inventarios = [
   valorUni : 0,
   valorG : 0,
   stock : 0,
-  bodega : "principal"
+  bodega : "auxiliar"
 },
 {
   mp : "MARGARINA ARTESANAL",
@@ -471,7 +471,7 @@ const inventarios = [
   valorUni : 0,
   valorG : 0,
   stock : 0,
-  bodega : "principal"
+  bodega : "auxiliar"
 },
 {
   mp : "MARGARINA HOJALDRE",
@@ -480,7 +480,7 @@ const inventarios = [
   valorUni : 0,
   valorG : 0,
   stock : 0,
-  bodega : "principal"
+  bodega : "auxiliar"
 },
 {
   mp : "MARGARINA HOJALDRE VITINA",
@@ -489,7 +489,7 @@ const inventarios = [
   valorUni : 0,
   valorG : 0,
   stock : 0,
-  bodega : "principal"
+  bodega : "auxiliar"
 },
 {
   mp : "MEJORADOR",
@@ -498,7 +498,7 @@ const inventarios = [
   valorUni : 0,
   valorG : 0,
   stock : 0,
-  bodega : "principal"
+  bodega : "auxiliar"
 },
 {
   mp : "POLVO PARA HORNEAR",
@@ -507,7 +507,7 @@ const inventarios = [
   valorUni : 0,
   valorG : 0,
   stock : 0,
-  bodega : "principal"
+  bodega : "auxiliar"
 },
 {
   mp : "PROPINATO DE CALCIO",
@@ -516,7 +516,7 @@ const inventarios = [
   valorUni : 0,
   valorG : 0,
   stock : 0,
-  bodega : "principal"
+  bodega : "auxiliar"
 },
 {
   mp : "PROTEINA AISLADA DE SOYA",
@@ -525,7 +525,7 @@ const inventarios = [
   valorUni : 0,
   valorG : 0,
   stock : 0,
-  bodega : "principal"
+  bodega : "auxiliar"
 },
 {
   mp : "SAL",
@@ -534,7 +534,7 @@ const inventarios = [
   valorUni : 0,
   valorG : 0,
   stock : 0,
-  bodega : "principal"
+  bodega : "auxiliar"
 },
 {
   mp : "SALVADO DE TRIGO",
@@ -543,7 +543,7 @@ const inventarios = [
   valorUni : 0,
   valorG : 0,
   stock : 0,
-  bodega : "principal"
+  bodega : "auxiliar"
 },
 {
   mp : "STICKER GRANDE 62 X 30",
@@ -552,7 +552,7 @@ const inventarios = [
   valorUni : 0,
   valorG : 0,
   stock : 0,
-  bodega : "principal"
+  bodega : "auxiliar"
 },
 {
   mp : "STICKER PEQUEÑO 29 X 30",
@@ -561,7 +561,7 @@ const inventarios = [
   valorUni : 0,
   valorG : 0,
   stock : 0,
-  bodega : "principal"
+  bodega : "auxiliar"
 },
 {
   mp : "TINTURA DE CARAMELO",
@@ -570,7 +570,7 @@ const inventarios = [
   valorUni : 0,
   valorG : 0,
   stock : 0,
-  bodega : "principal"
+  bodega : "auxiliar"
 },
 {
   mp : "FIBRA DE POLLO",
@@ -579,7 +579,7 @@ const inventarios = [
   valorUni : 0,
   valorG : 0,
   stock : 0,
-  bodega : "principal"
+  bodega : "auxiliar"
 },
 {
   mp : "VIDEO JET 55 MM X 600 MTS",
@@ -588,7 +588,7 @@ const inventarios = [
   valorUni : 0,
   valorG : 0,
   stock : 0,
-  bodega : "principal"
+  bodega : "auxiliar"
 },
 {
   mp : "VIDEO JET 55 MM X 1200 MTS",
@@ -597,7 +597,7 @@ const inventarios = [
   valorUni : 0,
   valorG : 0,
   stock : 0,
-  bodega : "principal"
+  bodega : "auxiliar"
 },
 {
   mp : "VIDEO JET 55 MM X 700 MTS",
@@ -606,7 +606,7 @@ const inventarios = [
   valorUni : 0,
   valorG : 0,
   stock : 0,
-  bodega : "principal"
+  bodega : "auxiliar"
 },
 {
   mp : "VIDEO JET 33 MM",
@@ -615,7 +615,7 @@ const inventarios = [
   valorUni : 0,
   valorG : 0,
   stock : 0,
-  bodega : "principal"
+  bodega : "auxiliar"
 },
 {
   mp : "VINAGRE",
@@ -624,7 +624,7 @@ const inventarios = [
   valorUni : 0,
   valorG : 0,
   stock : 0,
-  bodega : "principal"
+  bodega : "auxiliar"
 }
 ];
 //recorre el arreglo producto por producto
