@@ -25,6 +25,7 @@ var inOutRoute = require("./routes/inOut");
 var produccionRoute = require("./routes/produccion");
 var productoRoute = require("./routes/producto");
 var ingredienteRoute = require("./routes/ingrediente");
+var productoTerRoute = require("./routes/productoTer");
 
 
 var configDB = require('./config/database.js');
@@ -63,6 +64,8 @@ app.use("/app", inOutRoute);
 app.use("/app", produccionRoute);
 app.use("/app", productoRoute);
 app.use("/app", ingredienteRoute);
+app.use("/app", productoTerRoute);
+
 
 
 // launch ======================================================================

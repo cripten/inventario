@@ -51,9 +51,11 @@
                 <td><%= salida.presentacion %></td>
                 <td>
                   <!--Edit button-->
-                  <!--<form action="/app/salida/<%= salida._id %>/edit" method="GET" class="link">
+                  <form action="/app/inout/<%= salida._id %>/edit" method="GET" class="link">
+                    <input type="hidden" class="form-control" name="bodega" value="inventarioprincipal">
+                    <input type="hidden" class="form-control" name="tipo" value="salida">
                     <button type="submit" class="btn btn-warning btn-sm right-space"><i class="fas fa-pencil-alt"></i></button>
-                  </form>-->
+                  </form>
                   <!--delete button-->
                   <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#myModal<%= salida._id %>"><i class="far fa-trash-alt"></i></button>
 

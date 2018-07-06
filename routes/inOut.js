@@ -40,7 +40,8 @@ router.route("/inOut/:id")
 .put(validaciones,function(req,res,next){
   Edit_Stock(req,res,function(block){
     if(block){
-
+      req.flash("error","La salida no se puede realizar por falta de materia prima");
+      res.redirect("/app/inOut?tipo="+req.body.tipo+"&bodega="+req.body.bodega);
     }else{
       /*var now = Date.now();
       var date = dateFormat(now, "d/m/yyyy");
@@ -48,21 +49,21 @@ router.route("/inOut/:id")
 
       //res.locals.inOut.fecha = date;
       //res.locals.inOut.hora = hora;
-      /*res.locals.inOut.numFact = req.body.numFact;
-      res.locals.inOut.marca = req.body.nombre;
+      res.locals.inOut.numFact = req.body.numFact;
+      res.locals.inOut.marca = req.body.marca;
       res.locals.inOut.cantidad = req.body.cantidad;
-      res.locals.inOut.precio = req.body.precio;
+      res.locals.inOut.presentacion = req.body.presentacion;
       res.locals.inOut.valorUni = req.body.valorUni;
       res.locals.inOut.valorG = req.body.valorUni/req.body.presentacion;
       //res.locals.inOut.inv = req.body.inv;
       res.locals.inOut.save(function(err){
         if(!err){
-    			res.redirect("/app/inventario");
+    			res.redirect("/app/inventario?bodega=principal");
     		}
     		else{
     			console.log(err);
     		}
-      });*/
+      });
     }
   });
 })
@@ -163,22 +164,27 @@ function Edit_Stock(req,res,callback){
     if(err){ res.redirect("/"); return; }
     console.log(inventario);
     if(req.body.tipo == "entrada"){
+      inventario.valorUni = (inventario.presentacion*req.body.valorUni)/req.body.presentacion;
+      inventario.valorG = Number((req.body.valorUni/req.body.presentacion).toFixed(2));
       inventario.stock = (inventario.stock - (res.locals.inOut.cantidad * res.locals.inOut.presentacion)) + (req.body.cantidad * req.body.presentacion);
+      console.log(inventario.stock);
     }else{
       inventario.stock = (inventario.stock + (res.locals.inOut.cantidad * res.locals.inOut.presentacion)) - (req.body.cantidad * req.body.presentacion);
+      console.log(inventario.stock);
     }
+    inventario.cantidadTotal = inventario.stock/inventario.presentacion;
     if(inventario.stock < 0){
-      callback(true);
+      return callback(true);
     }
     else{
-      /*inventario.save(function(err){
+      inventario.save(function(err){
           if(!err){
             return callback(false);
           }
           else{
             console.log(err);
           }
-      });*/
+      });
     }
   });
 }
