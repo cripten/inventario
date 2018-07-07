@@ -7,7 +7,7 @@ var productoTer_schema = new Schema({
   stock:{type: String, required: true},
   averiasPor:{type: Number, required: true},
   diferenciaPor:{type: Number, required: true},
-  cont:{type:Number}
+  cont:{type:Number},
 });
 
 module.exports = mongoose.model("ProductoTer",productoTer_schema);

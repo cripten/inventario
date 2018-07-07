@@ -32,9 +32,9 @@
         <% if(productos.length > 0){ %>
           <% productos.forEach(function(producto){ %>
     				<tr>
-              <td><%= producto.nombre %> </td>
-              <td><%= producto.stock %> </td>
-              <td><%= producto.averidaPor %></td>
+              <td><%= producto.nombre %></td>
+              <td><%= producto.stock %></td>
+              <td><%= producto.averiasPor %></td>
               <td><%= producto.diferenciaPor %></td>
               <td>
                 <!--historial button-->
@@ -42,8 +42,6 @@
                   <input type="hidden" name="prodid" value="<%= producto.id %>">
                   <button type="submit" class="btn btn-success btn-sm"><i class="fas fa-clipboard-list"></i></button><!--edit button-->
                 </form>
-              </td>
-              <td>
                 <!--Edit button-->
                  <form action="/app/productoTer/<%= producto._id %>/edit" method="GET" class="link">
                    <button type="submit" class="btn btn-warning btn-sm right-space"><i class="fas fa-pencil-alt"></i></button>
@@ -62,7 +60,7 @@
                         <div class="modal-body"><p class="modal-title" id="myModalLabel"> Está seguro de que quiere eliminar este producto?</h4></div>
                         <div class="modal-footer">
                           <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-                          <form action="/app/producto/<%= producto._id%>?_method=delete" class="link" method="POST">
+                          <form action="/app/productoTer/<%= producto._id%>?_method=delete" class="link" method="POST">
                             <input type="hidden" name="nombre" value="<%= producto.nombre %>">
                             <button type="submit" class="btn btn-primary"> Confirmar</button>
                           </form>
@@ -74,7 +72,7 @@
             </tr>
     			<% }); %>
         <% } else{ %>
-          <td colspan="7" class="text-center"> No hay productos para mostrar</td>
+          <td colspan="5" class="text-center"> No hay productos para mostrar</td>
         <% } %>
       </tbody>
     </table>

@@ -1,16 +1,17 @@
 var express = require("express");
 var mongoose = require("mongoose");
 var router = express.Router();
+var Produccion = require("../models/produccion");
 var ProductoTer = require("../models/productoTer");
 var flash = require("connect-flash");
-var find_inventario = require("../middlewares/find_inventario");
+var find_productoTer = require("../middlewares/find_productoTer");
 //MATERIEPRIME =========================
 // new materieprime form
 router.get("/productoTer/new",function(req,res,next){
   res.render("app/empaque/new.ejs",{ messages: req.flash("error") });
 });
 //all routes with this path use this middleware for refactor code
-router.all("/productoTer/:id*",find_inventario);
+router.all("/productoTer/:id*",find_productoTer);
 //-----------------------------------------------------
 // edit materieprime form
 router.get("/productoTer/:id/edit",function(req,res,next){
@@ -22,7 +23,7 @@ router.route("/productoTer/:id")
 
 })
 .put(validaciones,function(req,res,next){
-  res.locals.productoTer.nombre = req.body.mp;
+  res.locals.productoTer.nombre = req.body.nombre;
   res.locals.productoTer.save(function(err){
     if(!err){
 			res.redirect("/app/productoTer");
@@ -35,7 +36,7 @@ router.route("/productoTer/:id")
 })
 .delete(function(req,res,next){
   // Inventario.findOneAndRemove({ _id:req.params.id},function(err){
-  ProductoTer.remove({ mp :req.body.mp},function(err){
+  ProductoTer.remove({ nombre :req.body.nombre},function(err){
     if(!err){
 			res.redirect("/app/productoTer");
 		}
@@ -67,7 +68,7 @@ router.route("/productoTer")
   	diferenciaPor : 0,
   }
 	var productoTer = new ProductoTer(data)
-	inventario.save(function(err,result){
+	productoTer.save(function(err,result){
     if(!err){
       res.redirect("/app/productoTer");
     }
@@ -82,7 +83,7 @@ module.exports = router;
 
 function validaciones(req,res,next){
 		//aqui se valida con express-validator
-		req.checkBody('producto','Invalid materia prima').notEmpty();
+		req.checkBody('nombre','Invalid materia prima').notEmpty();
 
 		var errors = req.validationErrors(true);//almacena todos los errores
 		if(errors){

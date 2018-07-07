@@ -10,7 +10,7 @@ var elaborado_schema = new Schema({
   averiasPor:{type: Number, required: true},
   diferencia:{type: Number, required: true},
   diferenciaPor:{type: Number, required: true},
-  total:{type: String, required: true},
+  proc: {type: Schema.Types.ObjectId, ref: "Produccion"},
   prodTer: {type: Schema.Types.ObjectId, ref: "ProductoTer"},//ref al id de la collecion inventario
 });
 

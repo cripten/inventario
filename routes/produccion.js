@@ -121,8 +121,12 @@ function Regis_Out(req, res){
     cantidad: req.body.cantidad,
     peso: req.body.peso,
     pesoCrud: req.body.pesoCrud,
+    averias:0,
+    averiasPor:0,
+    diferencia:0,
+    diferenciaPor:0,
     estado: "pendiente",
-    prod: req.body.prod
+    prod: req.body.prod,
     }
   var produccion = new Produccion(data);
   produccion.save(function(err){
