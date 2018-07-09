@@ -8,6 +8,7 @@ var produccion_schema = new Schema({
   cantidad: {type: Number, required: true},
   peso: {type: Number, required: true},
   pesoCrud:{type: Number, required: true},
+  empacado:{type: Number, required: true},
   averias:{type: Number, required: true},
   averiasPor:{type: Number, required: true},
   diferencia:{type: Number, required: true},

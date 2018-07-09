@@ -1,0 +1,69 @@
+<% include ../../partials/layout.ejs %>
+<div class="container-fluid">
+  <div class="col-md-12">
+      <h1 class="text-center pacifico"> Panel de administración de Producto terminado</h1>
+      <hr class="cust-hr">
+      <ul class="nav nav-tabs nav-justified">
+        <li class="nav-item">
+          <a class="nav-link active" href="/app/productpTer">Producto terminado</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/app/elaborado/entrada">Entradas</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/app/elaborado">Elaborado</a>
+        </li>
+      </ul>
+    </div>
+    <br>
+    <br>
+    <caption>Produccion actual</caption>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Producto</th>
+          <th>Cantidad</th>
+          <th>Empacado</th>
+          <th>Averidas</th>
+          <th>Averidas %</th>
+          <th>Diferencia</th>
+          <th>Diferencia %</th>
+          <th>Estado %</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% if(producciones.length > 0){ %>
+          <% producciones.forEach(function(produccion){ %>
+    				<tr>
+              <td><%= produccion.prod.nombre %> X <%= produccion.peso %></td>
+              <td><%= produccion.cantidad %></td>
+              <td><%= produccion.empacado %></td>
+              <td><%= produccion.averias %></td>
+              <td><%= produccion.averiasPor %></td>
+              <td><%= produccion.diferencia %></td>
+              <td><%= produccion.diferenciaPor %></td>
+              <td><%= produccion.estado %></td>
+              <td>
+                <!--Allow button-->
+                <form action="/app/elaborado/allow" method="POST" class="link">
+                  <input type="hidden" name="nombre" value="<%= produccion.prod.nombre %>">
+                  <input type="hidden" name="peso" value="<%= produccion.peso %>">
+                  <input type="hidden" name="empacado" value="<%= produccion.empacado %>">
+                  <input type="hidden" name="averias" value="<%= produccion.averias %>">
+                  <input type="hidden" name="averiasPor" value="<%= produccion.averiasPor %>">
+                  <input type="hidden" name="diferencia" value="<%= produccion.diferencia %>">
+                  <input type="hidden" name="diferenciaPor" value="<%= produccion.diferenciaPor %>">
+                  <button type="submit" class="btn btn-success btn-sm  formu"><i class="fas fa-check"></i> Aprobar</button><!--edit button-->
+                </form>
+              </td>
+
+            </tr>
+    			<% }); %>
+        <% } else{ %>
+          <td colspan="5" class="text-center"> No hay entradas para mostrar</td>
+        <% } %>
+      </tbody>
+    </table>
+  </div>
+</div>
