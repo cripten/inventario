@@ -121,6 +121,7 @@ function Regis_Out(req, res){
     cantidad: req.body.cantidad,
     peso: req.body.peso,
     pesoCrud: req.body.pesoCrud,
+    empacado:0,
     averias:0,
     averiasPor:0,
     diferencia:0,

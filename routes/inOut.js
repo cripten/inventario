@@ -113,7 +113,7 @@ router.post("/inOut",validaciones,function(req,res,next){
     }
   });
 });
-
+//routa para aprobar la entradas y llenar el inventario auxiliar con la entrada
 router.post("/InOutAux",function(req,res,next){
   InOut.findOne({"_id": req.body.allow})
   .populate("inv")
@@ -125,6 +125,8 @@ router.post("/InOutAux",function(req,res,next){
 
         if(err){ res.redirect("/app"); return; }
         inventario.stock = inventario.stock + (parseInt(inOut.cantidad) * parseInt(inOut.presentacion));
+        inventario.valorUni = inOut.valorUni;
+        inventario.valorG = inOut.valorG;
         inventario.cantidadTotal = inventario.stock/inOut.inv.presentacion;
         inventario.save(function(err){
           res.redirect("/app/inOut?tipo=salida&bodega=auxiliar");
@@ -248,32 +250,66 @@ function SumRest_Stock(req,callback){
 
 // Metodo  para guardar registros de entradas y salidas
 function Regis_InOut(req, res){
-  var now = Date.now();
-  var date = dateFormat(now, "d/m/yyyy");
-  var hora = dateFormat(now, "d/m/yyyy, h:MM:ss TT");
-  var valorG = req.body.valorUni/req.body.presentacion;
-  var data = {
-    fecha: date,
-    hora: hora,
-    marca: req.body.marca,
-    cantidad: req.body.cantidad,
-    presentacion: req.body.presentacion,
-    valorUni: req.body.valorUni,
-    valorG:  Number(valorG.toFixed(2)),
-    numFact: req.body.numFact,
-    tipo: req.body.tipo,
-    estado: req.body.tipo == "entrada" ? "permitido" : "pendiente",
-    inv: req.body.inv
-    }
-  var inOut = new InOut(data);
-  inOut.save(function(err){
-    if(!err){
-      res.redirect("/app/inOut?tipo="+req.body.tipo+"&bodega="+req.body.bodega);
-    }
-    else{
-      console.log(err);
-    }
-  });
+  if(req.body.tipo == "salida"){
+      Inventario.findById(req.body.inv,function(err,inventario){
+        var valorUni = inventario.valorUni;
+        var now = Date.now();
+        var date = dateFormat(now, "d/m/yyyy");
+        var hora = dateFormat(now, "d/m/yyyy, h:MM:ss TT");
+        var valorG = valorUni/req.body.presentacion;
+        var data = {
+          fecha: date,
+          hora: hora,
+          marca: req.body.marca,
+          cantidad: req.body.cantidad,
+          presentacion: req.body.presentacion,
+          valorUni: valorUni,
+          valorG:  Number(valorG.toFixed(2)),
+          numFact: req.body.numFact,
+          tipo: req.body.tipo,
+          estado: req.body.tipo == "entrada" ? "permitido" : "pendiente",
+          inv: req.body.inv
+          }
+        var inOut = new InOut(data);
+        inOut.save(function(err){
+          if(!err){
+            res.redirect("/app/inOut?tipo="+req.body.tipo+"&bodega="+req.body.bodega);
+          }
+          else{
+            console.log(err);
+          }
+        });
+      });
+  }
+  else{
+    var now = Date.now();
+    var date = dateFormat(now, "d/m/yyyy");
+    var hora = dateFormat(now, "d/m/yyyy, h:MM:ss TT");
+    var valorG =  req.body.valorUni /req.body.presentacion;
+    var data = {
+      fecha: date,
+      hora: hora,
+      marca: req.body.marca,
+      cantidad: req.body.cantidad,
+      presentacion: req.body.presentacion,
+      valorUni: req.body.valorUni,
+      valorG:  Number(valorG.toFixed(2)),
+      numFact: req.body.numFact,
+      tipo: req.body.tipo,
+      estado: req.body.tipo == "entrada" ? "permitido" : "pendiente",
+      inv: req.body.inv
+      }
+    var inOut = new InOut(data);
+    inOut.save(function(err){
+      if(!err){
+        res.redirect("/app/inOut?tipo="+req.body.tipo+"&bodega="+req.body.bodega);
+      }
+      else{
+        console.log(err);
+      }
+    });
+  }
+
 }
 
 function validaciones(req,res,next){

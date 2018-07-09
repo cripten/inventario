@@ -32,10 +32,13 @@
         <thead>
           <tr>
             <th>#</th>
-            <th>Producto</th>
             <th>Fecha</th>
+            <th>Producto</th>
+            <th>Marca</th>
             <th>Cantidad</th>
             <th>Presentacion</th>
+            <th>Valor Unitario($)</th>
+            <th>Valor/Gramo($)</th>
             <th>estado</th>
             <th>Acciones</th>
           </tr>
@@ -46,10 +49,13 @@
                 <% if(salida.estado === "pendiente"){ %>
                   <tr>
                     <td><%= cont %> </td>
-                    <td><%= salida.inv.mp %></td>
                     <td><%= salida.hora %></td>
+                    <td><%= salida.inv.mp %></td>
+                    <td><%= salida.marca %></td>
                     <td><%= salida.cantidad %></td>
                     <td><%= salida.presentacion %></td>
+                    <td><%= salida.valorUni %></td>
+                    <td><%= salida.valorG %></td>
                     <td><%= salida.estado %></td>
                     <td>
                       <!--Allow button-->
@@ -61,11 +67,14 @@
                   </tr>
                 <% }else{ %>
                   <tr class="alert-success">
-                    <td><%= cont %> </td>
-                    <td><%= salida.inv.mp %></td>
+                    <td> <%= cont %>
                     <td><%= salida.hora %></td>
+                    <td><%= salida.inv.mp %></td>
+                    <td><%= salida.marca %></td>
                     <td><%= salida.cantidad %></td>
                     <td><%= salida.presentacion %></td>
+                    <td><%= salida.valorUni %></td>
+                    <td><%= salida.valorG %></td>
                     <td><%= salida.estado %></td>
                     <td></td>
                   </tr>

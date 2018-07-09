@@ -5,7 +5,10 @@
       <hr class="cust-hr">
       <ul class="nav nav-tabs nav-justified">
         <li class="nav-item">
-          <a class="nav-link active" href="/app/productpTer">Producto terminado</a>
+          <a class="nav-link active" href="/app/productoTer">Producto terminado</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/app/elaborado/entrada">Entradas</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="/app/elaborado">Elaborado</a>
@@ -40,11 +43,11 @@
                 <!--historial button-->
                 <form action="/app/elaborado/historial" method="GET" class="link mx-auto">
                   <input type="hidden" name="prodid" value="<%= producto.id %>">
-                  <button type="submit" class="btn btn-success btn-sm"><i class="fas fa-clipboard-list"></i></button><!--edit button-->
+                  <button type="submit" class="btn btn-success btn-sm "><i class="fas fa-clipboard-list"></i></button><!--edit button-->
                 </form>
                 <!--Edit button-->
                  <form action="/app/productoTer/<%= producto._id %>/edit" method="GET" class="link">
-                   <button type="submit" class="btn btn-warning btn-sm right-space"><i class="fas fa-pencil-alt"></i></button>
+                   <button type="submit" class="btn btn-warning btn-sm"><i class="fas fa-pencil-alt"></i></button>
                  </form>
                 <!--delete button-->
                 <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#myModal<%= producto._id %>"><i class="far fa-trash-alt"></i></button>

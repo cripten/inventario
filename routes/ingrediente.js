@@ -147,7 +147,7 @@ router.post("/ingrediente",function(req,res,next){
       if(!err){
         done++;
         if(done === invs.length){
-          res.redirect("/app/ingrediente");
+          res.redirect("/app/productoTer");
         }
       }
       else{

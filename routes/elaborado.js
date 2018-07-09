@@ -1,17 +1,21 @@
 var express = require("express");
 var router = express.Router();
+
+//Modelos
 var Inventario = require("../models/inventario");
 var InOut = require("../models/inOut");
 var Producto = require("../models/producto");
 var Ingrediente = require("../models/ingrediente");
 var Produccion = require("../models/produccion");
 var Elaborado = require("../models/elaborado");
+var ProductoTer = require("../models/productoTer");
+
 var flash = require("connect-flash");
 var find_inOut = require("../middlewares/find_inOut");
 var dateFormat = require("dateformat");
 var mongoose = require('mongoose');
-//InOut =========================
-// Nueva entrada o salida
+//ELABORADO=========================
+// Nuevo elaborado
 router.get("/elaborado/new",function(req,res,next){
   Produccion.find({})
   .sort({nombre:1})
@@ -20,20 +24,40 @@ router.get("/elaborado/new",function(req,res,next){
     res.render("app/empaque/elaborado/new.ejs",{ messages: req.flash("error"), produccion:produccion });
   });
 });
+//entradas aprobadas para el producto terminado
 router.get("/elaborado/entrada",function(req,res,next){
   Produccion.find({})
-  .sort({nombre:1})
+  .populate("prod")
+  .sort({estado:-1})
   .exec(function(err,producciones){
     if(err){ console.log(err); return; }
     res.render("app/empaque/entrada.ejs",{ messages: req.flash("error"), producciones:producciones });
   });
 });
+//ruta para aprobar entradas de produccion y llenar el inventario de producto terminado
 router.post("/elaborado/allow",function(req,res,next){
-  Produccion.find({})
+  Produccion.findById(req.body.allow)
+  .populate("prod")
   .sort({nombre:1})
-  .exec(function(err,producciones){
+  .exec(function(err,produccion){
+    produccion.estado = "aprobado";
+    productoTer = produccion.prod.nombre+" X "+produccion.peso;
+    console.log(productoTer);
+    /*produccion.save(function(err){
+      productoTer = produccion.prod.nombre+" X "+produccion.peso;
+      ProductoTer.findOne({"nombre":productoTer},function(err,producto){
+        if(err){ res.redirect("/app"); return; }
+        producto.stock = producto.stock + parseInt(produccion.empacado);
+        producto.averiasPor = produccion.averiasPor;
+        producto.diferenciaPor = produccion.diferenciaPor;
+        producto.save(function(err){
+          res.redirect("/app/productoTer");
+        });
+      });
+    });
+    produ
     if(err){ console.log(err); return; }
-    res.render("app/empaque/entrada.ejs",{ messages: req.flash("error"), producciones:producciones });
+    res.render("app/empaque/entrada.ejs",{ messages: req.flash("error"), producciones:producciones });*/
   });
 });
 

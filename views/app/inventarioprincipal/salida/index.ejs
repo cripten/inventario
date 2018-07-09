@@ -33,10 +33,13 @@
         <thead>
           <tr>
             <th>#</th>
-            <th>Producto</th>
             <th>Fecha</th>
+            <th>Producto</th>
+            <th>Marca</th>
             <th>Cantidad</th>
             <th>Presentacion</th>
+            <th>Valor Unitario($)</th>
+            <th>Valor/Gramo($)</th>
             <th>Acciones</th>
           </tr>
         </thead>
@@ -45,10 +48,13 @@
             <% inOut.forEach(function(salida){ %>
       				<tr>
                 <td><%= cont %> </td>
-                <td><%= salida.inv.mp %></td>
                 <td><%= salida.hora %></td>
+                <td><%= salida.inv.mp %></td>
+                <td><%= salida.marca %></td>
                 <td><%= salida.cantidad %></td>
                 <td><%= salida.presentacion %></td>
+                <td><%= salida.valorUni %></td>
+                <td><%= salida.valorG %></td>
                 <td>
                   <!--Edit button-->
                   <form action="/app/inout/<%= salida._id %>/edit" method="GET" class="link">

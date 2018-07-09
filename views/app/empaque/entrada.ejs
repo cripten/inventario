@@ -5,7 +5,7 @@
       <hr class="cust-hr">
       <ul class="nav nav-tabs nav-justified">
         <li class="nav-item">
-          <a class="nav-link active" href="/app/productpTer">Producto terminado</a>
+          <a class="nav-link active" href="/app/productoTer">Producto terminado</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="/app/elaborado/entrada">Entradas</a>
@@ -47,13 +47,7 @@
               <td>
                 <!--Allow button-->
                 <form action="/app/elaborado/allow" method="POST" class="link">
-                  <input type="hidden" name="nombre" value="<%= produccion.prod.nombre %>">
-                  <input type="hidden" name="peso" value="<%= produccion.peso %>">
-                  <input type="hidden" name="empacado" value="<%= produccion.empacado %>">
-                  <input type="hidden" name="averias" value="<%= produccion.averias %>">
-                  <input type="hidden" name="averiasPor" value="<%= produccion.averiasPor %>">
-                  <input type="hidden" name="diferencia" value="<%= produccion.diferencia %>">
-                  <input type="hidden" name="diferenciaPor" value="<%= produccion.diferenciaPor %>">
+                  <input type="hidden" name="allow" value="<%= produccion._id %>">
                   <button type="submit" class="btn btn-success btn-sm  formu"><i class="fas fa-check"></i> Aprobar</button><!--edit button-->
                 </form>
               </td>
@@ -61,7 +55,7 @@
             </tr>
     			<% }); %>
         <% } else{ %>
-          <td colspan="5" class="text-center"> No hay entradas para mostrar</td>
+          <td colspan="9" class="text-center"> No hay entradas para mostrar</td>
         <% } %>
       </tbody>
     </table>
