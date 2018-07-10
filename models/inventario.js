@@ -9,6 +9,7 @@ var inventario_schema = new Schema({
   valorUni:{type: Number, required: true},
   valorG:{type: Number, required: true},
   stock: {type: Number},
+  valorTotalG: {type: Number},
   bodega: {type: String, required: true}
 
 });

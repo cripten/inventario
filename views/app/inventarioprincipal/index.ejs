@@ -18,6 +18,9 @@
 
     <br>
     <a href="/app/inventario/new" class="btn btn-primary btn-lg active"><i class="fas fa-plus"></i> Nueva Materia Prima</a>
+
+    <p  class="money"><i class="fas fa-dollar-sign"></i>Valor del inventario: <span class="badge badge-success">$<%= valorTotal%></span></p>
+
     <br>
     <br>
     <caption>Inventario actual</caption>
@@ -27,9 +30,10 @@
           <th>Producto</th>
           <th>Bodega Principal</th>
           <th>Presentacion(G)</th>
-          <th>Valor Unitario(S)</th>
-          <th>Valor/Gramo(S)</th>
+          <th>Valor Unitario($)</th>
+          <th>Valor/Gramo($)</th>
           <th>Stock</th>
+          <th>Valor Total G($)</th>
           <th>Acciones</th>
         </tr>
       </thead>
@@ -43,6 +47,7 @@
               <td><%= inventario.valorUni %></td>
               <td><%= inventario.valorG %></td>
               <td><%= inventario.stock %></td>
+              <td>$ <%= inventario.valorTotalG %></td>
               <td>
                 <!--historial button-->
                 <form action="/app/historial/<%= inventario._id %>" method="GET" class="link">

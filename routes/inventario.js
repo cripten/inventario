@@ -57,7 +57,16 @@ router.route("/inventario")
   .sort({mp:1})
   .exec(function(err,inventarios){
     if(err){res.redirect("/"); return;}
-    res.render("app/inventario"+req.query.bodega+"/index.ejs", { inventarios: inventarios });
+    var cont = 1;
+    var valorTotal = 0;
+    inventarios.forEach(function(inventario){
+      cont++;
+      valorTotal = valorTotal + inventario.valorTotalG;
+      if(cont > inventarios.length){
+        res.render("app/inventario"+req.query.bodega+"/index.ejs", { inventarios: inventarios, valorTotal: valorTotal });
+      }
+
+    });
   });
 })
 .post(validaciones,function(req,res,next){
@@ -70,6 +79,7 @@ router.route("/inventario")
   	valorUni : 0,
   	valorG : 0,
   	stock : 0,
+    valorTotalG : 0,
   	bodega : "principal",
   },
   {
@@ -79,6 +89,7 @@ router.route("/inventario")
     valorUni : 0,
     valorG : 0,
     stock : 0,
+    valorTotalG : 0,
     bodega : "auxiliar",
   }
 ];

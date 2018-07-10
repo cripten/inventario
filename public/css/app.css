@@ -249,6 +249,9 @@ button.btn-default:before {
       height:30vh;
       border-radius: 10px;
     }
+    .money{
+      float: right;
+    }
 
 @media (max-width: 575.98px) {
 	body{

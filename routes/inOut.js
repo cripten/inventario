@@ -103,13 +103,13 @@ router.get("/inOut",function(req,res,next){
 });
 
 router.post("/inOut",validaciones,function(req,res,next){
-  SumRest_Stock(req, function(block){
+  SumRest_Stock(req, function(block,valorUni){
     if(block){
       req.flash("error","no se puede sacar del inventario actual");
       res.redirect("/app/inOut?tipo="+req.body.tipo+"&bodega="+req.body.bodega);
     }
     else{
-      Regis_InOut(req,res);
+      Regis_InOut(req,res,valorUni);
     }
   });
 });
@@ -224,7 +224,7 @@ function SumRest_Stock(req,callback){
     if(err){ res.redirect("/"); return; }
     //si se quiere hacer una salida pero lo que se quiere sacar es mayor a lo que hay
     if((req.body.cantidad * req.body.presentacion) > inventario.stock && req.body.tipo == "salida"){
-      return callback(true);
+      return callback(true,inventario.valorUni);
     }
     if(req.body.tipo == "entrada"){
       inventario.valorUni = (inventario.presentacion*req.body.valorUni)/req.body.presentacion;
@@ -236,10 +236,11 @@ function SumRest_Stock(req,callback){
     }
 
     inventario.cantidadTotal = inventario.stock/inventario.presentacion;
+    inventario.valorTotalG = Number((inventario.valorG * inventario.cantidadTotal * inventario.presentacion ).toFixed(2));
 
     inventario.save(function(err){
       if(!err){
-        return callback(false);
+        return callback(false,inventario.valorUni);
       }
       else{
         console.log(err);
@@ -249,8 +250,34 @@ function SumRest_Stock(req,callback){
 };
 
 // Metodo  para guardar registros de entradas y salidas
-function Regis_InOut(req, res){
-  if(req.body.tipo == "salida"){
+function Regis_InOut(req, res, valorUni){
+  var now = Date.now();
+  var date = dateFormat(now, "d/m/yyyy");
+  var hora = dateFormat(now, "d/m/yyyy, h:MM:ss TT");
+  var valorG =  valorUni /req.body.presentacion;
+  var data = {
+    fecha: date,
+    hora: hora,
+    marca: req.body.marca,
+    cantidad: req.body.cantidad,
+    presentacion: req.body.presentacion,
+    valorUni: valorUni,
+    valorG:  Number(valorG.toFixed(2)),
+    numFact: req.body.numFact,
+    tipo: req.body.tipo,
+    estado: req.body.tipo == "entrada" ? "permitido" : "pendiente",
+    inv: req.body.inv
+    }
+  var inOut = new InOut(data);
+  inOut.save(function(err){
+    if(!err){
+      res.redirect("/app/inOut?tipo="+req.body.tipo+"&bodega="+req.body.bodega);
+    }
+    else{
+      console.log(err);
+    }
+  });
+  /*if(req.body.tipo == "salida"){
       Inventario.findById(req.body.inv,function(err,inventario){
         var valorUni = inventario.valorUni;
         var now = Date.now();
@@ -308,7 +335,7 @@ function Regis_InOut(req, res){
         console.log(err);
       }
     });
-  }
+  }*/
 
 }
 
