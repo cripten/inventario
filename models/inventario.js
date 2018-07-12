@@ -10,6 +10,9 @@ var inventario_schema = new Schema({
   valorG:{type: Number, required: true},
   stock: {type: Number},
   valorTotalG: {type: Number},
+  stockReal: {type: Number},
+  diferencia: {type: Number},
+  valorDif: {type: Number},
   bodega: {type: String, required: true}
 
 });

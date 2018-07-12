@@ -6,6 +6,16 @@ var flash = require("connect-flash");
 var find_inventario = require("../middlewares/find_inventario");
 //MATERIEPRIME =========================
 // new materieprime form
+//Routa para calcular el costo real de lo que se produjo
+router.post("/inventario/real",function(req,res,next){
+  console.log(req.query.id);
+  /*Inventario.findById(,function(err,inventario){
+    if(err){res.redirect("/"); return;}
+    inventario.
+  });*/
+  //res.render("app/inventarioauxiliar/index.ejs",{ messages: req.flash("error") });
+});
+// new materieprime form
 router.get("/inventario/new",function(req,res,next){
   res.render("app/inventarioprincipal/new.ejs",{ messages: req.flash("error") });
 });
@@ -80,6 +90,9 @@ router.route("/inventario")
   	valorG : 0,
   	stock : 0,
     valorTotalG : 0,
+    stockReal: 0,
+    diferencia: 0,
+    valorDif: 0,
   	bodega : "principal",
   },
   {
@@ -90,6 +103,9 @@ router.route("/inventario")
     valorG : 0,
     stock : 0,
     valorTotalG : 0,
+    stockReal: 0,
+    diferencia: 0,
+    valorDif: 0,
     bodega : "auxiliar",
   }
 ];

@@ -1,0 +1,7 @@
+<form action="/app/inventario/real" method="GET" class="link">
+  <input type="number" class="form-control" aria-label="Recipient's username" aria-describedby="basic-addon2" name="stockReal">
+  <div class="input-group-append">
+    <!--<button type="submit" class="btn btn-success btn-sm right-space"><i style="font-size: 3.5vh;"class="fas fa-save"></button>-->
+    <a class="btn btn-primary btn-md" href="/app/inventario/real?id=<%= inventario._id %>"><i style="font-size: 3.5vh;"class="fas fa-save"></i></a>
+  </div>
+</form>

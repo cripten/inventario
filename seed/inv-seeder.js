@@ -13,6 +13,9 @@ const inventarios = [
 	valorG : 0,
 	stock : 0,
 	valorTotalG : 0,
+	stockReal: 0,
+  diferencia: 0,
+  valorDif: 0,
 	bodega : "auxiliar"
 },
 {
@@ -23,6 +26,9 @@ const inventarios = [
 	valorG : 0,
 	stock : 0,
 	valorTotalG : 0,
+	stockReal: 0,
+	diferencia: 0,
+	valorDif: 0,
 	bodega : "auxiliar"
 },
 {
@@ -33,6 +39,9 @@ const inventarios = [
   valorG : 0,
   stock : 0,
 	valorTotalG : 0,
+	stockReal: 0,
+	diferencia: 0,
+	valorDif: 0,
   bodega : "auxiliar"
 },
 {
@@ -43,6 +52,9 @@ const inventarios = [
   valorG : 0,
   stock : 0,
 	valorTotalG : 0,
+	stockReal: 0,
+	diferencia: 0,
+	valorDif: 0,
   bodega : "auxiliar"
 },
 {
@@ -53,6 +65,9 @@ const inventarios = [
   valorG : 0,
   stock : 0,
 	valorTotalG : 0,
+	stockReal: 0,
+	diferencia: 0,
+	valorDif: 0,
   bodega : "auxiliar"
 },
 {
@@ -63,6 +78,9 @@ const inventarios = [
   valorG : 0,
   stock : 0,
 	valorTotalG : 0,
+	stockReal: 0,
+	diferencia: 0,
+	valorDif: 0,
   bodega : "auxiliar"
 },
 {
@@ -73,6 +91,9 @@ const inventarios = [
   valorG : 0,
   stock : 0,
 	valorTotalG : 0,
+	stockReal: 0,
+	diferencia: 0,
+	valorDif: 0,
   bodega : "auxiliar"
 },
 {
@@ -83,6 +104,9 @@ const inventarios = [
   valorG : 0,
   stock : 0,
 	valorTotalG : 0,
+	stockReal: 0,
+	diferencia: 0,
+	valorDif: 0,
   bodega : "auxiliar"
 },
 {
@@ -93,6 +117,9 @@ const inventarios = [
   valorG : 0,
   stock : 0,
 	valorTotalG : 0,
+	stockReal: 0,
+	diferencia: 0,
+	valorDif: 0,
   bodega : "auxiliar"
 },
 {
@@ -103,6 +130,9 @@ const inventarios = [
   valorG : 0,
   stock : 0,
 	valorTotalG : 0,
+	stockReal: 0,
+	diferencia: 0,
+	valorDif: 0,
   bodega : "auxiliar"
 },
 {
@@ -113,6 +143,9 @@ const inventarios = [
   valorG : 0,
   stock : 0,
 	valorTotalG : 0,
+	stockReal: 0,
+	diferencia: 0,
+	valorDif: 0,
   bodega : "auxiliar"
 },
 {
@@ -123,6 +156,9 @@ const inventarios = [
   valorG : 0,
   stock : 0,
 	valorTotalG : 0,
+	stockReal: 0,
+	diferencia: 0,
+	valorDif: 0,
   bodega : "auxiliar"
 },
 {
@@ -133,6 +169,9 @@ const inventarios = [
   valorG : 0,
   stock : 0,
 	valorTotalG : 0,
+	stockReal: 0,
+	diferencia: 0,
+	valorDif: 0,
   bodega : "auxiliar"
 },
 {
@@ -143,6 +182,9 @@ const inventarios = [
   valorG : 0,
   stock : 0,
 	valorTotalG : 0,
+	stockReal: 0,
+	diferencia: 0,
+	valorDif: 0,
   bodega : "auxiliar"
 },
 {
@@ -153,6 +195,9 @@ const inventarios = [
   valorG : 0,
   stock : 0,
 	valorTotalG : 0,
+	stockReal: 0,
+	diferencia: 0,
+	valorDif: 0,
   bodega : "auxiliar"
 },
 {
@@ -163,6 +208,9 @@ const inventarios = [
   valorG : 0,
   stock : 0,
 	valorTotalG : 0,
+	stockReal: 0,
+	diferencia: 0,
+	valorDif: 0,
   bodega : "auxiliar"
 },
 {
@@ -173,6 +221,9 @@ const inventarios = [
   valorG : 0,
   stock : 0,
 	valorTotalG : 0,
+	stockReal: 0,
+	diferencia: 0,
+	valorDif: 0,
   bodega : "auxiliar"
 },
 {
@@ -183,6 +234,9 @@ const inventarios = [
   valorG : 0,
   stock : 0,
 	valorTotalG : 0,
+	stockReal: 0,
+	diferencia: 0,
+	valorDif: 0,
   bodega : "auxiliar"
 },
 {
@@ -193,6 +247,9 @@ const inventarios = [
   valorG : 0,
   stock : 0,
 	valorTotalG : 0,
+	stockReal: 0,
+	diferencia: 0,
+	valorDif: 0,
   bodega : "auxiliar"
 },
 {
@@ -203,6 +260,9 @@ const inventarios = [
   valorG : 0,
   stock : 0,
 	valorTotalG : 0,
+	stockReal: 0,
+	diferencia: 0,
+	valorDif: 0,
   bodega : "auxiliar"
 },
 {
@@ -213,6 +273,9 @@ const inventarios = [
   valorG : 0,
   stock : 0,
 	valorTotalG : 0,
+	stockReal: 0,
+	diferencia: 0,
+	valorDif: 0,
   bodega : "auxiliar"
 },
 {
@@ -223,6 +286,9 @@ const inventarios = [
   valorG : 0,
   stock : 0,
 	valorTotalG : 0,
+	stockReal: 0,
+	diferencia: 0,
+	valorDif: 0,
   bodega : "auxiliar"
 },
 {
@@ -233,6 +299,9 @@ const inventarios = [
   valorG : 0,
   stock : 0,
 	valorTotalG : 0,
+	stockReal: 0,
+	diferencia: 0,
+	valorDif: 0,
   bodega : "auxiliar"
 },
 {
@@ -243,6 +312,9 @@ const inventarios = [
   valorG : 0,
   stock : 0,
 	valorTotalG : 0,
+	stockReal: 0,
+	diferencia: 0,
+	valorDif: 0,
   bodega : "auxiliar"
 },
 {
@@ -253,6 +325,9 @@ const inventarios = [
   valorG : 0,
   stock : 0,
 	valorTotalG : 0,
+	stockReal: 0,
+	diferencia: 0,
+	valorDif: 0,
   bodega : "auxiliar"
 },
 {
@@ -263,6 +338,9 @@ const inventarios = [
   valorG : 0,
   stock : 0,
 	valorTotalG : 0,
+	stockReal: 0,
+	diferencia: 0,
+	valorDif: 0,
   bodega : "auxiliar"
 },
 {
@@ -273,6 +351,9 @@ const inventarios = [
   valorG : 0,
   stock : 0,
 	valorTotalG : 0,
+	stockReal: 0,
+	diferencia: 0,
+	valorDif: 0,
   bodega : "auxiliar"
 },
 {
@@ -283,6 +364,9 @@ const inventarios = [
   valorG : 0,
   stock : 0,
 	valorTotalG : 0,
+	stockReal: 0,
+	diferencia: 0,
+	valorDif: 0,
   bodega : "auxiliar"
 },
 {
@@ -293,6 +377,9 @@ const inventarios = [
   valorG : 0,
   stock : 0,
 	valorTotalG : 0,
+	stockReal: 0,
+	diferencia: 0,
+	valorDif: 0,
   bodega : "auxiliar"
 },
 {
@@ -303,6 +390,9 @@ const inventarios = [
   valorG : 0,
   stock : 0,
 	valorTotalG : 0,
+	stockReal: 0,
+	diferencia: 0,
+	valorDif: 0,
   bodega : "auxiliar"
 },
 {
@@ -313,6 +403,9 @@ const inventarios = [
   valorG : 0,
   stock : 0,
 	valorTotalG : 0,
+	stockReal: 0,
+	diferencia: 0,
+	valorDif: 0,
   bodega : "auxiliar"
 },
 {
@@ -323,6 +416,9 @@ const inventarios = [
   valorG : 0,
   stock : 0,
 	valorTotalG : 0,
+	stockReal: 0,
+	diferencia: 0,
+	valorDif: 0,
   bodega : "auxiliar"
 },
 {
@@ -333,6 +429,9 @@ const inventarios = [
   valorG : 0,
   stock : 0,
 	valorTotalG : 0,
+	stockReal: 0,
+	diferencia: 0,
+	valorDif: 0,
   bodega : "auxiliar"
 },
 {
@@ -343,6 +442,9 @@ const inventarios = [
   valorG : 0,
   stock : 0,
 	valorTotalG : 0,
+	stockReal: 0,
+	diferencia: 0,
+	valorDif: 0,
   bodega : "auxiliar"
 },
 {
@@ -353,6 +455,9 @@ const inventarios = [
   valorG : 0,
   stock : 0,
 	valorTotalG : 0,
+	stockReal: 0,
+	diferencia: 0,
+	valorDif: 0,
   bodega : "auxiliar"
 },
 {
@@ -363,6 +468,9 @@ const inventarios = [
   valorG : 0,
   stock : 0,
 	valorTotalG : 0,
+	stockReal: 0,
+	diferencia: 0,
+	valorDif: 0,
   bodega : "auxiliar"
 },
 {
@@ -373,6 +481,9 @@ const inventarios = [
   valorG : 0,
   stock : 0,
 	valorTotalG : 0,
+	stockReal: 0,
+	diferencia: 0,
+	valorDif: 0,
   bodega : "auxiliar"
 },
 {
@@ -383,6 +494,9 @@ const inventarios = [
   valorG : 0,
   stock : 0,
 	valorTotalG : 0,
+	stockReal: 0,
+	diferencia: 0,
+	valorDif: 0,
   bodega : "auxiliar"
 },
 {
@@ -393,6 +507,9 @@ const inventarios = [
   valorG : 0,
   stock : 0,
 	valorTotalG : 0,
+	stockReal: 0,
+	diferencia: 0,
+	valorDif: 0,
   bodega : "auxiliar"
 },
 {
@@ -403,6 +520,9 @@ const inventarios = [
   valorG : 0,
   stock : 0,
 	valorTotalG : 0,
+	stockReal: 0,
+	diferencia: 0,
+	valorDif: 0,
   bodega : "auxiliar"
 },
 {
@@ -413,6 +533,9 @@ const inventarios = [
   valorG : 0,
   stock : 0,
 	valorTotalG : 0,
+	stockReal: 0,
+	diferencia: 0,
+	valorDif: 0,
   bodega : "auxiliar"
 },
 {
@@ -423,6 +546,9 @@ const inventarios = [
   valorG : 0,
   stock : 0,
 	valorTotalG : 0,
+	stockReal: 0,
+	diferencia: 0,
+	valorDif: 0,
   bodega : "auxiliar"
 },
 {
@@ -433,6 +559,9 @@ const inventarios = [
   valorG : 0,
   stock : 0,
 	valorTotalG : 0,
+	stockReal: 0,
+	diferencia: 0,
+	valorDif: 0,
   bodega : "auxiliar"
 },
 {
@@ -443,6 +572,9 @@ const inventarios = [
   valorG : 0,
   stock : 0,
 	valorTotalG : 0,
+	stockReal: 0,
+	diferencia: 0,
+	valorDif: 0,
   bodega : "auxiliar"
 },
 {
@@ -453,6 +585,9 @@ const inventarios = [
   valorG : 0,
   stock : 0,
 	valorTotalG : 0,
+	stockReal: 0,
+	diferencia: 0,
+	valorDif: 0,
   bodega : "auxiliar"
 },
 {
@@ -463,6 +598,9 @@ const inventarios = [
   valorG : 0,
   stock : 0,
 	valorTotalG : 0,
+	stockReal: 0,
+	diferencia: 0,
+	valorDif: 0,
   bodega : "auxiliar"
 },
 {
@@ -473,6 +611,9 @@ const inventarios = [
   valorG : 0,
   stock : 0,
 	valorTotalG : 0,
+	stockReal: 0,
+	diferencia: 0,
+	valorDif: 0,
   bodega : "auxiliar"
 },
 {
@@ -483,6 +624,9 @@ const inventarios = [
   valorG : 0,
   stock : 0,
 	valorTotalG : 0,
+	stockReal: 0,
+	diferencia: 0,
+	valorDif: 0,
   bodega : "auxiliar"
 },
 {
@@ -493,6 +637,9 @@ const inventarios = [
   valorG : 0,
   stock : 0,
 	valorTotalG : 0,
+	stockReal: 0,
+	diferencia: 0,
+	valorDif: 0,
   bodega : "auxiliar"
 },
 {
@@ -503,6 +650,9 @@ const inventarios = [
   valorG : 0,
   stock : 0,
 	valorTotalG : 0,
+	stockReal: 0,
+	diferencia: 0,
+	valorDif: 0,
   bodega : "auxiliar"
 },
 {
@@ -513,6 +663,9 @@ const inventarios = [
   valorG : 0,
   stock : 0,
 	valorTotalG : 0,
+	stockReal: 0,
+	diferencia: 0,
+	valorDif: 0,
   bodega : "auxiliar"
 },
 {
@@ -523,6 +676,9 @@ const inventarios = [
   valorG : 0,
   stock : 0,
 	valorTotalG : 0,
+	stockReal: 0,
+	diferencia: 0,
+	valorDif: 0,
   bodega : "auxiliar"
 },
 {
@@ -533,6 +689,9 @@ const inventarios = [
   valorG : 0,
   stock : 0,
 	valorTotalG : 0,
+	stockReal: 0,
+	diferencia: 0,
+	valorDif: 0,
   bodega : "auxiliar"
 },
 {
@@ -543,6 +702,9 @@ const inventarios = [
   valorG : 0,
   stock : 0,
 	valorTotalG : 0,
+	stockReal: 0,
+	diferencia: 0,
+	valorDif: 0,
   bodega : "auxiliar"
 },
 {
@@ -553,6 +715,9 @@ const inventarios = [
   valorG : 0,
   stock : 0,
 	valorTotalG : 0,
+	stockReal: 0,
+	diferencia: 0,
+	valorDif: 0,
   bodega : "auxiliar"
 },
 {
@@ -563,6 +728,9 @@ const inventarios = [
   valorG : 0,
   stock : 0,
 	valorTotalG : 0,
+	stockReal: 0,
+	diferencia: 0,
+	valorDif: 0,
   bodega : "auxiliar"
 },
 {
@@ -573,6 +741,9 @@ const inventarios = [
   valorG : 0,
   stock : 0,
 	valorTotalG : 0,
+	stockReal: 0,
+	diferencia: 0,
+	valorDif: 0,
   bodega : "auxiliar"
 },
 {
@@ -583,6 +754,9 @@ const inventarios = [
   valorG : 0,
   stock : 0,
 	valorTotalG : 0,
+	stockReal: 0,
+	diferencia: 0,
+	valorDif: 0,
   bodega : "auxiliar"
 },
 {
@@ -593,6 +767,9 @@ const inventarios = [
   valorG : 0,
   stock : 0,
 	valorTotalG : 0,
+	stockReal: 0,
+	diferencia: 0,
+	valorDif: 0,
   bodega : "auxiliar"
 },
 {
@@ -603,6 +780,9 @@ const inventarios = [
   valorG : 0,
   stock : 0,
 	valorTotalG : 0,
+	stockReal: 0,
+	diferencia: 0,
+	valorDif: 0,
   bodega : "auxiliar"
 },
 {
@@ -613,6 +793,9 @@ const inventarios = [
   valorG : 0,
   stock : 0,
 	valorTotalG : 0,
+	stockReal: 0,
+	diferencia: 0,
+	valorDif: 0,
   bodega : "auxiliar"
 },
 {
@@ -623,6 +806,9 @@ const inventarios = [
   valorG : 0,
   stock : 0,
 	valorTotalG : 0,
+	stockReal: 0,
+	diferencia: 0,
+	valorDif: 0,
   bodega : "auxiliar"
 },
 {
@@ -633,6 +819,9 @@ const inventarios = [
   valorG : 0,
   stock : 0,
 	valorTotalG : 0,
+	stockReal: 0,
+	diferencia: 0,
+	valorDif: 0,
   bodega : "auxiliar"
 },
 {
@@ -643,6 +832,9 @@ const inventarios = [
   valorG : 0,
   stock : 0,
 	valorTotalG : 0,
+	stockReal: 0,
+	diferencia: 0,
+	valorDif: 0,
   bodega : "auxiliar"
 },
 {
@@ -653,6 +845,9 @@ const inventarios = [
   valorG : 0,
   stock : 0,
 	valorTotalG : 0,
+	stockReal: 0,
+	diferencia: 0,
+	valorDif: 0,
   bodega : "auxiliar"
 },
 {
@@ -663,6 +858,9 @@ const inventarios = [
   valorG : 0,
   stock : 0,
 	valorTotalG : 0,
+	stockReal: 0,
+	diferencia: 0,
+	valorDif: 0,
   bodega : "auxiliar"
 },
 {
@@ -673,6 +871,9 @@ const inventarios = [
   valorG : 0,
   stock : 0,
 	valorTotalG : 0,
+	stockReal: 0,
+	diferencia: 0,
+	valorDif: 0,
   bodega : "auxiliar"
 },
 {
@@ -683,6 +884,9 @@ const inventarios = [
   valorG : 0,
   stock : 0,
 	valorTotalG : 0,
+	stockReal: 0,
+	diferencia: 0,
+	valorDif: 0,
   bodega : "auxiliar"
 },
 {
@@ -693,6 +897,9 @@ const inventarios = [
   valorG : 0,
   stock : 0,
 	valorTotalG : 0,
+	stockReal: 0,
+	diferencia: 0,
+	valorDif: 0,
   bodega : "auxiliar"
 }
 ];
