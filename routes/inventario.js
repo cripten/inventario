@@ -3,6 +3,7 @@ var mongoose = require("mongoose");
 var router = express.Router();
 var Inventario = require("../models/inventario");
 var flash = require("connect-flash");
+var numeral = require('numeral');
 var find_inventario = require("../middlewares/find_inventario");
 //MATERIEPRIME =========================
 // new materieprime form
@@ -73,7 +74,8 @@ router.route("/inventario")
       cont++;
       valorTotal = valorTotal + inventario.valorTotalG;
       if(cont > inventarios.length){
-        res.render("app/inventario"+req.query.bodega+"/index.ejs", { inventarios: inventarios, valorTotal: valorTotal });
+        var string = numeral(valorTotal).format('0,0.0000');
+        res.render("app/inventario"+req.query.bodega+"/index.ejs", { inventarios: inventarios, valorTotal: string });
       }
 
     });
