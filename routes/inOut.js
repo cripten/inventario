@@ -169,12 +169,11 @@ function Edit_Stock(req,res,callback){
       inventario.valorUni = (inventario.presentacion*req.body.valorUni)/req.body.presentacion;
       inventario.valorG = Number((req.body.valorUni/req.body.presentacion).toFixed(2));
       inventario.stock = (inventario.stock - (res.locals.inOut.cantidad * res.locals.inOut.presentacion)) + (req.body.cantidad * req.body.presentacion);
-      console.log(inventario.stock);
     }else{
       inventario.stock = (inventario.stock + (res.locals.inOut.cantidad * res.locals.inOut.presentacion)) - (req.body.cantidad * req.body.presentacion);
-      console.log(inventario.stock);
     }
     inventario.cantidadTotal = inventario.stock/inventario.presentacion;
+    inventario.valorTotalG = Number((inventario.valorG * inventario.cantidadTotal * inventario.presentacion ).toFixed(2));
     if(inventario.stock < 0){
       return callback(true);
     }
@@ -207,7 +206,7 @@ function Devolucion_Stock(req,callback){
       }
     }
     inventario.cantidadTotal = inventario.stock/inventario.presentacion;
-    console.log(inventario.cantidadTotal);
+    inventario.valorTotalG = Number((inventario.valorG * inventario.cantidadTotal * inventario.presentacion ).toFixed(2));
     inventario.save(function(err){
         if(!err){
           return callback(false);

@@ -40,7 +40,13 @@
       <tbody>
         <% if(inventarios.length > 0){ %>
           <% inventarios.forEach(function(inventario){ %>
-    				<tr>
+            <% if(inventario.cantidadTotal > inventario.rango){ %>
+    				  <tr class="alert alert-success">
+            <% }else if(inventario.cantidadTotal < inventario.rango && inventario.cantidadTotal > 0 ){ %>
+              <tr class="alert alert-warning">
+            <% }else{ %>
+              <tr class="alert alert-danger">
+            <% } %>
               <td><%= inventario.mp %> </td>
               <td><%= inventario.cantidadTotal %></td>
               <td><%= inventario.presentacion %></td>

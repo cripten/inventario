@@ -5,7 +5,8 @@ var Schema = mongoose.Schema;
 var inOut_schema = new Schema({
   fecha:{type: String, required: true},
   hora: {type: String},
-  numFact: {type:Number, required:true},
+  codigo: {type: String},
+  numFact: {type:String, required:true},
   marca:{type: String, required: true},
   cantidad: {type: Number, required: true},
   presentacion: {type: Number, required: true},

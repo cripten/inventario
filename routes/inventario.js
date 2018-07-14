@@ -35,6 +35,7 @@ router.route("/inventario/:id")
 .put(validaciones,function(req,res,next){
   res.locals.inventario.mp = req.body.mp;
   res.locals.inventario.presentacion = req.body.presentacion;
+  res.locals.inventario.rango = req.body.rango;
   res.locals.inventario.cantidadTotal =   res.locals.inventario.stock / req.body.presentacion;
   res.locals.inventario.save(function(err){
     if(!err){
@@ -95,6 +96,7 @@ router.route("/inventario")
     stockReal: 0,
     diferencia: 0,
     valorDif: 0,
+    rango: req.body.rango,
   	bodega : "principal",
   },
   {
@@ -108,6 +110,7 @@ router.route("/inventario")
     stockReal: 0,
     diferencia: 0,
     valorDif: 0,
+    rango: req.body.rango,
     bodega : "auxiliar",
   }
 ];

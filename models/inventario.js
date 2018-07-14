@@ -13,6 +13,7 @@ var inventario_schema = new Schema({
   stockReal: {type: Number},
   diferencia: {type: Number},
   valorDif: {type: Number},
+  rango:{type: Number},
   bodega: {type: String, required: true}
 
 });
