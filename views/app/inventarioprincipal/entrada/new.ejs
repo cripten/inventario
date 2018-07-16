@@ -17,7 +17,7 @@
     	<form action="/app/inOut" method="post">
         <div class="form-group">
           <label>Numero de factura:</label>
-          <input type="text" placeholder="Numero de factura" class="form-control" name="numFact">
+          <input type="text" placeholder="Numero de factura" class="form-control" name="numFact" onkeyup="mayus(this);">
         </div>
         <div class="form-group">
           <label>Producto:</label>
@@ -30,7 +30,7 @@
         </div>
         <div class="form-group">
           <label>Marca</label>
-          <input type="text" placeholder="Nombre de la marca" class="form-control" name="marca">
+          <input type="text" placeholder="Nombre de la marca" class="form-control" name="marca" onkeyup="mayus(this);" >
         </div>
         <div class="form-group">
           <label>Cantidad</label>
@@ -38,7 +38,7 @@
         </div>
         <div class="form-group">
           <label>Presentacion</label>
-          <input type="number" step="0.000001" placeholder="Cantidad en gramos"  class="form-control number" name="presentacion">
+          <input type="number" step="0.000001" placeholder="Cantidad en gramos"  class="form-control" name="presentacion">
         </div>
         <div class="form-group">
           <label>Valor Unitario</label>
@@ -66,5 +66,8 @@
     const value = element.value;
     element.value = formatNumber(value);
   });
+  function mayus(e) {
+    e.value = e.value.toUpperCase();
+  }
 
 </script>

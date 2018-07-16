@@ -21,8 +21,11 @@
         <label>Presentacion</label>
         <input type="number" class="form-control" name="presentacion" value="<%= inOut.presentacion %>">
       </div>
+      <div class="form-group">
+        <label>Marca</label>
+        <input type="text" placeholder="Nombre de la marca" class="form-control" name="marca" value="<%= inOut.marca %>" onkeyup="mayus(this);">
+      </div>
       <input type="hidden" name="inv" value="<%= inOut.inv._id %>">
-      <input type="hidden" name="marca" value="0">
       <input type="hidden" name="valorUni" value="0">
       <input type="hidden" name="numFact" value="0">
       <input type="hidden" name="tipo" value="salida">
@@ -36,3 +39,8 @@
   </div>
 </div>
 </div>
+<script type="text/javascript">
+  function mayus(e) {
+    e.value = e.value.toUpperCase();
+  }
+</script>

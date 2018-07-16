@@ -53,7 +53,7 @@ router.get("/produccion",function(req,res,next){
 		res.render("app/inventarioauxiliar/produccion/index.ejs", { messages: req.flash("error"), produccion:produccion });
   });
 });
-router.post("/produccion",function(req,res,next){
+router.post("/produccion",validaciones,function(req,res,next){
   SumRest_Stock(req,function(block){
     if(block == true){
       Regis_Out(req,res);

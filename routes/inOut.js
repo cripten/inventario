@@ -222,16 +222,16 @@ function SumRest_Stock(req,callback){
   Inventario.findById(req.body.inv,function(err,inventario){
     if(err){ res.redirect("/"); return; }
     //si se quiere hacer una salida pero lo que se quiere sacar es mayor a lo que hay
-    if((req.body.cantidad * req.body.presentacion * 1000) > inventario.stock && req.body.tipo == "salida"){
+    if((req.body.cantidad * req.body.presentacion) > inventario.stock && req.body.tipo == "salida"){
       return callback(true,inventario.valorUni);
     }
     if(req.body.tipo == "entrada"){
-      inventario.valorUni = (inventario.presentacion*req.body.valorUni)/(req.body.presentacion * 1000);
-      inventario.valorG = Number((req.body.valorUni/(req.body.presentacion * 1000)).toFixed(2));
-      inventario.stock = inventario.stock + (req.body.cantidad * req.body.presentacion * 1000);
+      inventario.valorUni = (inventario.presentacion*req.body.valorUni)/(req.body.presentacion);
+      inventario.valorG = Number((req.body.valorUni/(req.body.presentacion)).toFixed(2));
+      inventario.stock = inventario.stock + (req.body.cantidad * req.body.presentacion);
     }else{
 
-      inventario.stock = inventario.stock - (req.body.cantidad * req.body.presentacion * 1000);
+      inventario.stock = inventario.stock - (req.body.cantidad * req.body.presentacion);
     }
 
     inventario.cantidadTotal = inventario.stock/inventario.presentacion;
@@ -253,13 +253,13 @@ function Regis_InOut(req, res, valorUni){
   var now = Date.now();
   var date = dateFormat(now, "d/m/yyyy");
   var hora = dateFormat(now, "d/m/yyyy, h:MM:ss TT");
-  var valorG =  valorUni /(req.body.presentacion * 1000);
+  var valorG =  valorUni /req.body.presentacion;
   var data = {
     fecha: date,
     hora: hora,
     marca: req.body.marca,
     cantidad: req.body.cantidad,
-    presentacion: (req.body.presentacion * 1000),
+    presentacion: req.body.presentacion,
     valorUni: valorUni,
     valorG:  Number(valorG.toFixed(2)),
     numFact: req.body.numFact,

@@ -62,7 +62,9 @@ router.route("/producto")
   {
   	nombre : req.body.nombre,
   	totalG : 0,
-  	total : 0
+  	total : 0,
+    estado: "nuevo",
+    destino: req.body.destino
   }
   producto = new Producto(data);
 	producto.save(function(err,result){

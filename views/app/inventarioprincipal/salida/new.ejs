@@ -33,7 +33,7 @@
         </div>
         <div class="form-group">
           <label>Marca</label>
-          <input type="text" class="form-control" name="marca">
+          <input type="text" class="form-control" name="marca" onkeyup="mayus(this);">
         </div>
         <input type="hidden" name="valorUni" value="0">
         <input type="hidden" name="numFact" value="0">
@@ -46,3 +46,8 @@
     </div>
   </div>
 </div>
+<script type="text/javascript">
+  function mayus(e) {
+    e.value = e.value.toUpperCase();
+  }
+</script>

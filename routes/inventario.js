@@ -8,14 +8,22 @@ var find_inventario = require("../middlewares/find_inventario");
 //MATERIEPRIME =========================
 // new materieprime form
 //Routa para calcular el costo real de lo que se produjo
-router.post("/inventario/real",function(req,res,next){
-  console.log(req.query.id);
-  /*Inventario.findById(,function(err,inventario){
+router.get("/inventario/real",function(req,res,next){
+  Inventario.findById(req.query.invid,function(err,inventario){
     if(err){res.redirect("/"); return;}
-    inventario.
-  });*/
-  //res.render("app/inventarioauxiliar/index.ejs",{ messages: req.flash("error") });
+    //OPERACIONES
+    //diferencia
+    inventario.diferencia  = inventario.stock - req.query.stockReal;
+    //costo diferencia
+    inventario.valorDif = inventario.diferencia * inventario.valorG;
+    //stock real
+    inventario.stockReal = req.query.stockReal;
+    inventario.save(function(err){
+      res.redirect("/app/inventario?bodega=auxiliar");
+    });
+  });
 });
+
 // new materieprime form
 router.get("/inventario/new",function(req,res,next){
   res.render("app/inventarioprincipal/new.ejs",{ messages: req.flash("error") });

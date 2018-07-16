@@ -15,7 +15,7 @@
     <form action="/app/inOut/<%= inOut._id %>?_method=PUT" method="post" enctype="multipart/form-data">
       <div class="form-group">
         <label>Numero de factura</label>
-        <input type="text" class="form-control" name="numFact" value="<%= inOut.numFact %>">
+        <input type="text" class="form-control" name="numFact" value="<%= inOut.numFact %>" onkeyup="mayus(this);">
       </div>
       <div class="form-group">
         <label>Producto:</label>
@@ -25,7 +25,7 @@
       </div>
       <div class="form-group">
         <label>Marca</label>
-        <input type="text" class="form-control" name="marca" value="<%= inOut.marca %>">
+        <input type="text" class="form-control" name="marca" value="<%= inOut.marca %>" onkeyup="mayus(this);">
       </div>
       <div class="form-group">
         <label>Cantidad</label>
@@ -50,3 +50,8 @@
   </div>
 </div>
 </div>
+<script type="text/javascript">
+  function mayus(e) {
+    e.value = e.value.toUpperCase();
+  }
+</script>

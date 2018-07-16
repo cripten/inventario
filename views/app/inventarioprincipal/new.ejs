@@ -17,7 +17,7 @@
     	<form action="/app/inventario" method="post" enctype="multipart/form-data">
         <div class="form-group">
           <label>Producto</label>
-          <input type="text" class="form-control" name="mp">
+          <input type="text" class="form-control" name="mp" onkeyup="mayus(this);">
         </div>
         <div class="form-group">
           <label>Presentacion</label>
@@ -35,3 +35,19 @@
   </div>
   </div>
 </div>
+<script type="text/javascript">
+  const number = document.querySelector('.number');
+
+  function formatNumber (n) {
+    n = String(n).replace(/\D/g, "");
+    return n === '' ? n : Number(n).toLocaleString();
+  }
+  number.addEventListener('keyup', (e) => {
+    const element = e.target;
+    const value = element.value;
+    element.value = formatNumber(value);
+  });
+  function mayus(e) {
+    e.value = e.value.toUpperCase();
+  }
+</script>

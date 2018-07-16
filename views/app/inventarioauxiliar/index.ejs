@@ -48,7 +48,8 @@
                 <div class="input-group">
                   <form action="/app/inventario/real" method="GET" class="link col-12" style="margin: 0; padding: 0;">
                     <input type="number" class="form-control col-8 " style="display:inline;" aria-label="Recipient's username" aria-describedby="basic-addon2" name="stockReal">
-                    <button type="submit" class="btn btn-primary btn-md" href="/app/inventario/real?id=<%= inventario._id %>"><i style="font-size: 3vh;"class="fas fa-save"></i></button>
+                    <input type="hidden" name="invid" value="<%= inventario._id %>">
+                    <button type="submit" class="btn btn-primary btn-md"><i style="font-size: 3vh;"class="fas fa-save"></i></button>
                     <!--<div class="input-group-append">
                       <a class="btn btn-primary btn-md" href="/app/inventario/real?id=<%= inventario._id %>"><i style="font-size: 3.5vh;"class="fas fa-save"></i></a>
                     </div>-->

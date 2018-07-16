@@ -10,7 +10,7 @@ var dateFormat = require("dateformat");
 //InOut =========================
 // Nueva entrada o salida
 router.get("/ingrediente/new",function(req,res,next){
-  Producto.find({},function(err,productos){
+  Producto.find({"estado":"nuevo"},function(err,productos){
     if(err){ console.log(err); return; }
     Inventario.find({bodega:"auxiliar"})
     .sort({mp:1})
@@ -130,7 +130,8 @@ router.post("/ingrediente",function(req,res,next){
   }
   Producto.findById(req.body.prod,function(err,producto){
     producto.total = Math.round(cantidadTotalProm);
-    producto.totalG = cantidadTotalG
+    producto.totalG = cantidadTotalG;
+    producto.estado = "usado";
     producto.save(function(err,result){
       if(!err){
         }
