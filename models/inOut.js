@@ -17,5 +17,5 @@ var inOut_schema = new Schema({
   inv: {type: Schema.Types.ObjectId, ref: "Inventario"},//ref al id de la collecion inventario
 
 });
-
+//prueba
 module.exports = mongoose.model("InOut",inOut_schema);
