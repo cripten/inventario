@@ -86,7 +86,7 @@ function SumRest_Stock(req,callback){
         // si la cantidad a producir es menor a lo que hay en el stock del ingrediente
         if(inventario.stock > totalProduccion && pase == true){
           //se resta del stock del ingrediente lo que se va a producir
-          inventario.stock = inventario.stock - totalProduccion;
+          inventario.stock = inventario.stock - Math.trunc(totalProduccion);//trunca el numero para que no lleve los decimales
           inventario.cantidadTotal = inventario.stock/inventario.presentacion;
           console.log(inventario.stock);
           console.log(inventario.cantidadTotal);
@@ -121,6 +121,7 @@ function Regis_Out(req, res){
     cantidad: req.body.cantidad,
     peso: req.body.peso,
     pesoCrud: req.body.pesoCrud,
+    lote: req.body.lote,
     empacado:0,
     averias:0,
     averiasPor:0,
@@ -140,7 +141,8 @@ function validaciones(req,res,next){
 		//aqui se valida con express-validator
     req.checkBody('cantidad','Invalid cantidad').notEmpty();
 		req.checkBody('peso','Invalid peso').notEmpty();
-    req.checkBody('peso crudo','Invalid peso crudo').notEmpty();
+    req.checkBody('pesoCrud','Invalid peso crudo').notEmpty();
+    req.checkBody('lote','Invalid lote').notEmpty();
 
 
 		var errors = req.validationErrors(true);//almacena todos los errores

@@ -1,67 +1,71 @@
 <% include ../../partials/layout.ejs %>
 <div class="container-fluid">
   <div class="col-md-12">
-      <h1 class="text-center pacifico"> Panel de administración de Producto terminado</h1>
+      <h1 class="text-center pacifico"> Panel de administración de Empaque</h1>
       <hr class="cust-hr">
       <ul class="nav nav-tabs nav-justified">
         <li class="nav-item">
-          <a class="nav-link active" href="/app/productpTer">Producto terminado</a>
+          <a class="nav-link" href="/app/productoTer">Producto terminado</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="/app/elaborado">Elaborado</a>
+          <a class="nav-link" href="/app/elaborado/entrada">Entradas</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" href="/app/elaborado">Elaborado</a>
         </li>
       </ul>
     </div>
 
     <br>
-    <a href="/app/producto/new" class="btn btn-primary btn-lg active"><i class="fas fa-plus"></i> Nuevo producto</a>
+    <a href="/app/elaborado/new" class="btn btn-primary btn-lg active"><i class="fas fa-plus"></i> Nuevo producto</a>
     <br>
     <br>
-    <caption>Inventario actual</caption>
+    <caption>Registros de empaque actual</caption>
     <table class="table">
       <thead>
         <tr>
           <th>Producto</th>
-          <th>Total % </th>
-          <th>Total en gramos</th>
-          <th>ingredientes</th>
+          <th>Cantidad</th>
+          <th>Empacado</th>
+          <th>Averias</th>
+          <th>Averias %</th>
+          <th>Diferencia</th>
+          <th>Diferencia %</th>
           <th>Acciones</th>
         </tr>
       </thead>
       <tbody>
-        <% if(productos.length > 0){ %>
-          <% productos.forEach(function(producto){ %>
+        <% if(producciones.length > 0){ %>
+          <% producciones.forEach(function(produccion{ %>
     				<tr>
-              <td><%= producto.nombre %> </td>
-              <td><%= producto.total %></td>
-              <td><%= producto.totalG  %></td>
-              <td><!--Ingredientes button-->
-                <form action="/app/ingrediente" method="GET" class="link mx-auto">
-                  <input type="hidden" name="prodid" value="<%= producto.id %>">
-                  <button type="submit" class="btn btn-success btn-sm"><i class="fas fa-clipboard-list"></i></button><!--edit button-->
-                </form>
-              </td>
+              <td><%= produccion.prod.nombre%> </td>
+              <td><%= produccion.cantidad %></td>
+              <td><%= produccion.empacado %></td>
+              <td><%= produccion.averias %></td>
+              <td><%= produccion.averiasPor %></td>
+              <td><%= produccion.diferencia %></td>
+              <td><%= produccion.diferenciaPor %></td>
               <td>
                 <!--Edit button-->
-                 <form action="/app/producto/<%= producto._id %>/edit" method="GET" class="link">
+                 <form action="/app/elaborado/<%= produccion._id %>/edit" method="GET" class="link">
                    <button type="submit" class="btn btn-warning btn-sm right-space"><i class="fas fa-pencil-alt"></i></button>
                  </form>
                 <!--delete button-->
-                <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#myModal<%= producto._id %>"><i class="far fa-trash-alt"></i></button>
+                <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#myModal<%= produccion._id %>"><i class="far fa-trash-alt"></i></button>
 
-                <div class="modal fade" id="myModal<%= producto._id %>" tabindex="-1" role="dialog" arialabelledby="myModalLabel">
+                <div class="modal fade" id="myModal<%= produccion._id %>" tabindex="-1" role="dialog" arialabelledby="myModalLabel">
                     <div class="modal-dialog" role="document">
                       <div class="modal-content">
-                        <div class="modal-header">Producto:<%producto.name %></h4>
+                        <div class="modal-header">Producto:<%produccion.prod.name %></h4>
                           <button type="button" class="close" data-dismiss="modal" arial-label="Close">
                             <span aria-hidden="true"> &times;</span>
                           </button>
                         </div>
-                        <div class="modal-body"><p class="modal-title" id="myModalLabel"> Está seguro de que quiere eliminar este producto?</h4></div>
+                        <div class="modal-body"><p class="modal-title" id="myModalLabel"> Está seguro de que quiere eliminar este registro de elaborado?</h4></div>
                         <div class="modal-footer">
                           <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-                          <form action="/app/producto/<%= producto._id%>?_method=delete" class="link" method="POST">
-                            <input type="hidden" name="nombre" value="<%= producto.nombre %>">
+                          <form action="/app/elaborado/<%= produccion._id%>?_method=delete" class="link" method="POST">
+                            <input type="hidden" name="nombre" value="<%= produccion.prod.nombre %>">
                             <button type="submit" class="btn btn-primary"> Confirmar</button>
                           </form>
                         </div>
@@ -72,7 +76,7 @@
             </tr>
     			<% }); %>
         <% } else{ %>
-          <td colspan="7" class="text-center"> No hay productos para mostrar</td>
+          <td colspan="7" class="text-center"> No hay registros para mostrar</td>
         <% } %>
       </tbody>
     </table>

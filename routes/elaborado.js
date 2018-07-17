@@ -19,9 +19,9 @@ var mongoose = require('mongoose');
 router.get("/elaborado/new",function(req,res,next){
   Produccion.find({})
   .sort({nombre:1})
-  .exec(function(err,produccion){
+  .exec(function(err,producciones){
     if(err){ console.log(err); return; }
-    res.render("app/empaque/elaborado/new.ejs",{ messages: req.flash("error"), produccion:produccion });
+    res.render("app/empaque/elaborado/new.ejs",{ messages: req.flash("error"), producciones:producciones });
   });
 });
 //entradas aprobadas para el producto terminado
@@ -85,7 +85,7 @@ router.route("/produccion/:id")
 });
 
 //ENTRADAS Y SALIDAS COLLECTION ================
-router.get("/produccion",function(req,res,next){
+router.get("/elaborado",function(req,res,next){
   Produccion.find({"tipo": req.query.tipo})
   .populate("prod")
   .sort({hora: -1})
@@ -94,7 +94,7 @@ router.get("/produccion",function(req,res,next){
 		res.render("app/inventarioauxiliar/produccion/index.ejs", { messages: req.flash("error"), produccion:produccion });
   });
 });
-router.post("/produccion",function(req,res,next){
+router.post("/elaborado",function(req,res,next){
   SumRest_Stock(req,function(block){
     if(block == true){
       Regis_Out(req,res);

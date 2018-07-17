@@ -15,6 +15,7 @@ var produccion_schema = new Schema({
   diferencia:{type: Number, required: true},
   diferenciaPor:{type: Number, required: true},
   estado: {type: String},
+  Faltante:{type: Number, required: true},
   prod: {type: Schema.Types.ObjectId, ref: "Producto"},//ref al id de la collecion inventario
 
 });

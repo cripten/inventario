@@ -14,10 +14,23 @@
     	<% } %>
 
     	<!-- MATERIEPRIME FORM -->
-    	<form action="/app/producto" method="post" enctype="multipart/form-data">
+    	<form action="/app/elaborado" method="post" enctype="multipart/form-data">
         <div class="form-group">
-          <label>Producto</label>
-          <input type="text" class="form-control" name="nombre">
+          <label>Producto:</label>
+          <select name="inv" required>
+            <option value="" class="form-control">Seleccionar
+            <% inventarios.forEach(function(inventario){ %>
+              <option value="<%= inventario._id %>" class="form-control"><%= inventario.mp %>
+            <% }); %>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Empacado</label>
+          <input type="number" placeholder="Número de unidades empacadas" class="form-control" name="empacado" >
+        </div>
+        <div class="form-group">
+          <label>Averias</label>
+          <input type="number" placeholder="Número de averias" class="form-control" name="empacado" >
         </div>
     		<button type="submit" class="btn btn-success btn-lg">Guardar</button>
     	</form>
