@@ -18,6 +18,7 @@ var mongoose = require('mongoose');
 // Nuevo elaborado
 router.get("/elaborado/new",function(req,res,next){
   Produccion.find({})
+  .populate("prod")
   .sort({nombre:1})
   .exec(function(err,producciones){
     if(err){ console.log(err); return; }
@@ -94,64 +95,41 @@ router.get("/elaborado",function(req,res,next){
 		res.render("app/inventarioauxiliar/produccion/index.ejs", { messages: req.flash("error"), produccion:produccion });
   });
 });
-router.post("/elaborado",function(req,res,next){
-  SumRest_Stock(req,function(block){
+router.post("/elaborado",validaciones,function(req,res,next){
+  Empacado_Form(req,function(block){
     if(block == true){
-      Regis_Out(req,res);
+      Regis_Elbo(req, res){
     }else{
-      req.flash("error","no se puede realizar la accion debido a que no hay suficiente materia prima en el stock ");
-      res.redirect("/app/produccion/new");//devuelve la cadena de mensajes
+      req.flash("error","no se puede realizar la accion");
+      res.redirect("/app/elaborado/new");//devuelve la cadena de mensajes
     }
   });
-
 });
 module.exports = router;
-
 //=============================METODOS====================================================
 // Metodo  para sumar(entradas) y restar(salidas) del stock  de una materia prima
-function SumRest_Stock(req,callback){
-  var done = 0;
-  var pase = true;
-  Ingrediente.find({"prod": req.body.prod})
-  .populate("prod inv")
-  .exec(function(err, ingredientes){//se busca los ingredientes a base del producto a realizar
-    //se recorre los documentos de ingredientes
-    ingredientes.forEach(function(ingrediente){
-      // se busca el ingrediente en el inventario por el id para hacer operaciones con el stock
-      Inventario.findOne({"_id": ingrediente.inv._id,"bodega":"auxiliar"},function(err,inventario){
-        if(err){ res.redirect("/"); return; }
-        // se calcula la cantidad necesaria de cada ingrediente para hacer el la cantidad del producto
-        var totalProduccion = ingrediente.cantidadG * req.body.cantidad * req.body.pesoCrud;
-        console.log(totalProduccion);
-        console.log(inventario.stock);
-        // si la cantidad a producir es menor a lo que hay en el stock del ingrediente
-        if(inventario.stock > totalProduccion && pase == true){
-          //se resta del stock del ingrediente lo que se va a producir
-          inventario.stock = inventario.stock - totalProduccion;
-          inventario.cantidadTotal = inventario.stock/inventario.presentacion;
-          console.log(inventario.stock);
-          console.log(inventario.cantidadTotal);
-          // se guarda
-          inventario.save(function(err){
-            if(!err){}
-            else{ console.log(err); }
-          });
-        }
-        else{
-          pase = false;
-        }
-        done++;
-        if(done === ingredientes.length){
-          return callback(pase);
-        }
+function Empacado_Form(req,callback){
+  Produccion.findById(req.body.procc)
+  .populate("prod")
+  .exec(function(err,produccion){
+    if(err){ res.redirect("/app"); return; }
+    produccion.empacado = req.body.empacado;
+    produccion.averias = req.body.averias;
+    produccion.diferencia = parseInt(produccion.faltante) + (parseInt(produccion.cantidad) - (parseInt(req.body.empacado) + parseInt(req.body.averias)));
+    if(produccion.faltante < 0 produccion.faltante > produccion.cantidad){
+      produccion.averiasPor = produccion.averias / produccion.cantidad;
+      produccion.save(function(err){
+        return callback(true);
       });
-    });
-
+    }
+    else{
+      return callback(false);
+    }
   });
 };
 
 // Metodo  para guardar registros de entradas y salidas
-function Regis_Out(req, res){
+function Regis_Elbo(req, res){
   var now = Date.now();
   var date = dateFormat(now, "d/m/yyyy");
   var hora = dateFormat(now, "d/m/yyyy, h:MM:ss TT");
@@ -159,15 +137,13 @@ function Regis_Out(req, res){
   var data = {
     fecha: date,
     hora: hora,
-    cantidad: req.body.cantidad,
-    peso: req.body.peso,
-    pesoCrud: req.body.pesoCrud,
-    averias:0,
-    averiasPor:0,
-    diferencia:0,
-    diferenciaPor:0,
-    estado: "pendiente",
-    prod: req.body.prod,
+    empacado: req.body.empacado,
+    averias: req.body.averias,
+    averiasPor:,
+    diferencia:,
+    diferenciaPor:,
+    turno:,
+    proc:
     }
   var produccion = new Produccion(data);
   produccion.save(function(err){
@@ -178,10 +154,8 @@ function Regis_Out(req, res){
 
 function validaciones(req,res,next){
 		//aqui se valida con express-validator
-    req.checkBody('cantidad','Invalid cantidad').notEmpty();
-		req.checkBody('peso','Invalid peso').notEmpty();
-    req.checkBody('peso crudo','Invalid peso crudo').notEmpty();
-
+    req.checkBody('empacado','Invalid cantidad').notEmpty();
+		req.checkBody('averias','Invalid peso').notEmpty();
 
 		var errors = req.validationErrors(true);//almacena todos los errores
 		if(errors){
@@ -191,7 +165,7 @@ function validaciones(req,res,next){
 				console.log(errors[type].msg);
 			}
 			req.flash("error",messages);
-			res.redirect("/app/produccion/new");//devuelve la cadena de mensajes
+			res.redirect("/app/elaborado/new");//devuelve la cadena de mensajes
 		}
 		else{
 			return next();

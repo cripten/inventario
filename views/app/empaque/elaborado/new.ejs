@@ -1,4 +1,4 @@
-<% include ../../partials/layout.ejs %>
+<% include ../../../partials/layout.ejs %>
 <div class="container-fluid">
   <div class="row">
     <div class="col-sm-6 col-sm-offset-3 mx-auto">
@@ -16,11 +16,11 @@
     	<!-- MATERIEPRIME FORM -->
     	<form action="/app/elaborado" method="post" enctype="multipart/form-data">
         <div class="form-group">
-          <label>Producto:</label>
-          <select name="inv" required>
-            <option value="" class="form-control">Seleccionar
-            <% inventarios.forEach(function(inventario){ %>
-              <option value="<%= inventario._id %>" class="form-control"><%= inventario.mp %>
+          <label>Produccion:</label>
+          <select name="procc" required>
+            <option value="" class="form-control">SELECCIONAR
+            <% producciones.forEach(function(produccion){ %>
+              <option value="<%= produccion._id %>" class="form-control"><%= produccion.prod.nombre %>
             <% }); %>
           </select>
         </div>
@@ -30,7 +30,7 @@
         </div>
         <div class="form-group">
           <label>Averias</label>
-          <input type="number" placeholder="Número de averias" class="form-control" name="empacado" >
+          <input type="number" placeholder="Número de averias" class="form-control" name="averias" >
         </div>
     		<button type="submit" class="btn btn-success btn-lg">Guardar</button>
     	</form>

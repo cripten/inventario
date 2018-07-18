@@ -8,6 +8,7 @@ var elaborado_schema = new Schema({
   averiasPor:{type: Number, required: true},
   diferencia:{type: Number, required: true},
   diferenciaPor:{type: Number, required: true},
+  turno:{type: Number, required: true},
   proc: {type: Schema.Types.ObjectId, ref: "Produccion"},
 });
 
