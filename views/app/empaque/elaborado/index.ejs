@@ -24,6 +24,7 @@
     <table class="table">
       <thead>
         <tr>
+          <th>Turno</th>
           <th>Producto</th>
           <th>Cantidad</th>
           <th>Empacado</th>
@@ -35,28 +36,30 @@
         </tr>
       </thead>
       <tbody>
-        <% if(producciones.length > 0){ %>
-          <% producciones.forEach(function(produccion{ %>
+        <% if(elaborados.length > 0){ %>
+          <% elaborados.forEach(function(elaborado){ %>
     				<tr>
-              <td><%= produccion.prod.nombre%> </td>
-              <td><%= produccion.cantidad %></td>
-              <td><%= produccion.empacado %></td>
-              <td><%= produccion.averias %></td>
-              <td><%= produccion.averiasPor %></td>
-              <td><%= produccion.diferencia %></td>
-              <td><%= produccion.diferenciaPor %></td>
+              <td><%= elaborado.turno %> </td>
+              <td><%= elaborado.proc.prod.nombre %> </td>
+              <td><%= elaborado.proc.cantidad %> </td>
+              <td><%= elaborado.empacado %> </td>
+              <td><%= elaborado.averias %> </td>
+              <td><%= elaborado.averiasPor %> </td>
+              <td><%= elaborado.diferencia%> </td>
+              <td><%= elaborado.diferenciaPor %> </td>
+
               <td>
                 <!--Edit button-->
-                 <form action="/app/elaborado/<%= produccion._id %>/edit" method="GET" class="link">
+                 <form action="/app/elaborado/<%= elaborado._id %>/edit" method="GET" class="link">
                    <button type="submit" class="btn btn-warning btn-sm right-space"><i class="fas fa-pencil-alt"></i></button>
                  </form>
                 <!--delete button-->
-                <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#myModal<%= produccion._id %>"><i class="far fa-trash-alt"></i></button>
+                <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#myModal<%= elaborado._id %>"><i class="far fa-trash-alt"></i></button>
 
-                <div class="modal fade" id="myModal<%= produccion._id %>" tabindex="-1" role="dialog" arialabelledby="myModalLabel">
+                <div class="modal fade" id="myModal<%= elaborado._id %>" tabindex="-1" role="dialog" arialabelledby="myModalLabel">
                     <div class="modal-dialog" role="document">
                       <div class="modal-content">
-                        <div class="modal-header">Producto:<%produccion.prod.name %></h4>
+                        <div class="modal-header">Producto:</h4>
                           <button type="button" class="close" data-dismiss="modal" arial-label="Close">
                             <span aria-hidden="true"> &times;</span>
                           </button>
@@ -64,8 +67,8 @@
                         <div class="modal-body"><p class="modal-title" id="myModalLabel"> Está seguro de que quiere eliminar este registro de elaborado?</h4></div>
                         <div class="modal-footer">
                           <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-                          <form action="/app/elaborado/<%= produccion._id%>?_method=delete" class="link" method="POST">
-                            <input type="hidden" name="nombre" value="<%= produccion.prod.nombre %>">
+                          <form action="/app/elaborado/<%= elaborado._id%>?_method=delete" class="link" method="POST">
+                            <input type="hidden" name="nombre" value="<%= elaborado._id %>">
                             <button type="submit" class="btn btn-primary"> Confirmar</button>
                           </form>
                         </div>

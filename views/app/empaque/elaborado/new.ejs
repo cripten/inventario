@@ -17,7 +17,7 @@
     	<form action="/app/elaborado" method="post" enctype="multipart/form-data">
         <div class="form-group">
           <label>Produccion:</label>
-          <select name="procc" required>
+          <select name="proc" required>
             <option value="" class="form-control">SELECCIONAR
             <% producciones.forEach(function(produccion){ %>
               <option value="<%= produccion._id %>" class="form-control"><%= produccion.prod.nombre %>

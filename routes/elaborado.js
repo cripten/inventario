@@ -87,18 +87,24 @@ router.route("/produccion/:id")
 
 //ENTRADAS Y SALIDAS COLLECTION ================
 router.get("/elaborado",function(req,res,next){
-  Produccion.find({"tipo": req.query.tipo})
+  Elaborado.find({})
+  .populate("proc")
+  .exec(function(err,elaborados){
+    if(err){ res.redirect("/app"); return; }
+		res.render("app/empaque/elaborado/index.ejs", { messages: req.flash("error"), elaborados:elaborados });
+  });
+  /*Produccion.find({"tipo": req.query.tipo})
   .populate("prod")
   .sort({hora: -1})
   .exec(function(err,produccion){
     if(err){ res.redirect("/app"); return; }
 		res.render("app/inventarioauxiliar/produccion/index.ejs", { messages: req.flash("error"), produccion:produccion });
-  });
+  });*/
 });
 router.post("/elaborado",validaciones,function(req,res,next){
-  Empacado_Form(req,function(block){
+  Empacado_Form(req,function(block,){
     if(block == true){
-      Regis_Elbo(req, res){
+      //Empacado_Regis(req, res);
     }else{
       req.flash("error","no se puede realizar la accion");
       res.redirect("/app/elaborado/new");//devuelve la cadena de mensajes
@@ -109,28 +115,89 @@ module.exports = router;
 //=============================METODOS====================================================
 // Metodo  para sumar(entradas) y restar(salidas) del stock  de una materia prima
 function Empacado_Form(req,callback){
+
   Produccion.findById(req.body.procc)
   .populate("prod")
   .exec(function(err,produccion){
     if(err){ res.redirect("/app"); return; }
-    produccion.empacado = req.body.empacado;
-    produccion.averias = req.body.averias;
-    produccion.diferencia = parseInt(produccion.faltante) + (parseInt(produccion.cantidad) - (parseInt(req.body.empacado) + parseInt(req.body.averias)));
-    if(produccion.faltante < 0 produccion.faltante > produccion.cantidad){
-      produccion.averiasPor = produccion.averias / produccion.cantidad;
-      produccion.save(function(err){
-        return callback(true);
+    var elaborado = parseInt(req.body.empacado) + parseInt(req.body.averias);
+    var Prediferencia = produccion.diferencia;
+
+    produccion.turno = produccion.turno + 1;
+    //produccion.empacado = req.body.empacado;
+    //produccion.averias = req.body.averias;
+    produccion.diferencia = produccion.diferencia == 0 ? parseInt(produccion.cantidad) - elaborado : parseInt(produccion.diferencia) - elaborado ;
+    // produccion.diferencia = 0;
+    // produccion.diferenciaPor = 0;
+    // produccion.turno = 0;
+    produccion.averiasPor = Prediferencia == 0 ? (req.body.averias / produccion.cantidad) : req.body.averias / Prediferencia;
+    produccion.diferenciaPor = Prediferencia == 0 ? produccion.diferencia / produccion.cantidad : produccion.diferencia / Prediferencia;
+    console.log("dif:"+produccion.diferencia);
+    console.log("averiasPor:"+produccion.averiasPor);
+    console.log("difPor:"+produccion.diferenciaPor);
+    console.log("turno:"+produccion.turno);
+    if(produccion.diferencia >= 0 && produccion.turno <= 3){
+      var now = Date.now();
+      var date = dateFormat(now, "d/m/yyyy");
+      var hora = dateFormat(now, "d/m/yyyy, h:MM:ss TT");
+
+      var data = {
+        fecha: date,
+        hora: hora,
+        empacado: req.body.empacado,
+        averias: req.body.averias,
+        averiasPor: produccion.averiasPor,
+        diferencia: produccion.diferencia,
+        diferenciaPor: produccion.diferenciaPor,
+        turno : produccion.turno,
+        proc: req.body.proc
+        }
+      var elaborado = new Elaborado(data);
+      elaborado.save(function(err){
+        if(!err){ return callback(true); } //res.redirect("/app/produccion"); }
+        else{ console.log(err); }
       });
     }
     else{
       return callback(false);
     }
   });
-};
+}
+
 
 // Metodo  para guardar registros de entradas y salidas
-function Regis_Elbo(req, res){
-  var now = Date.now();
+function Empacado_Regis(req, res){
+  /*Produccion.findById(req.body.procc)
+  .populate("prod")
+  .exec(function(err,produccion){
+    if(err){ res.redirect("/app"); return; }
+    var elaborado = parseInt(req.body.empacado) + parseInt(req.body.averias);
+    var Prediferencia = produccion.diferencia;
+
+    produccion.turno = produccion.turno + 1;
+    produccion.empacado = req.body.empacado;
+    produccion.averias = req.body.averias;
+    produccion.diferencia = produccion.diferencia == 0 ? parseInt(produccion.cantidad) - elaborado : parseInt(produccion.diferencia) - elaborado ;
+    // produccion.diferencia = 0;
+    // produccion.diferenciaPor = 0;
+    // produccion.turno = 0;
+    produccion.averiasPor = Prediferencia == 0 ? (produccion.averias / produccion.cantidad) : produccion.averias / Prediferencia;
+    produccion.diferenciaPor = Prediferencia == 0 ? produccion.diferencia / produccion.cantidad : produccion.diferencia / Prediferencia;
+    console.log("dif:"+produccion.diferencia);
+    console.log("averiasPor:"+produccion.averiasPor);
+    console.log("difPor:"+produccion.diferenciaPor);
+    console.log("turno:"+produccion.turno);
+    if(produccion.diferencia >= 0 && produccion.turno <= 3){
+      produccion.save(function(err){
+        console.log("hola");
+       //return callback(true);
+      });
+    }
+    else{
+      return callback(false);
+    }
+  });
+  /*var now = Date.now();
   var date = dateFormat(now, "d/m/yyyy");
   var hora = dateFormat(now, "d/m/yyyy, h:MM:ss TT");
 
@@ -149,7 +216,7 @@ function Regis_Elbo(req, res){
   produccion.save(function(err){
     if(!err){ res.redirect("/app/produccion"); }
     else{ console.log(err); }
-  });
+  });*/
 }
 
 function validaciones(req,res,next){

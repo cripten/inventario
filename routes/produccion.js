@@ -128,6 +128,7 @@ function Regis_Out(req, res){
     diferencia:0,
     diferenciaPor:0,
     estado: "pendiente",
+    turno: 0,
     prod: req.body.prod,
     }
   var produccion = new Produccion(data);
