@@ -120,20 +120,24 @@ function Empacado_Regis(req,callback){
   .populate("prod")
   .exec(function(err,produccion){
     if(err){ res.redirect("/app"); return; }
+
     var elaborado = parseInt(req.body.empacado) + parseInt(req.body.averias);
+    var PrediferenciaPor = produccion.diferenciaPor * produccion.turno;
+    var PreaveriasPor =   produccion.averiasPor * produccion.turno;
     var Prediferencia = produccion.diferencia;
 
     produccion.turno = produccion.turno + 1;
-    produccion.empacado = req.body.empacado;
-    produccion.averias = req.body.averias;
+    produccion.empacado = produccion.empacado + parseInt(req.body.empacado);
+    produccion.averias = produccion.averias + parseInt(req.body.averias);
     produccion.diferencia = produccion.diferencia == 0 ? parseInt(produccion.cantidad) - elaborado : parseInt(produccion.diferencia) - elaborado ;
+    // produccion.empacado = req.body.empacado;
+    // produccion.averias = req.body.averias;
     // produccion.averiasPor = 0;
     // produccion.diferencia = 0;
     // produccion.diferenciaPor = 0;
     // produccion.turno = 0;
-    produccion.averiasPor = Prediferencia == 0 ? (req.body.averias / produccion.cantidad) : req.body.averias / Prediferencia;
-    produccion.diferenciaPor = Prediferencia == 0 ? produccion.diferencia / produccion.cantidad : produccion.diferencia / Prediferencia;
-
+    produccion.averiasPor = Prediferencia == 0 ? Number((req.body.averias / produccion.cantidad).toFixed(1)) : ((req.body.averias / Prediferencia)* 100 ).toFixed(1);
+    produccion.diferenciaPor = Prediferencia == 0 ? Number(((req.body.diferencia / produccion.cantidad)* 100).toFixed(1)) : ((req.body.diferencia / Prediferencia)* 100 ).toFixed(1);
     if(produccion.diferencia >= 0 && produccion.turno <= 3){
       var now = Date.now();
       var date = dateFormat(now, "d/m/yyyy");
@@ -153,6 +157,8 @@ function Empacado_Regis(req,callback){
       var elaborado = new Elaborado(data);
       elaborado.save(function(err){
         if(!err){
+          produccion.averiasPor = Number(((produccion.averiasPor +  PreaveriasPor) / produccion.turno).toFixed(1));
+          produccion.diferenciaPor = Number(((produccion.diferenciaPor +  PrediferenciaPor) / produccion.turno).toFixed(1));
           produccion.save(function(err){
             if(!err){
               return callback(true);
