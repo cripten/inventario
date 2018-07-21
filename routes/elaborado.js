@@ -102,9 +102,9 @@ router.get("/elaborado",function(req,res,next){
   });*/
 });
 router.post("/elaborado",validaciones,function(req,res,next){
-  Empacado_Form(req,function(block,){
+  Empacado_Regis(req,function(block){//,produccion){
     if(block == true){
-      //Empacado_Regis(req, res);
+      res.redirect("/app/elaborado");
     }else{
       req.flash("error","no se puede realizar la accion");
       res.redirect("/app/elaborado/new");//devuelve la cadena de mensajes
@@ -114,9 +114,9 @@ router.post("/elaborado",validaciones,function(req,res,next){
 module.exports = router;
 //=============================METODOS====================================================
 // Metodo  para sumar(entradas) y restar(salidas) del stock  de una materia prima
-function Empacado_Form(req,callback){
+function Empacado_Regis(req,callback){
 
-  Produccion.findById(req.body.procc)
+  Produccion.findById(req.body.proc)
   .populate("prod")
   .exec(function(err,produccion){
     if(err){ res.redirect("/app"); return; }
@@ -124,18 +124,16 @@ function Empacado_Form(req,callback){
     var Prediferencia = produccion.diferencia;
 
     produccion.turno = produccion.turno + 1;
-    //produccion.empacado = req.body.empacado;
-    //produccion.averias = req.body.averias;
+    produccion.empacado = req.body.empacado;
+    produccion.averias = req.body.averias;
     produccion.diferencia = produccion.diferencia == 0 ? parseInt(produccion.cantidad) - elaborado : parseInt(produccion.diferencia) - elaborado ;
+    // produccion.averiasPor = 0;
     // produccion.diferencia = 0;
     // produccion.diferenciaPor = 0;
     // produccion.turno = 0;
     produccion.averiasPor = Prediferencia == 0 ? (req.body.averias / produccion.cantidad) : req.body.averias / Prediferencia;
     produccion.diferenciaPor = Prediferencia == 0 ? produccion.diferencia / produccion.cantidad : produccion.diferencia / Prediferencia;
-    console.log("dif:"+produccion.diferencia);
-    console.log("averiasPor:"+produccion.averiasPor);
-    console.log("difPor:"+produccion.diferenciaPor);
-    console.log("turno:"+produccion.turno);
+
     if(produccion.diferencia >= 0 && produccion.turno <= 3){
       var now = Date.now();
       var date = dateFormat(now, "d/m/yyyy");
@@ -154,7 +152,13 @@ function Empacado_Form(req,callback){
         }
       var elaborado = new Elaborado(data);
       elaborado.save(function(err){
-        if(!err){ return callback(true); } //res.redirect("/app/produccion"); }
+        if(!err){
+          produccion.save(function(err){
+            if(!err){
+              return callback(true);
+            }
+          });
+        }
         else{ console.log(err); }
       });
     }
@@ -166,7 +170,7 @@ function Empacado_Form(req,callback){
 
 
 // Metodo  para guardar registros de entradas y salidas
-function Empacado_Regis(req, res){
+function Empacado_form(req, res){
   /*Produccion.findById(req.body.procc)
   .populate("prod")
   .exec(function(err,produccion){
