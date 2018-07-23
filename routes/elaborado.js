@@ -88,7 +88,7 @@ router.route("/produccion/:id")
 //ENTRADAS Y SALIDAS COLLECTION ================
 router.get("/elaborado",function(req,res,next){
   Elaborado.find({})
-  .populate("proc")
+  .populate("proc prod")
   .exec(function(err,elaborados){
     if(err){ res.redirect("/app"); return; }
 		res.render("app/empaque/elaborado/index.ejs", { messages: req.flash("error"), elaborados:elaborados });
@@ -136,8 +136,8 @@ function Empacado_Regis(req,callback){
     // produccion.diferencia = 0;
     // produccion.diferenciaPor = 0;
     // produccion.turno = 0;
-    produccion.averiasPor = Prediferencia == 0 ? Number((req.body.averias / produccion.cantidad).toFixed(1)) : ((req.body.averias / Prediferencia)* 100 ).toFixed(1);
-    produccion.diferenciaPor = Prediferencia == 0 ? Number(((req.body.diferencia / produccion.cantidad)* 100).toFixed(1)) : ((req.body.diferencia / Prediferencia)* 100 ).toFixed(1);
+    produccion.averiasPor = Prediferencia == 0 ? Number(((req.body.averias / produccion.cantidad)* 100).toFixed(1)) : ((req.body.averias / Prediferencia)* 100 ).toFixed(1);
+    produccion.diferenciaPor = Prediferencia == 0 ? Number(((produccion.diferencia / produccion.cantidad)* 100).toFixed(1)) : ((produccion.diferencia / Prediferencia)* 100 ).toFixed(1);
     if(produccion.diferencia >= 0 && produccion.turno <= 3){
       var now = Date.now();
       var date = dateFormat(now, "d/m/yyyy");
@@ -152,7 +152,8 @@ function Empacado_Regis(req,callback){
         diferencia: produccion.diferencia,
         diferenciaPor: produccion.diferenciaPor,
         turno : produccion.turno,
-        proc: req.body.proc
+        proc: req.body.proc,
+        prod: produccion.prod._id
         }
       var elaborado = new Elaborado(data);
       elaborado.save(function(err){

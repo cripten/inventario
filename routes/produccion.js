@@ -81,12 +81,13 @@ function SumRest_Stock(req,callback){
         if(err){ res.redirect("/"); return; }
         // se calcula la cantidad necesaria de cada ingrediente para hacer el la cantidad del producto
         var totalProduccion = ingrediente.cantidadG * req.body.cantidad * req.body.pesoCrud;
+        totalProduccion = Math.trunc(totalProduccion);
         console.log(totalProduccion);
         console.log(inventario.stock);
         // si la cantidad a producir es menor a lo que hay en el stock del ingrediente
         if(inventario.stock > totalProduccion && pase == true){
           //se resta del stock del ingrediente lo que se va a producir
-          inventario.stock = inventario.stock - Math.trunc(totalProduccion);//trunca el numero para que no lleve los decimales
+          inventario.stock = inventario.stock - totalProduccion;//trunca el numero para que no lleve los decimales
           inventario.cantidadTotal = inventario.stock/inventario.presentacion;
           console.log(inventario.stock);
           console.log(inventario.cantidadTotal);

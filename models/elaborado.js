@@ -10,6 +10,7 @@ var elaborado_schema = new Schema({
   diferenciaPor:{type: Number, required: true},
   turno:{type: Number, required: true},
   proc: {type: Schema.Types.ObjectId, ref: "Produccion"},
+  prod: {type: Schema.Types.ObjectId, ref: "Producto"}
 });
 
 module.exports = mongoose.model("Elaborado",elaborado_schema);

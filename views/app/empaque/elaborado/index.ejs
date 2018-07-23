@@ -40,7 +40,7 @@
           <% elaborados.forEach(function(elaborado){ %>
     				<tr>
               <td><%= elaborado.turno %> </td>
-              <td><%= elaborado.proc.prod.nombre %> </td>
+              <td><%= elaborado.prod.nombre %> X <%= elaborado.proc.peso %> </td>
               <td><%= elaborado.proc.cantidad %> </td>
               <td><%= elaborado.empacado %> </td>
               <td><%= elaborado.averias %> </td>
@@ -79,7 +79,7 @@
             </tr>
     			<% }); %>
         <% } else{ %>
-          <td colspan="7" class="text-center"> No hay registros para mostrar</td>
+          <td colspan="9" class="text-center"> No hay registros para mostrar</td>
         <% } %>
       </tbody>
     </table>

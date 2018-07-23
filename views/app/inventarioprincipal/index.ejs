@@ -23,9 +23,12 @@
 
     <br>
     <br>
+    <br>
+    <br>
+    <br>
     <caption>Inventario actual</caption>
     <table class="table">
-      <thead>
+      <thead class="header" id="myHeader">
         <tr>
           <th>Producto</th>
           <th>Bodega Principal</th>
@@ -36,6 +39,17 @@
           <th>Valor Total G($)</th>
           <th>Acciones</th>
         </tr>
+        <br>
+        <!--<tr class="head_fijo">
+          <th class="head_fijo1" >Producto</th>
+          <th class="head_fijo2" >Bodega Principal</th>
+          <th class="head_fijo3" >Presentacion(G)</th>
+          <th class="head_fijo4" >Valor Unitario($)</th>
+          <th class="head_fijo5" >Valor/Gramo($)</th>
+          <th class="head_fijo6" >Stock</th>
+          <th class="head_fijo7" >Valor Total G($)</th>
+          <th class="head_fijo8" >Acciones</th>
+        </tr>-->
       </thead>
       <tbody>
         <% if(inventarios.length > 0){ %>
@@ -97,3 +111,17 @@
     </table>
   </div>
 </div>
+<script>
+window.onscroll = function() {myFunction()};
+
+var header = document.getElementById("myHeader");
+var sticky = header.offsetTop;
+
+function myFunction() {
+  if (window.pageYOffset > 370) {
+    header.classList.add("sticky");
+  } else {
+    header.classList.remove("sticky");
+  }
+}
+</script>

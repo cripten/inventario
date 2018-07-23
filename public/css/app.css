@@ -63,13 +63,68 @@ header{
 	  color: white;
     margin-left: 20px;
     font-size: 18px;
-    font-weight: 100;
 }
 
 .right-space{
 	margin-right:0.5em;
 }
+/*fijar encabezado de tabla*/
+.sticky {
+  position: fixed;
+  top: 0;
+  width: 100%;
+}
 
+.sticky th{
+  margin-left: 100px;
+  left: 100px;
+}
+
+
+.head_fijo{
+  position:relative;
+  margin-top: 10px;
+  top:10px;
+  }
+.head_fijo1{
+  position:fixed;// hace que siempre este fijo aunque hagas scroll
+  left:200px;//fija la posición en horizontal left, puedes usar right
+  }
+.head_fijo2{
+  position:fixed;// hace que siempre este fijo aunque hagas scroll
+  margin-left:0px;
+  left:28.1%;
+}
+.head_fijo3{
+  position:fixed;// hace que siempre este fijo aunque hagas scroll
+  margin-left:0px;
+  left:40%;
+  }
+.head_fijo4{
+  position:fixed;// hace que siempre este fijo aunque hagas scroll
+  margin-left:0px;
+  left:51%;
+}
+.head_fijo5{
+  position:fixed;// hace que siempre este fijo aunque hagas scroll
+  margin-left:0px;
+  left:62%;
+  }
+.head_fijo6{
+  position:fixed;// hace que siempre este fijo aunque hagas scroll
+  margin-left:0px;
+  left:72.3%;
+}
+.head_fijo7{
+  position:fixed;// hace que siempre este fijo aunque hagas scroll
+  margin-left:0px;
+  left:77.4%;
+}
+.head_fijo8{
+  position:fixed;// hace que siempre este fijo aunque hagas scroll
+  margin-left:0px;
+  left:88%;
+}
 /*para los botenes submit con esta clase*/
 form.link{
 	display: inline-block;
