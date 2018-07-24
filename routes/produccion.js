@@ -119,6 +119,7 @@ function Regis_Out(req, res){
   var data = {
     fecha: date,
     hora: hora,
+    fecha_ven: "vacio",
     cantidad: req.body.cantidad,
     peso: req.body.peso,
     pesoCrud: req.body.pesoCrud,

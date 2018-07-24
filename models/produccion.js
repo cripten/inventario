@@ -5,6 +5,7 @@ var Schema = mongoose.Schema;
 var produccion_schema = new Schema({
   fecha:{type: String, required: true},
   hora: {type: String},
+  fecha_ven:{type: String},
   cantidad: {type: Number, required: true},
   peso: {type: Number, required: true},
   pesoCrud:{type: Number, required: true},

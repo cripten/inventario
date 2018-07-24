@@ -1,0 +1,89 @@
+<% include ../../partials/layout.ejs %>
+<div class="container-fluid">
+  <div class="col-md-12">
+      <h1 class="text-center pacifico"> Panel de administración de Despacho</h1>
+      <hr class="cust-hr">
+      <ul class="nav nav-tabs nav-justified">
+        <li class="nav-item">
+          <a class="nav-link active" href="/app/despacho">Despacho</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/app/despacho/entrada">Entradas</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/app/despacho/registro">Registro de despachos</a>
+        </li>
+      </ul>
+    </div>
+
+    <br>
+    <a href="/app/productoTer/new" class="btn btn-primary btn-lg active"><i class="fas fa-plus"></i> Nuevo Despacho </a>
+    <p  class="money"><i class="fas fa-dollar-sign"></i>Total cajas: <span class="badge badge-success">$<%= totalCaja %></span></p>
+    <p  class="money"><i class="fas fa-dollar-sign"></i>Total bolsas: <span class="badge badge-success">$<%= totalBolsa %></span></p>
+    <p  class="money"><i class="fas fa-dollar-sign"></i>Total general: <span class="badge badge-success">$<%= totalGeneral %></span></p>
+
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+
+    <caption>Despacho actual</caption>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Producto/th>
+          <th>Cantidad</th>
+          <th>Fecha de vencimiento</th>
+          <th>Cajas</th>
+          <th>Unidades</th>
+          <th>Bolsas</th>
+          <th>Unidades</th>
+          <th>Total</th>
+
+        </tr>
+      </thead>
+      <tbody>
+        <% if(despachos.length > 0){ %>
+          <% despachos.forEach(function(despacho){ %>
+    				<tr>
+              <td><%= despacho.prodTer.nombre %></td>
+              <td><%= despacho.cantidad %></td>
+              <td><%= despacho.averiasPor %></td>
+              <td><%= despacho.diferenciaPor %></td>
+              <td>
+                <!--Edit button-->
+                 <form action="/app/despacho/<%= despacho._id %>/edit" method="GET" class="link">
+                   <button type="submit" class="btn btn-warning btn-sm"><i class="fas fa-pencil-alt"></i></button>
+                 </form>
+                <!--delete button-->
+                <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#myModal<%= despacho._id %>"><i class="far fa-trash-alt"></i></button>
+
+                <div class="modal fade" id="myModal<%= despacho._id %>" tabindex="-1" role="dialog" arialabelledby="myModalLabel">
+                    <div class="modal-dialog" role="document">
+                      <div class="modal-content">
+                        <div class="modal-header">Despacho:</h4>
+                          <button type="button" class="close" data-dismiss="modal" arial-label="Close">
+                            <span aria-hidden="true"> &times;</span>
+                          </button>
+                        </div>
+                        <div class="modal-body"><p class="modal-title" id="myModalLabel"> Está seguro de que quiere eliminar este despacho</h4></div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                          <form action="/app/despacho/<%= despacho._id%>?_method=delete" class="link" method="POST">
+                            <button type="submit" class="btn btn-primary"> Confirmar</button>
+                          </form>
+                        </div>
+                      </div>
+                    </div>
+                </div>
+              </td>
+            </tr>
+    			<% }); %>
+        <% } else{ %>
+          <td colspan="5" class="text-center"> No hay productos para mostrar</td>
+        <% } %>
+      </tbody>
+    </table>
+  </div>
+</div>

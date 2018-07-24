@@ -3,6 +3,9 @@ var mongoose = require("mongoose");
 var Schema = mongoose.Schema;
 
 var elaborado_schema = new Schema({
+  fecha:{type: String, required: true},
+  hora:{type: String, required: true},
+  fecha_ven:{type: String, required: true},
   empacado:{type: Number, required: true},
   averias:{type: Number, required: true},
   averiasPor:{type: Number, required: true},

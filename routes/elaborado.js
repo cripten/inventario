@@ -39,16 +39,18 @@ router.get("/elaborado/entrada",function(req,res,next){
 router.post("/elaborado/allow",function(req,res,next){
   Produccion.findById(req.body.allow)
   .populate("prod")
-  .sort({nombre:1})
+  .sort({estado:1})
   .exec(function(err,produccion){
     produccion.estado = "aprobado";
-    productoTer = produccion.prod.nombre+" X "+produccion.peso;
-    console.log(productoTer);
-    /*produccion.save(function(err){
-      productoTer = produccion.prod.nombre+" X "+produccion.peso;
+    produccion.save(function(err){
+      var productoTer = produccion.prod.nombre+" X "+produccion.peso;
       ProductoTer.findOne({"nombre":productoTer},function(err,producto){
         if(err){ res.redirect("/app"); return; }
-        producto.stock = producto.stock + parseInt(produccion.empacado);
+        console.log(producto);
+        producto.stock = parseInt(producto.stock) + parseInt(produccion.empacado);
+        console.log("+"+produccion.empacado);
+        console.log(producto.stock);
+        producto.averias = produccion.averiasPor;
         producto.averiasPor = produccion.averiasPor;
         producto.diferenciaPor = produccion.diferenciaPor;
         producto.save(function(err){
@@ -56,11 +58,8 @@ router.post("/elaborado/allow",function(req,res,next){
         });
       });
     });
-    produ
-    if(err){ console.log(err); return; }
-    res.render("app/empaque/entrada.ejs",{ messages: req.flash("error"), producciones:producciones });*/
   });
-});
+ });
 
 router.route("/produccion/:id")
 .delete(function(req,res,next){
@@ -125,6 +124,8 @@ function Empacado_Regis(req,callback){
     var PrediferenciaPor = produccion.diferenciaPor * produccion.turno;
     var PreaveriasPor =   produccion.averiasPor * produccion.turno;
     var Prediferencia = produccion.diferencia;
+    var venc = req.body.fecha_ven.replace(/-/g, '\/');
+    var fecha_ven = dateFormat(venc, "d/m/yyyy");
 
     produccion.turno = produccion.turno + 1;
     produccion.empacado = produccion.empacado + parseInt(req.body.empacado);
@@ -136,8 +137,10 @@ function Empacado_Regis(req,callback){
     // produccion.diferencia = 0;
     // produccion.diferenciaPor = 0;
     // produccion.turno = 0;
+    // produccion.fecha_ven = "vacio";
     produccion.averiasPor = Prediferencia == 0 ? Number(((req.body.averias / produccion.cantidad)* 100).toFixed(1)) : ((req.body.averias / Prediferencia)* 100 ).toFixed(1);
     produccion.diferenciaPor = Prediferencia == 0 ? Number(((produccion.diferencia / produccion.cantidad)* 100).toFixed(1)) : ((produccion.diferencia / Prediferencia)* 100 ).toFixed(1);
+    produccion.fecha_ven = fecha_ven;
     if(produccion.diferencia >= 0 && produccion.turno <= 3){
       var now = Date.now();
       var date = dateFormat(now, "d/m/yyyy");
@@ -146,6 +149,7 @@ function Empacado_Regis(req,callback){
       var data = {
         fecha: date,
         hora: hora,
+        fecha_ven: fecha_ven,
         empacado: req.body.empacado,
         averias: req.body.averias,
         averiasPor: produccion.averiasPor,
