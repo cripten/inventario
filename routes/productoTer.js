@@ -51,8 +51,8 @@ router.route("/productoTer")
 .get(function(req,res,next){
   //verifica que la colleccion a mostrar cumpla los requisitos el usuario que la creo y y muestre los archivos de la bodega por la que se solicita
   //req.query.nombre_variable_a_mostrar esto enviado por get por el ?nombre_variable_a_mostrar=valor
-  ProductoTer.find()
-  .sort({mp:1})
+  ProductoTer.find({})
+  .sort({nombre:1})
   .exec(function(err,productos){
     if(err){res.redirect("/"); return;}
     res.render("app/empaque/index.ejs", { productos: productos });
@@ -64,8 +64,11 @@ router.route("/productoTer")
   {
   	nombre : req.body.nombre,
   	stock : 0,
+    averias: 0,
   	averiasPor : 0,
+    diferencia: 0,
   	diferenciaPor : 0,
+    cont: 0,
   }
 	var productoTer = new ProductoTer(data)
 	productoTer.save(function(err,result){

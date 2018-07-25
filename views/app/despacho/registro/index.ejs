@@ -1,0 +1,82 @@
+<% include ../../../partials/layout.ejs %>
+<div class="container-fluid">
+  <div class="col-md-12">
+      <h1 class="text-center pacifico"> Panel de administración de Empaque</h1>
+      <hr class="cust-hr">
+      <ul class="nav nav-tabs nav-justified">
+        <li class="nav-item">
+          <a class="nav-link" href="/app/despacho">Despacho</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/app/despacho/entrada">Entradas</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" href="/app/despacho/registro">Registro de despachos</a>
+        </li>
+      </ul>
+    </div>
+
+    <br>
+    <a href="/app/elaborado/new" class="btn btn-primary btn-lg active"><i class="fas fa-plus"></i> Nuevo ingreso</a>
+    <br>
+    <br>
+    <caption>Registros de despacho actual</caption>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Producto</th>
+          <th>Cantidad</th>
+          <th>Cajas</th>
+          <th>Unidades empacadas</th>
+          <th>Bolsas %</th>
+          <th>Unidades empacadas</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% if(registros.length > 0){ %>
+          <% registros.forEach(function(registro){ %>
+    				<tr>
+              <td><%= registro.desp.nombre %></td>
+              <td><%= registro.cantidad %></td>
+              <td><%= registro.caja %></td>
+              <td><%= registro.unidadCaja %></td>
+              <td><%= registro.Bolsa %></td>
+              <td><%= registro.unidadBolsa %></td>
+              <td>
+                <!--Edit button-->
+                 <form action="/app/despacho/registro/<%= despacho._id %>/edit" method="GET" class="link">
+                   <button type="submit" class="btn btn-warning btn-sm right-space"><i class="fas fa-pencil-alt"></i></button>
+                 </form>
+                <!--delete button-->
+                <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#myModal<%= despacho._id %>"><i class="far fa-trash-alt"></i></button>
+
+                <div class="modal fade" id="myModal<%= despacho._id %>" tabindex="-1" role="dialog" arialabelledby="myModalLabel">
+                    <div class="modal-dialog" role="document">
+                      <div class="modal-content">
+                        <div class="modal-header">Producto:</h4>
+                          <button type="button" class="close" data-dismiss="modal" arial-label="Close">
+                            <span aria-hidden="true"> &times;</span>
+                          </button>
+                        </div>
+                        <div class="modal-body"><p class="modal-title" id="myModalLabel"> Está seguro de que quiere eliminar este registro de elaborado?</h4></div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                          <form action="/app/despacho/<%= despacho._id%>?_method=delete" class="link" method="POST">
+                            <input type="hidden" name="nombre" value="<%= despacho._id %>">
+                            <button type="submit" class="btn btn-primary"> Confirmar</button>
+                          </form>
+                        </div>
+                      </div>
+                    </div>
+                </div>
+              </td>
+            </tr>
+    			<% }); %>
+        <% } else{ %>
+          <td colspan="9" class="text-center"> No hay registros para mostrar</td>
+        <% } %>
+      </tbody>
+    </table>
+  </div>
+</div>

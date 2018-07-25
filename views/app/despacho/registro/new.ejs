@@ -1,0 +1,50 @@
+<% include ../../../partials/layout.ejs %>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-sm-6 col-sm-offset-3 mx-auto">
+
+    	<h1><i class="fas fa-sign-in-alt"></i>Nuevo registro de despacho</h1>
+
+    	<% if(messages.length > 0) { %>
+    		<div class="alert alert-danger">
+    			<% messages.forEach(function(message) { %>
+    				<p><%= message %></p>
+    			<% }); %>
+    		</div>
+    	<% } %>
+
+    	<!-- MATERIEPRIME FORM -->
+    	<form action="/app/elaborado" method="post" enctype="multipart/form-data">
+        <div class="form-group">
+          <label>Orden:</label>
+          <select name="proc" required>
+            <option value="" class="form-control">SELECCIONAR
+            <% producciones.forEach(function(produccion){ %>
+              <option value="<%= produccion._id %>" class="form-control"><%= produccion.prod.nombre %> X <%= produccion.prod.peso %>
+            <% }); %>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Caja:</label>
+          <input type="number" placeholder="Número de cajas" class="form-control" name="caja" >
+        </div>
+        <div class="form-group">
+          <label>Unidades empacadas:</label>
+          <input type="number" placeholder="Cajas " class="form-control" name="unidadCaja" >
+        </div>
+        <div class="form-group">
+          <label>Bolsa</label>
+          <input type="number" placeholder="Número de averias" class="form-control" name="bolsa" >
+        </div>
+        <div class="form-group">
+          <label>Unidades empacadas:</label>
+          <input type="number" placeholder="Bolsas" class="form-control" name="unidadBolsa" >
+        </div>
+    		<button type="submit" class="btn btn-success btn-lg">Guardar</button>
+    	</form>
+
+    	<hr>
+    </div>
+  </div>
+  </div>
+</div>

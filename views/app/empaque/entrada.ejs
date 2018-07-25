@@ -5,10 +5,10 @@
       <hr class="cust-hr">
       <ul class="nav nav-tabs nav-justified">
         <li class="nav-item">
-          <a class="nav-link active" href="/app/productoTer">Producto terminado</a>
+          <a class="nav-link" href="/app/productoTer">Producto terminado</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="/app/elaborado/entrada">Entradas</a>
+          <a class="nav-link active" href="/app/elaborado/entrada">Entradas</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="/app/elaborado">Elaborado</a>
@@ -16,6 +16,14 @@
       </ul>
     </div>
     <br>
+    <br>
+    <% if(messages.length > 0) { %>
+      <div class="alert alert-danger">
+        <% messages.forEach(function(message) { %>
+          <p><%= message %></p>
+        <% }); %>
+      </div>
+    <% } %>
     <br>
     <caption>Produccion actual</caption>
     <table class="table">

@@ -8,7 +8,7 @@ var despacho_schema = new Schema({
   unidadCaja:{type: Number, required: true},
   unidadbolsa:{type: Number, required: true},
   total:{type: Number, required: true},
-  prodTer: {type: Schema.Types.ObjectId, ref: "ProductoTer"}
+  prodTer: {type: Schema.Types.ObjectId, ref: "ProductoTer"},
   proc: {type: Schema.Types.ObjectId, ref: "Produccion"},
 });
 

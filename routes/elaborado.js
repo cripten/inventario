@@ -41,23 +41,33 @@ router.post("/elaborado/allow",function(req,res,next){
   .populate("prod")
   .sort({estado:1})
   .exec(function(err,produccion){
-    produccion.estado = "aprobado";
-    produccion.save(function(err){
-      var productoTer = produccion.prod.nombre+" X "+produccion.peso;
-      ProductoTer.findOne({"nombre":productoTer},function(err,producto){
-        if(err){ res.redirect("/app"); return; }
-        console.log(producto);
-        producto.stock = parseInt(producto.stock) + parseInt(produccion.empacado);
-        console.log("+"+produccion.empacado);
-        console.log(producto.stock);
-        producto.averias = produccion.averiasPor;
-        producto.averiasPor = produccion.averiasPor;
-        producto.diferenciaPor = produccion.diferenciaPor;
-        producto.save(function(err){
-          res.redirect("/app/productoTer");
+    if(produccion.estado == "pendiente"){
+      produccion.estado = "aprobado";
+      produccion.save(function(err){
+        var productoTer = produccion.prod.nombre+" X "+produccion.peso;
+        ProductoTer.findOne({"nombre":productoTer},function(err,producto){
+          if(err){ res.redirect("/app"); return; }
+          producto.stock = parseInt(producto.stock) + parseInt(producto.stock) + parseInt(produccion.empacado);
+          producto.averias = parseInt(producto.averias) + parseInt(produccion.averias);
+          producto.averiasPor = parseInt(producto.averiasPor) + parseInt(produccion.averiasPor);
+          producto.diferencia = parseInt(producto.diferencia) + parseInt(produccion.diferencia);
+          producto.diferenciaPor = produccion.diferenciaPor;
+          // producto.stock = 0;
+          // producto.averias = 0;
+          // producto.averiasPor = 0;
+          // producto.diferencia = 0;
+          // producto.diferenciaPor = 0;
+          producto.save(function(err){
+            if(!err){res.redirect("/app/productoTer");}
+            else{console.log(err);}
+          });
         });
       });
-    });
+    }else{
+      req.flash("error","no se  puede aprobar más de una vez un empaque");
+      res.redirect("/app/elaborado/entrada");
+    }
+
   });
  });
 
@@ -66,7 +76,6 @@ router.route("/produccion/:id")
   SumRest_Stock(req, function(block){
     console.log(block);
     if(block){
-      console.log("hola");
       req.flash("error","no se puede hacer la devolucion");
       res.redirect("/app/inOut?tipo="+req.body.tipo);
     }
