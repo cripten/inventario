@@ -27,7 +27,7 @@ var productoRoute = require("./routes/producto");
 var ingredienteRoute = require("./routes/ingrediente");
 var productoTerRoute = require("./routes/productoTer");
 var elaboradoRoute = require("./routes/elaborado");
-//var despachoRoute = require("./routes/despacho");
+var despachoRoute = require("./routes/despacho");
 var despachoRegisRoute = require("./routes/despachoRegis");
 
 var configDB = require('./config/database.js');
@@ -68,7 +68,7 @@ app.use("/app", productoRoute);
 app.use("/app", ingredienteRoute);
 app.use("/app", productoTerRoute);
 app.use("/app", elaboradoRoute);
-//app.use("/app", despachoRoute);
+app.use("/app", despachoRoute);
 app.use("/app", despachoRegisRoute);
 
 

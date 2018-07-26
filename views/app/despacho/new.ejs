@@ -14,10 +14,15 @@
     	<% } %>
 
     	<!-- MATERIEPRIME FORM -->
-    	<form action="/app/productoTer" method="post" enctype="multipart/form-data">
+    	<form action="/app/despacho" method="post" enctype="multipart/form-data">
         <div class="form-group">
-          <label>Producto</label>
-          <input type="text" class="form-control" name="nombre"  onkeyup="mayus(this);">
+          <label>Producto Terminado:</label>
+          <select name="prodTer" required>
+            <option value="" class="form-control">SELECCIONAR
+            <% productos.forEach(function(productoTer){ %>
+              <option value="<%= productoTer._id %>" class="form-control"><%= productoTer.nombre %>
+            <% }); %>
+          </select>
         </div>
     		<button type="submit" class="btn btn-success btn-lg">Guardar</button>
     	</form>
@@ -27,8 +32,3 @@
   </div>
   </div>
 </div>
-<script type="text/javascript">
-  function mayus(e) {
-    e.value = e.value.toUpperCase();
-  }
-</script>

@@ -11,13 +11,13 @@
           <a class="nav-link" href="/app/despacho/entrada">Entradas</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link active" href="/app/despacho/registro">Registro de despachos</a>
+          <a class="nav-link active" href="/app/despachoRegis">Registro de despachos</a>
         </li>
       </ul>
     </div>
 
     <br>
-    <a href="/app/elaborado/new" class="btn btn-primary btn-lg active"><i class="fas fa-plus"></i> Nuevo ingreso</a>
+    <a href="/app/despachoRegis/new" class="btn btn-primary btn-lg active"><i class="fas fa-plus"></i> Nuevo registro</a>
     <br>
     <br>
     <caption>Registros de despacho actual</caption>
@@ -26,6 +26,8 @@
         <tr>
           <th>Producto</th>
           <th>Cantidad</th>
+          <th>lote</th>
+          <th>Fecha de vencimiento</th>
           <th>Cajas</th>
           <th>Unidades empacadas</th>
           <th>Bolsas %</th>
@@ -39,6 +41,8 @@
     				<tr>
               <td><%= registro.desp.nombre %></td>
               <td><%= registro.cantidad %></td>
+              <th><%= registro.proc.lote %></th>
+              <th><%= registro.proc.fecha_ven %></th>
               <td><%= registro.caja %></td>
               <td><%= registro.unidadCaja %></td>
               <td><%= registro.Bolsa %></td>

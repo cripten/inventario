@@ -2,6 +2,7 @@ var express = require("express");
 var router = express.Router();
 var Despacho = require("../models/despacho");
 var Produccion = require("../models/produccion");
+var DespachoRegis = require("../models/despachoRegis");
 var InOut= require("../models/inOut");
 var flash = require("connect-flash");
 var find_inOut = require("../middlewares/find_inOut");
@@ -9,14 +10,14 @@ var dateFormat = require("dateformat");
 var mongoose = require('mongoose');
 //InOut =========================
 // Nueva entrada o salida
-router.get("/despacho/registro/new",function(req,res,next){
+router.get("/despachoRegis/new",function(req,res,next){
   Produccion.find({})
   .populate("prod")
   .sort({'prod.nombre':1})
   .exec(function(err,producciones){
     if(err){ console.log(err); return; }
     console.log(producciones);
-    //res.render("app/inventarioprincipal/"+req.query.tipo+"/new.ejs",{ messages: req.flash("error"), inventarios:inventarios });
+    res.render("app/despacho/registro/new.ejs",{ messages: req.flash("error"), producciones:producciones });
   });
 });
 //Consultar historial de producto
@@ -91,22 +92,80 @@ router.route("/inOut/:id")
     }
   });
 });
-
+*/
 //ENTRADAS Y SALIDAS COLLECTION ================
-router.get("/inOut",function(req,res,next){
-  InOut.find({"tipo": req.query.tipo})
-  .populate("inv")
-  .sort({estado: -1})
-  .exec(function(err,inOut){
-    console.log(inOut);
+router.route("/despachoRegis")
+.get(function(req,res,next){
+  DespachoRegis.find({})
+  .populate("desp proc")
+  .exec(function(err,registros){
+    console.log(registros);
     if(err){ res.redirect("/app"); return; }
 
-		res.render("app/inventario"+req.query.bodega+"/"+req.query.tipo+"/index.ejs", { messages: req.flash("error"), inOut:inOut });
+    res.render("app/despacho/registro/index.ejs", { messages: req.flash("error"), registros:registros });
   });
-});
+})
+.post(function(req,res,next){
+  var total = parseInt(req.body.caja * req.body.UnidadCaja ) + parseInt(req.body.bolsa * req.body.UnidadBolsa ); // saca el tal empacado
+  Produccion.findOne({"_id":req.body.proc})
+  .populate("prod")
+  .exec(function(err, produccion){
+    var nombreProd = produccion.prod.nombre + " X " + produccion.peso;
+    //verifica si lo que se empaco en empaque es mayor o igual a lo que hay en despacho
+    if(total > req.produccion.empacado){
+      Despacho.findOne({"nombre": nombreProd },function(err,despacho){
+        if(err){res.redirect("/"); return;}
+        despacho.caja = req.body.caja;
+        despacho.unidadCaja = req.body.UnidadCaja;
+        despacho.bolsa = req.body.bolsa;
+        despacho.unidadBolsa = req.body.UnidadBolsa;
+        despacho.total =   parseInt(despacho.total) + parseInt(total);
+        despacho.save(function(err){
+          if(!err){
+            data = {
+              caja: req.body.caja,
+              bolsa: req.body.caja,
+              unidadCaja: req.body.UnidadCaja,
+              unidadBolsa: req.body.UnidadBolsa,
+              total: total,
+              desp: despacho._id ,
+              proc: req.body.proc
+            }
+            despachoRegis = new DespachoRegis(data);
+            despachoRegis.save(function(err){
+              if(!err){
+                res.redirect("/app/despachoRegis");
+              }
+              else{
+                console.log(err);
+              }
+            });
+          }else{
+            console.log(err);}
+        });
+      });
+    }
+  });
 
-router.post("/inOut",validaciones,function(req,res,next){
-  SumRest_Stock(req, function(block,valorUni){
+
+
+  /*  var cont = 1;
+    var totalGeneral = 0;
+    if(despachos){
+      despachos.forEach(function(despacho){
+        cont++;
+        totalGeneral = totalGeneral + despacho.total;
+        if(cont > despachos.length){
+          var string = numeral(totalGeneral).format('0,0.0000');
+          res.render("app/despacho/index.ejs", { despachos: despachos, totalGeneral: string});
+        }
+      });
+    }
+    else{
+      res.render("app/despacho/index.ejs", { despachos: {}, totalGeneral: {} });
+    }
+  });
+  /*SumRest_Stock(req, function(block,valorUni){
     if(block){
       req.flash("error","no se puede sacar del inventario actual");
       res.redirect("/app/inOut?tipo="+req.body.tipo+"&bodega="+req.body.bodega);
@@ -114,8 +173,11 @@ router.post("/inOut",validaciones,function(req,res,next){
     else{
       Regis_InOut(req,res,valorUni);
     }
-  });
+  });*/
 });
+
+
+/*
 //routa para aprobar la entradas y llenar el inventario auxiliar con la entrada
 router.post("/InOutAux",function(req,res,next){
   InOut.findOne({"_id": req.body.allow})

@@ -11,20 +11,15 @@
           <a class="nav-link" href="/app/despacho/entrada">Entradas</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="/app/despacho/registro">Registro de despachos</a>
+          <a class="nav-link" href="/app/despachoRegis">Registro de despachos</a>
         </li>
       </ul>
     </div>
 
     <br>
-    <a href="/app/productoTer/new" class="btn btn-primary btn-lg active"><i class="fas fa-plus"></i> Nuevo Despacho </a>
-    <p  class="money"><i class="fas fa-dollar-sign"></i>Total cajas: <span class="badge badge-success">$<%= totalCaja %></span></p>
-    <p  class="money"><i class="fas fa-dollar-sign"></i>Total bolsas: <span class="badge badge-success">$<%= totalBolsa %></span></p>
-    <p  class="money"><i class="fas fa-dollar-sign"></i>Total general: <span class="badge badge-success">$<%= totalGeneral %></span></p>
+    <a href="/app/despacho/new" class="btn btn-primary btn-lg active"><i class="fas fa-plus"></i> Nuevo Despacho </a>
+    <p  class="money"><i class="fas fa-dollar-sign"></i>Total general: <span class="badge badge-success"><% if(totalGeneral > 0){ %> $<%= totalGeneral %> <% }else{ %>0<% } %></span></p>
 
-    <br>
-    <br>
-    <br>
     <br>
     <br>
 
@@ -32,14 +27,13 @@
     <table class="table">
       <thead>
         <tr>
-          <th>Producto/th>
-          <th>Cantidad</th>
-          <th>Fecha de vencimiento</th>
+          <th>Producto</th>
           <th>Cajas</th>
           <th>Unidades</th>
           <th>Bolsas</th>
           <th>Unidades</th>
           <th>Total</th>
+          <th>Acciones</th>
 
         </tr>
       </thead>
@@ -48,9 +42,11 @@
           <% despachos.forEach(function(despacho){ %>
     				<tr>
               <td><%= despacho.prodTer.nombre %></td>
-              <td><%= despacho.cantidad %></td>
-              <td><%= despacho.averiasPor %></td>
-              <td><%= despacho.diferenciaPor %></td>
+              <td><%= despacho.caja %></td>
+              <td><%= despacho.unidadCaja %></td>
+              <td><%= despacho.bolsa %></td>
+              <td><%= despacho.unidadBolsa %></td>
+              <td><%= despacho.total %></td>
               <td>
                 <!--Edit button-->
                  <form action="/app/despacho/<%= despacho._id %>/edit" method="GET" class="link">
@@ -81,7 +77,7 @@
             </tr>
     			<% }); %>
         <% } else{ %>
-          <td colspan="5" class="text-center"> No hay productos para mostrar</td>
+          <td colspan="8" class="text-center"> No hay productos para mostrar</td>
         <% } %>
       </tbody>
     </table>
