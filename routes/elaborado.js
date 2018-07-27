@@ -48,13 +48,11 @@ router.post("/elaborado/allow",function(req,res,next){
         if(err){ res.redirect("/app"); return; }
         console.log(producto);
         producto.stock = parseInt(producto.stock) + parseInt(produccion.empacado);
-        console.log("+"+produccion.empacado);
-        console.log(producto.stock);
         producto.averias = produccion.averiasPor;
         producto.averiasPor = produccion.averiasPor;
         producto.diferenciaPor = produccion.diferenciaPor;
         producto.save(function(err){
-          res.redirect("/app/productoTer");
+          if(!err){  res.redirect("/app/productoTer");}
         });
       });
     });
