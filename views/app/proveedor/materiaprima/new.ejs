@@ -1,0 +1,67 @@
+<% include ../../../partials/layout.ejs %>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-sm-6 col-sm-offset-3 mx-auto">
+
+    	<h1><i class="fas fa-sign-in-alt"></i>Nuevo Recurso</h1>
+
+    	<% if(messages.length > 0) { %>
+    		<div class="alert alert-danger">
+    			<% messages.forEach(function(message) { %>
+    				<p><%= message %></p>
+    			<% }); %>
+    		</div>
+    	<% } %>
+
+    	<!-- IN FORM -->
+    	<form action="/app/materiaprima" method="post">
+        <div class="form-group">
+          <label>Proveedor:</label>
+          <select name="provee" required>
+            <option value="" class="form-control">Seleccionar
+            <% proveedores.forEach(function(proveedor){ %>
+              <option value="<%= proveedor._id %>" class="form-control"><%= proveedor.nombre %>
+            <% }); %>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Nombre</label>
+          <input type="text" placeholder="Nombre del producto" class="form-control" name="nombre" onkeyup="mayus(this);" >
+        </div>
+        <div class="form-group">
+          <label>Marca</label>
+          <input type="text"  placeholder="Nombre de la marca" class="form-control" name="marca" onkeyup="mayus(this);" >
+        </div>
+        <div class="form-group">
+          <label>Presentacion</label>
+          <input type="text" step="0.01" placeholder="Cantidad en gramos" class="form-control" name="presentacion" >
+        </div>
+        <div class="form-group">
+          <label>Valor Unitario</label>
+          <input type="number" step="0.01" placeholder="Precio Unitario" class="form-control" name="valorUni">
+        </div>
+        <button type="submit" class="btn btn-success btn-lg">Guardar </button>
+    	</form>
+
+    	<hr>
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript">
+  const number = document.querySelector('.number');
+
+  function formatNumber (n) {
+    n = String(n).replace(/\D/g, "");
+    return n === '' ? n : Number(n).toLocaleString();
+  }
+  number.addEventListener('keyup', (e) => {
+    const element = e.target;
+    const value = element.value;
+    element.value = formatNumber(value);
+  });
+  function mayus(e) {
+    e.value = e.value.toUpperCase();
+  }
+
+</script>

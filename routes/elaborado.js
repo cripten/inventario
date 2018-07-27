@@ -61,7 +61,7 @@ router.post("/elaborado/allow",function(req,res,next){
             if(!err){res.redirect("/app/productoTer");}
             else{console.log(err);}
           });
-        });
+        })
       });
     }else{
       req.flash("error","no se  puede aprobar más de una vez un empaque");

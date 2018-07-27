@@ -1,0 +1,100 @@
+<% include ../../partials/layout.ejs %>
+<div class="container-fluid">
+  <div class="col-md-12">
+      <h1 class="text-center pacifico"> Panel de administración Bodega Principal</h1>
+      <hr class="cust-hr">
+      <ul class="nav nav-tabs nav-justified">
+        <li class="nav-item">
+          <a class="nav-link" href="/app/inventario?bodega=principal">Materia prima</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/app/inOut?tipo=entrada&bodega=principal">Entradas</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link " href="/app/inOut?tipo=salida&bodega=principal">Salidas</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" href="/app/proveedor">Proveedores</a>
+        </li>
+      </ul>
+    </div>
+
+    <br>
+    <a href="/app/proveedor/new" class="btn btn-primary btn-lg active"><i class="fas fa-plus"></i> Nueva proveedor</a>
+
+    <br>
+    <br>
+    <caption>Proveedores actuales</caption>
+    <table class="table">
+      <thead class="header" id="myHeader">
+        <tr>
+          <th>Nombre</th>
+          <th>Productos</th>
+          <th>Acciones</th>
+        </tr>
+        <br>
+      </thead>
+      <tbody>
+        <% if(proveedores.length > 0){ %>
+          <% proveedores.forEach(function(proveedor){ %>
+    				  <tr>
+              <td><%= proveedor.nombre %> </td>
+              <td>
+                <!--historial button-->
+                <form action="/app/proveedor/productos" method="POST" class="link">
+                  <input type="hidden" name="provee" value="<%= proveedor._id %>">
+                  <button type="submit" class="btn btn-success btn-sm right-space"><i class="fas fa-clipboard-list"></i> VER</button><!--edit button-->
+                </form>
+              </td>
+              <td>
+                <!--Edit button-->
+                 <form action="/app/proveedor/<%= proveedor._id %>/edit" method="GET" class="link">
+                   <button type="submit" class="btn btn-warning btn-sm right-space"><i class="fas fa-pencil-alt"></i></button>
+                 </form>
+                <!--delete button-->
+                <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#myModal<%= proveedor._id %>"><i class="far fa-trash-alt"></i></button>
+
+                <div class="modal fade" id="myModal<%= proveedor._id %>" tabindex="-1" role="dialog" arialabelledby="myModalLabel">
+                    <div class="modal-dialog" role="document">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h4 class="modal-title" id="myModalLabel">Proveedor:<%proveedor.nombre %></h4>
+                          <button type="button" class="close" data-dismiss="modal" arial-label="Close">
+                            <span aria-hidden="true"> &times;</span>
+                          </button>
+                        </div>
+                        <div class="modal-body"><p class="modal-title" id="myModalLabel"> Está seguro de que quiere eliminar este proveedor?</h4></div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                          <form action="/app/proveedor/<%= proveedor._id%>?_method=delete" class="link" method="POST">
+                            <input type="hidden" name="mp" value="<%= proveedor.nombre %>">
+                            <button type="submit" class="btn btn-primary"> Confirmar</button>
+                          </form>
+                        </div>
+                      </div>
+                    </div>
+                </div>
+              </td>
+            </tr>
+    			<% }); %>
+        <% } else{ %>
+          <td colspan="3" class="text-center"> No hay materia prima para mostrar</td>
+        <% } %>
+      </tbody>
+    </table>
+  </div>
+</div>
+<script>
+window.onscroll = function() {myFunction()};
+
+var header = document.getElementById("myHeader");
+var sticky = header.offsetTop;
+
+function myFunction() {
+  if (window.pageYOffset > 370) {
+    header.classList.add("sticky");
+  } else {
+    header.classList.remove("sticky");
+  }
+}
+</script>

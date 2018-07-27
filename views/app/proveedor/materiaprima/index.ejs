@@ -1,0 +1,72 @@
+<% include ../../../partials/layout.ejs %>
+<div class="container-fluid">
+    <div class="col-md-12">
+      <h1 class="text-center pacifico"> Materia prima de proveedores </h1>
+      <hr class="cust-hr">
+    </div>
+
+    <br>
+    <a href="/app/proveedor" class="btn btn-primary btn-lg"><i class="fas fa-plus"></i> Volver</a>
+    <a href="/app/materiaprima/new" class="btn btn-primary btn-lg"><i class="fas fa-plus"></i> Agregar Producto</a>
+    <br>
+    <br>
+    <caption>Productos actuales</caption>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Proveedor</th>
+          <th>Producto</th>
+          <th>marca</th>
+          <th>Presentacion</th>
+          <th>Valor Unitario($)</th>
+          <th>Valor/Gramo($)</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% if(materiaprimas.length > 0){ %>
+          <% materiaprimas.forEach(function(materiaprima){ %>
+      			<tr>
+              <td><%= materiaprima.provee.nombre %></td>
+              <td><%= materiaprima.nombre %></td>
+              <td><%= materiaprima.marca %></td>
+              <td><%= materiaprima.presentacion %></td>
+              <td><%= materiaprima.valorUni %></td>
+              <td><%= materiaprima.valorG %></td>
+              <td>
+                <!--Edit button-->
+                <form action="/app/materiarima/<%= materiaprima._id %>/edit" method="GET" class="link">
+                  <button type="submit" class="btn btn-warning btn-sm right-space"><i class="fas fa-pencil-alt"></i></button>
+                </form>
+                  <!--delete and back stock to inventary button-->
+                <button type="button" class="btn btn-danger btn-sm right-space" data-toggle="modal" data-target="#myModal<%= materiaprima._id %>"><i class="far fa-trash-alt"></i></button>
+
+                <div class="modal fade" id="myModal<%= materiaprima._id %>" tabindex="-1" role="dialog" arialabelledby="myModalLabel">
+                    <div class="modal-dialog" role="document">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h4 class="modal-title" id="myModalLabel">Materiaprima:<%= materiaprima.nombre %></h4>
+                          <button type="button" class="close" data-dismiss="modal" arial-label="Close">
+                            <span aria-hidden="true"> &times;</span>
+                          </button>
+                        </div>
+                        <div class="modal-body"><p class="modal-title" id="myModalLabel"> Está seguro que de que quiere eliminar esta materiaprima?</h4></div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                          <form action="/app/materiaprima/<%= materiaprima._id%>?_method=delete" class="link" method="POST">
+                            <button type="submit" class="btn btn-primary"> Confirmar</button>
+                          </form>
+                        </div>
+                      </div>
+                    </div>
+                </div>
+              </td>
+            </tr>
+      		<% }); %>
+        <% } else{ %>
+          <td colspan="3" class="text-center"> No hay materiaprima para mostrar</td>
+        <% } %>
+      </tbody>
+      </table>
+  </div>
+</div>

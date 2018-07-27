@@ -1,0 +1,33 @@
+<% include ../../partials/layout.ejs %>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-sm-6 col-sm-offset-3 mx-auto">
+
+    	<h1><i class="fas fa-sign-in-alt"></i>Nuevo proveedor</h1>
+
+    	<% if(messages.length > 0) { %>
+    		<div class="alert alert-danger">
+    			<% messages.forEach(function(message) { %>
+    				<p><%= message %></p>
+    			<% }); %>
+    		</div>
+    	<% } %>
+
+    	<!-- MATERIEPRIME FORM -->
+    	<form action="/app/proveedor" method="post" enctype="multipart/form-data">
+        <div class="form-group">
+          <label>Proveedor</label>
+          <input type="text" placeholder="Nombre del proveedor" class="form-control" name="nombre" onkeyup="mayus(this);">
+        </div>
+        <button type="submit" class="btn btn-success btn-lg">Guardar </button>
+      </form>
+    	<hr>
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript">
+  function mayus(e) {
+    e.value = e.value.toUpperCase();
+  }
+</script>
