@@ -1,0 +1,73 @@
+<% include ../../partials/layout.ejs %>
+<div class="container-fluid">
+  <div class="col-md-12">
+      <h1 class="text-center pacifico"> Panel de administración de Productos</h1>
+      <hr class="cust-hr">
+      <ul class="nav nav-tabs nav-justified">
+        <li class="nav-item">
+          <a class="nav-link active" href="/app/producto">Productos</a>
+        </li>
+      </ul>
+    </div>
+    <br>
+    <a href="/app/producto/new" class="btn btn-primary btn-lg active"><i class="fas fa-plus"></i> Nueva Orden</a>
+    <a href="/app/ingrediente/new" class="btn btn-primary btn-lg active"><i class="fas fa-plus"></i> Agregar ingredientes</a>
+    <br>
+    <br>
+    <caption>Clientes actuales</caption>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Codigo</th>
+          <th>Nombre</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% if(productos.length > 0){ %>
+          <% productos.forEach(function(producto){ %>
+    				<tr>
+              <td><%= cliente.codigo %> </td>
+              <td><%= cliente.nombre %></td>
+              <td><!--Ingredientes button-->
+                <form action="/app/orden" method="GET" class="link mx-auto">
+                  <input type="hidden" name="prodid" value="<%= producto.id %>">
+                  <button type="submit" class="btn btn-success btn-sm"><i class="fas fa-clipboard-list"></i></button><!--edit button-->
+                </form>
+              </td>
+              <td>
+                <!--Edit button-->
+                 <form action="/app/cliente/<%= cliente._id %>/edit" method="GET" class="link">
+                   <button type="submit" class="btn btn-warning btn-sm right-space"><i class="fas fa-pencil-alt"></i></button>
+                 </form>
+                <!--delete button-->
+                <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#myModal<%= cliente._id %>"><i class="far fa-trash-alt"></i></button>
+
+                <div class="modal fade" id="myModal<%= cliente._id %>" tabindex="-1" role="dialog" arialabelledby="myModalLabel">
+                    <div class="modal-dialog" role="document">
+                      <div class="modal-content">
+                        <div class="modal-header">Cliente:<%= cliente.nombre %></h4>
+                          <button type="button" class="close" data-dismiss="modal" arial-label="Close">
+                            <span aria-hidden="true"> &times;</span>
+                          </button>
+                        </div>
+                        <div class="modal-body"><p class="modal-title" id="myModalLabel"> Está seguro de que quiere eliminar este cliente?</h4></div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                          <form action="/app/cliente/<%= cliente._id%>?_method=delete" class="link" method="POST">
+                            <button type="submit" class="btn btn-primary"> Confirmar</button>
+                          </form>
+                        </div>
+                      </div>
+                    </div>
+                </div>
+              </td>
+            </tr>
+    			<% }); %>
+        <% } else{ %>
+          <td colspan="3" class="text-center"> No hay clientes para mostrar</td>
+        <% } %>
+      </tbody>
+    </table>
+  </div>
+</div>
