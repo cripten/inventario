@@ -1,9 +1,9 @@
-<% include ../../partials/link.ejs %>
+<% include ../../partials/layout.ejs %>
 <div class="container-fluid">
   <div class="row">
     <div class="col-sm-6 col-sm-offset-3 mx-auto">
 
-    	<h1><i class="fas fa-sign-in-alt"></i>Editar Recurso</h1>
+    	<h1><i class="fas fa-sign-in-alt"></i>Nuevo Cliente</h1>
 
     	<% if(messages.length > 0) { %>
     		<div class="alert alert-danger">
@@ -14,11 +14,36 @@
     	<% } %>
 
     	<!-- MATERIEPRIME FORM -->
-    	<form action="/app/producto/<%= producto._id %>?_method=PUT" method="post" enctype="multipart/form-data">
+    	<form action="/app/cliente/<%= cliente._id %>?_method=PUT"method="post" enctype="multipart/form-data">
         <div class="form-group">
-          <label>Producto</label>
-          <input type="text" class="form-control" name="nombre" value="<%= producto.nombre %>" onkeyup="mayus(this);">
+          <label>Codigo</label>
+          <input type="text" placeholder="Codigo del cliente" class="form-control" name="codigo" value="<%= cliente.codigo %>" onkeyup="mayus(this);">
         </div>
+        <div class="form-group">
+          <label>Nombre</label>
+          <input type="text" placeholder="Nombre del cliente" class="form-control" name="nombre" value="<%= cliente.nombre %>" onkeyup="mayus(this);">
+        </div>
+        <div class="form-group">
+          <label>Nit</label>
+          <input type="text" placeholder="Nit del cliente" class="form-control" name="nit" value="<%= cliente.nit %>" onkeyup="mayus(this);">
+        </div>
+        <div class="form-group">
+          <label>Ciudad</label>
+          <input type="text" placeholder="Ciudad del cliente" class="form-control" name="ciudad" value="<%= cliente.ciudad %>" onkeyup="mayus(this);">
+        </div>
+        <div class="form-group">
+          <label>Direccion</label>
+          <input type="text" placeholder="Direccion del cliente" class="form-control" name="direccion" value="<%= cliente.direccion %>" onkeyup="mayus(this);">
+        </div>
+        <div class="form-group">
+          <label>Telefono</label>
+          <input type="text" placeholder="Direccion del cliente" class="form-control" name="telefono" value="<%= cliente.telefono %>" onkeyup="mayus(this);">
+        </div>
+        <div class="form-group">
+          <label>Horario</label>
+          <textarea name="horario"  class="form-control" placeholder="Horario de disponibilidad" cols="30" rows="2" onkeyup="mayus(this);"><%= cliente.horario %></textarea>
+        </div>
+
     		<button type="submit" class="btn btn-success btn-lg">Guardar</button>
     	</form>
 

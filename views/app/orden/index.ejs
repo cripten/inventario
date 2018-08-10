@@ -1,0 +1,91 @@
+<% include ../../partials/layout.ejs %>
+<div class="container-fluid">
+  <div class="col-md-12">
+      <h1 class="text-center pacifico"> Panel de administración de Productos</h1>
+      <hr class="cust-hr">
+      <ul class="nav nav-tabs nav-justified">
+        <li class="nav-item">
+          <a class="nav-link" href="/app/producto">Productos</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/app/cliente">Clientes</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" href="/app/orden">Ordenes</a>
+        </li>
+      </ul>
+    </div>
+    <br>
+    <a href="/app/orden/new" class="btn btn-primary btn-lg active"><i class="fas fa-plus"></i> Nueva Orden</a>
+    <br>
+    <br>
+    <caption>Ordenes actuales</caption>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Fecha</th>
+          <th>Cliente</th>
+          <th>Codigo</th>
+          <th>Producto</th>
+          <th>Peso</th>
+          <th>Peso Crudo</th>
+          <th>cantidad</th>
+          <th>Orden de compra</th>
+          <th>Fecha de produccion</th>
+          <th>Fecha de entrega</th>
+          <th>Estado</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% if(ordenes.length > 0){ %>
+          <% ordenes.forEach(function(orden){ %>
+    				<tr>
+              <td><%= orden.fecha %> </td>
+              <td><%= orden.client.nombre %></td>
+              <td><%= orden.codigo %> </td>
+              <td><%= orden.prod.nombre %></td>
+              <td><%= orden.peso %> </td>
+              <td><%= orden.pesoCrud %> </td>
+              <td><%= orden.cantidad %></td>
+              <td><%= orden.ord_comp %> </td>
+              <td><%= orden.fecha_prod %></td>
+              <td><%= orden.fecha_ent %> </td>
+              <td><%= orden.estado %> </td>
+              <td>
+                <!--Edit button-->
+                 <form action="/app/orden/<%= orden._id %>/edit" method="GET" class="link">
+                   <button type="submit" class="btn btn-warning btn-sm right-space"><i class="fas fa-pencil-alt"></i></button>
+                 </form>
+                <!--delete button-->
+                <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#myModal<%= orden._id %>"><i class="far fa-trash-alt"></i></button>
+
+                <div class="modal fade" id="myModal<%= orden._id %>" tabindex="-1" role="dialog" arialabelledby="myModalLabel">
+                    <div class="modal-dialog" role="document">
+                      <div class="modal-content">
+                        <div class="modal-header">orden:<%= orden.ord_comp %></h4>
+                          <button type="button" class="close" data-dismiss="modal" arial-label="Close">
+                            <span aria-hidden="true"> &times;</span>
+                          </button>
+                        </div>
+                        <div class="modal-body"><p class="modal-title" id="myModalLabel"> Está seguro de que quiere eliminar esta orden?</h4></div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                          <form action="/app/orden/<%= orden._id%>?_method=delete" class="link" method="POST">
+                            <input type="hidden" name="id" value="<%= orden._id %>">
+                            <button type="submit" class="btn btn-primary"> Confirmar</button>
+                          </form>
+                        </div>
+                      </div>
+                    </div>
+                </div>
+              </td>
+            </tr>
+    			<% }); %>
+        <% } else{ %>
+          <td colspan="12" class="text-center"> No hay ordenes para mostrar</td>
+        <% } %>
+      </tbody>
+    </table>
+  </div>
+</div>

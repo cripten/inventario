@@ -5,13 +5,18 @@
       <hr class="cust-hr">
       <ul class="nav nav-tabs nav-justified">
         <li class="nav-item">
-          <a class="nav-link active" href="/app/producto">Productos</a>
+          <a class="nav-link" href="/app/producto">Productos</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" href="/app/cliente">Clientes</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/app/orden">Ordenes</a>
         </li>
       </ul>
     </div>
     <br>
-    <a href="/app/producto/new" class="btn btn-primary btn-lg active"><i class="fas fa-plus"></i> Nueva Orden</a>
-    <a href="/app/ingrediente/new" class="btn btn-primary btn-lg active"><i class="fas fa-plus"></i> Agregar ingredientes</a>
+    <a href="/app/cliente/new" class="btn btn-primary btn-lg active"><i class="fas fa-plus"></i> Nuevo Cliente</a>
     <br>
     <br>
     <caption>Clientes actuales</caption>
@@ -20,21 +25,25 @@
         <tr>
           <th>Codigo</th>
           <th>Nombre</th>
+          <th>Nit</th>
+          <th>Ciudad</th>
+          <th>Direccion</th>
+          <th>Telefono</th>
+          <th>Horario</th>
           <th>Acciones</th>
         </tr>
       </thead>
       <tbody>
-        <% if(productos.length > 0){ %>
-          <% productos.forEach(function(producto){ %>
+        <% if(clientes.length > 0){ %>
+          <% clientes.forEach(function(cliente){ %>
     				<tr>
               <td><%= cliente.codigo %> </td>
               <td><%= cliente.nombre %></td>
-              <td><!--Ingredientes button-->
-                <form action="/app/orden" method="GET" class="link mx-auto">
-                  <input type="hidden" name="prodid" value="<%= producto.id %>">
-                  <button type="submit" class="btn btn-success btn-sm"><i class="fas fa-clipboard-list"></i></button><!--edit button-->
-                </form>
-              </td>
+              <td><%= cliente.nit %> </td>
+              <td><%= cliente.ciudad %></td>
+              <td><%= cliente.direccion %> </td>
+              <td><%= cliente.telefono %></td>
+              <td><%= cliente.horario %> </td>
               <td>
                 <!--Edit button-->
                  <form action="/app/cliente/<%= cliente._id %>/edit" method="GET" class="link">
@@ -55,6 +64,7 @@
                         <div class="modal-footer">
                           <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
                           <form action="/app/cliente/<%= cliente._id%>?_method=delete" class="link" method="POST">
+                            <input type="hidden" name="id" value="<%= cliente._id %>">
                             <button type="submit" class="btn btn-primary"> Confirmar</button>
                           </form>
                         </div>
@@ -65,7 +75,7 @@
             </tr>
     			<% }); %>
         <% } else{ %>
-          <td colspan="3" class="text-center"> No hay clientes para mostrar</td>
+          <td colspan="8" class="text-center"> No hay clientes para mostrar</td>
         <% } %>
       </tbody>
     </table>

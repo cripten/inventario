@@ -24,6 +24,11 @@ router.route("/cliente/:id")
 .put(validaciones,function(req,res,next){
   res.locals.cliente.codigo = req.body.codigo;
   res.locals.cliente.nombre = req.body.nombre;
+  res.locals.cliente.nit = req.body.nit;
+  res.locals.cliente.ciudad = req.body.ciudad;
+  res.locals.cliente.direccion = req.body.direccion;
+  res.locals.cliente.telefono = req.body.telefono;
+  res.locals.cliente.horario = req.body.horario;
   res.locals.cliente.save(function(err){
     if(!err){
 			res.redirect("/app/cliente");
@@ -36,7 +41,7 @@ router.route("/cliente/:id")
 })
 .delete(function(req,res,next){
   // Inventario.findOneAndRemove({ _id:req.params.id},function(err){
-  Cliente.remove({ nombre :req.body.id},function(err){
+  Cliente.remove({ _id :req.body.id},function(err){
     if(!err){
 			res.redirect("/app/cliente");
 		}
@@ -70,7 +75,7 @@ router.route("/cliente")
     telefono : req.body.telefono,
     horario: req.body.horario
   }
-	var cliente = new Cliente(data)
+	var cliente = new Cliente(data);
 	cliente.save(function(err,result){
     if(!err){
       res.redirect("/app/cliente");
@@ -88,6 +93,11 @@ function validaciones(req,res,next){
 		//aqui se valida con express-validator
     req.checkBody('codigo','Invalid codigo').notEmpty();
 		req.checkBody('nombre','Invalid nombre').notEmpty();
+    req.checkBody('nit','Invalid nit').notEmpty();
+    req.checkBody('ciudad','Invalid ciudad').notEmpty();
+    req.checkBody('direccion','Invalid direccion').notEmpty();
+    req.checkBody('telefono','Invalid telefono').notEmpty();
+    req.checkBody('horario','Invalid horario').notEmpty();
 
 		var errors = req.validationErrors(true);//almacena todos los errores
 		if(errors){

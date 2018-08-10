@@ -1,0 +1,73 @@
+<% include ../../partials/layout.ejs %>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-sm-6 col-sm-offset-3 mx-auto">
+
+    	<h1><i class="fas fa-sign-in-alt"></i>Editar orden</h1>
+
+    	<% if(messages.length > 0) { %>
+    		<div class="alert alert-danger">
+    			<% messages.forEach(function(message) { %>
+    				<p><%= message %></p>
+    			<% }); %>
+    		</div>
+    	<% } %>
+
+    	<!-- MATERIEPRIME FORM -->
+    		<form action="/app/orden/<%= orden._id %>?_method=PUT"method="post" enctype="multipart/form-data">
+        <div class="form-group">
+          <label>Cliente:</label>
+          <select name="client" required>
+            <option value="" class="form-control">SELECCIONAR
+            <% clientes.forEach(function(cliente){ %>
+              <option value="<%= cliente._id %>" class="form-control"><%= cliente.nombre %>
+            <% }); %>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Codigo</label>
+          <input type="text" placeholder="Codigo de la orden" class="form-control" name="codigo"  onkeyup="mayus(this);">
+        </div>
+        <div class="form-group">
+          <label>Producto:</label>
+          <select name="prod" required>
+            <option value="" class="form-control">SELECCIONAR
+            <% productos.forEach(function(producto){ %>
+              <option value="<%= producto._id %>" class="form-control"><%= producto.nombre %>
+            <% }); %>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Peso</label>
+          <input type="number" placeholder="Peso en gramos" class="form-control" name="peso">
+        </div>
+        <div class="form-group">
+          <label>Peso crudo</label>
+          <input type="number" placeholder="Peso en gramos" class="form-control" name="pesoCrud">
+        </div>
+        <div class="form-group">
+          <label>Cantidad</label>
+          <input type="number" placeholder="Cantidad en unidades"class="form-control" name="cantidad">
+        </div>
+        <div class="form-group">
+          <label>Fecha de produccion</label>
+          <input class="form-control" type="date" name="fecha_prod" required>
+        </div>
+        <div class="form-group">
+          <label>Fecha de entrega</label>
+          <input class="form-control" type="date" name="fecha_ent" required>
+        </div>
+
+    		<button type="submit" class="btn btn-success btn-lg">Guardar</button>
+    	</form>
+
+    	<hr>
+    </div>
+  </div>
+  </div>
+</div>
+<script type="text/javascript">
+  function mayus(e) {
+    e.value = e.value.toUpperCase();
+  }
+</script>
