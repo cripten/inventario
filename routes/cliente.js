@@ -25,6 +25,7 @@ router.route("/cliente/:id")
   res.locals.cliente.codigo = req.body.codigo;
   res.locals.cliente.nombre = req.body.nombre;
   res.locals.cliente.nit = req.body.nit;
+  res.locals.cliente.email = req.body.email;
   res.locals.cliente.ciudad = req.body.ciudad;
   res.locals.cliente.direccion = req.body.direccion;
   res.locals.cliente.telefono = req.body.telefono;
@@ -70,6 +71,7 @@ router.route("/cliente")
   	codigo : req.body.codigo,
     nombre : req.body.nombre,
     nit : req.body.nit,
+    email : req.body.nit,
     ciudad : req.body.ciudad,
   	direccion : req.body.direccion,
     telefono : req.body.telefono,

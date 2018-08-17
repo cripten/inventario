@@ -106,6 +106,7 @@ router.route("/inventario")
     valorDif: 0,
     rango: req.body.rango,
   	bodega : "principal",
+    estado: "inactivo"
   },
   {
     mp : req.body.mp,
@@ -120,7 +121,23 @@ router.route("/inventario")
     valorDif: 0,
     rango: req.body.rango,
     bodega : "auxiliar",
-  }
+    estado: "inactivo"
+  },
+  {
+    mp : req.body.mp,
+    cantidadTotal : 0,
+    presentacion : req.body.presentacion,
+    valorUni : 0,
+    valorG : 0,
+    stock : 0,
+    valorTotalG : 0,
+    stockReal: 0,
+    diferencia: 0,
+    valorDif: 0,
+    rango: req.body.rango,
+    bodega : "pedido",
+    estado: "inactivo"
+  },
 ];
 //recorre el arreglo producto por producto
 var done = 0;

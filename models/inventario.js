@@ -14,7 +14,8 @@ var inventario_schema = new Schema({
   diferencia: {type: Number},
   valorDif: {type: Number},
   rango:{type: Number},
-  bodega: {type: String, required: true}
+  bodega: {type: String, required: true},
+  estado: {type: String}
 
 });
 inventario_schema.methods.entradaPrin = function(cantidad,presentacion){

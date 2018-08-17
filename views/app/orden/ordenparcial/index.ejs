@@ -1,0 +1,48 @@
+<% include ../../../partials/layout.ejs %>
+<div class="container">
+    <div class="col-md-12">
+      <h1 class="text-center pacifico"> Entradas bodega principal </h1>
+      <hr class="cust-hr">
+      <a href="/app/producto" class="btn btn-primary btn-lg active"><i class="fas fa-plus"></i> volver</a>
+    </div>
+
+    <br>
+    <% if(messages.length > 0) { %>
+      <br>
+      <div class="alert alert-danger">
+        <% messages.forEach(function(message) { %>
+          <p><%= message %></p>
+        <% }); %>
+      </div>
+    <% } %>
+    <br>
+    <caption>Entradas actuales</caption>
+    <div class="table-responsive">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Producto</th>
+            <th>Ingredientes</th>
+            <th>Cantidad Solicitada</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% var cont = 1; if(totalIngr.length > 0){ %>
+            <% totalIngr.forEach(function(ingrediente){ %>
+      				<tr>
+                <td><%= cont %> </td>
+                <td><%= ingrediente.prod.nombre %></td>
+                <td><%= ingrediente.inv.mp %></td>
+                <td><%= ingrediente.totalProd %>g</td>
+              </tr>
+      			<% cont++; }); %>
+          <% } else{ %>
+            <td colspan="4" class="text-center"> No hay ingredientes para mostrar</td>
+          <% } %>
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+</div>

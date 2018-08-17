@@ -1,0 +1,96 @@
+<% include ../../../partials/layout.ejs %>
+<div class="container-fluid">
+  <div class="col-md-12">
+      <h1 class="text-center pacifico"> Panel de administración Bodega Pedido</h1>
+      <hr class="cust-hr">
+      <ul class="nav nav-tabs nav-justified">
+        <li class="nav-item">
+          <a class="nav-link" href="/app/inventario?bodega=principal">Materia prima</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/app/inOut?tipo=entrada&bodega=principal">Entradas</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link " href="/app/inOut?tipo=salida&bodega=principal">Salidas</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active " href="/app/ordenMp">Materia prima solicitada</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link " href="/app/proveedor">Proveedores</a>
+        </li>
+      </ul>
+    </div>
+
+    <br>
+    <p  class="money"><i class="fas fa-dollar-sign"></i>Valor del inventario: <span class="badge badge-success">$<%= valorTotal%></span></p>
+
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <caption>Inventario actual</caption>
+    <table class="table">
+      <thead class="header" id="myHeader">
+        <tr>
+          <th>Producto</th>
+          <th>Bodega Principal</th>
+          <th>Presentacion(G)</th>
+          <th>Valor Unitario($)</th>
+          <th>Valor/Gramo($)</th>
+          <th>Stock</th>
+          <th>Valor Total G($)</th>
+        </tr>
+        <br>
+        <!--<tr class="head_fijo">
+          <th class="head_fijo1" >Producto</th>
+          <th class="head_fijo2" >Bodega Principal</th>
+          <th class="head_fijo3" >Presentacion(G)</th>
+          <th class="head_fijo4" >Valor Unitario($)</th>
+          <th class="head_fijo5" >Valor/Gramo($)</th>
+          <th class="head_fijo6" >Stock</th>
+          <th class="head_fijo7" >Valor Total G($)</th>
+          <th class="head_fijo8" >Acciones</th>
+        </tr>-->
+      </thead>
+      <tbody>
+        <% if(inventarios.length > 0){ %>
+          <% inventarios.forEach(function(inventario){ %>
+              <% if(inventario.cantidadTotal > inventario.rango){ %>
+      				  <tr class="alert alert-success">
+              <% }else if(inventario.cantidadTotal < inventario.rango && inventario.cantidadTotal > 0 ){ %>
+                <tr class="alert alert-warning">
+              <% }else{ %>
+                <tr class="alert alert-danger">
+              <% } %>
+                <td><%= inventario.mp %> </td>
+                <td><%= inventario.cantidadTotal %></td>
+                <td><%= inventario.presentacion %></td>
+                <td><%= inventario.valorUni %></td>
+                <td><%= inventario.valorG %></td>
+                <td><%= inventario.stock %></td>
+                <td>$ <%= inventario.valorTotalG %></td>
+              </tr>
+    		  <% }); %>
+        <% } else{ %>
+          <td colspan="6" class="text-center"> No hay materia prima para mostrar</td>
+        <% } %>
+      </tbody>
+    </table>
+  </div>
+</div>
+<script>
+window.onscroll = function() {myFunction()};
+
+var header = document.getElementById("myHeader");
+var sticky = header.offsetTop;
+
+function myFunction() {
+  if (window.pageYOffset > 370) {
+    header.classList.add("sticky");
+  } else {
+    header.classList.remove("sticky");
+  }
+}
+</script>

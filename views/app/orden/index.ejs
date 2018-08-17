@@ -34,6 +34,7 @@
           <th>Fecha de produccion</th>
           <th>Fecha de entrega</th>
           <th>Estado</th>
+          <th>Ingredientes Parciales</th>
           <th>Acciones</th>
         </tr>
       </thead>
@@ -52,6 +53,12 @@
               <td><%= orden.fecha_prod %></td>
               <td><%= orden.fecha_ent %> </td>
               <td><%= orden.estado %> </td>
+              <td>
+                <form action="/app/parcial" method="GET" class="link mx-auto">
+                  <input type="hidden" name="ordid" value="<%= orden.id %>">
+                  <button type="submit" class="btn btn-success btn-sm"><i class="fas fa-clipboard-list">ver</i></button><!--edit button-->
+                </form>
+              </td>
               <td>
                 <!--Edit button-->
                  <form action="/app/orden/<%= orden._id %>/edit" method="GET" class="link">

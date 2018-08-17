@@ -13,8 +13,8 @@ var orden_schema = new Schema({
   fecha_prod:{type: String, required: true},
   fecha_ent:{type: String, required: true},
   estado:{type: String, required: true},
-  client:{type: Schema.Types.ObjectId, ref:"cliente"},
-  prod: {type: Schema.Types.ObjectId, ref: "producto"}//ref al id de la collecion inventario
+  client:{type: Schema.Types.ObjectId, ref:"Cliente"},
+  prod: {type: Schema.Types.ObjectId, ref: "Producto"}//ref al id de la collecion inventario
 });
 
 module.exports = mongoose.model("Orden",orden_schema);
