@@ -63,7 +63,19 @@ router.get("/mp",function(req,res,next){
 });
 //ENTRADAS Y SALIDAS COLLECTION ================
 router.get("/ordenMp",function(req,res,next){
-  Inventario.find({bodega:"pedido", estado:"activo"})
+  var now = Date.now();
+  var date = dateFormat(now, "d/m/yyyy");
+  var datos = [];
+  //sirve para quitar los duplicados de fecha  y luego poder ser usado para seleccionar la fecha de la materia prima a mostrar
+  Orden.find({},function(err,orden){
+      for(var i = 0; i < orden.length; i++){
+        if(!datos.includes(orden[i].fecha_prod)){
+          datos.push(orden[i].fecha_prod);
+          console.log(orden[i].fecha_prod);
+        }
+      }
+  });
+  Inventario.find({bodega:"pedido", estado:"activo", fecha_prod:date})
   .sort({mp:1})
   .exec(function(err,inventarios){
     console.log(inventarios);
@@ -76,14 +88,44 @@ router.get("/ordenMp",function(req,res,next){
         valorTotal = valorTotal + inventario.valorTotalG;
         if(cont > inventarios.length){
           var string = numeral(valorTotal).format('0,0.0000');
-          return res.render("app/orden/ordenMp/index.ejs", { inventarios: inventarios, valorTotal: string });
+          return res.render("app/orden/ordenMp/index.ejs", { inventarios: inventarios, valorTotal: string, fechas: datos });
           //next();
         }
 
       });
     }else{
-      res.render("app/orden/ordenMp/index.ejs", { inventarios: {}, valorTotal:0 });
+      res.render("app/orden/ordenMp/index.ejs", { inventarios: {}, valorTotal:0, fechas:{} });
     }
+  });
+
+});
+//Ruta para consultar una orden de materia prima por fecha ================
+router.get("/proyeccionMp",function(req,res,next){
+  var datos = [];
+  Orden.find({},function(err,orden){
+      for(var i = 0; i < orden.length; i++){
+        if(!datos.includes(orden[i].fecha_prod)){
+          datos.push(orden[i].fecha_prod);
+          console.log(orden[i].fecha_prod);
+        }
+      }
+  });
+  Inventario.find({bodega:"pedido", estado:"activo", fecha_prod:req.query.fecha_prod})
+  .sort({mp:1})
+  .exec(function(err,inventarios){
+    console.log(inventarios);
+    if(err){console.log(err);}//res.redirect("/"); return;}
+    var cont = 1;
+    var valorTotal = 0;
+    inventarios.forEach(function(inventario){
+      cont++;
+      valorTotal = valorTotal + inventario.valorTotalG;
+      if(cont > inventarios.length){
+        var string = numeral(valorTotal).format('0,0.0000');
+        return res.render("app/orden/ordenMp/index.ejs", { inventarios: inventarios, valorTotal: string, fechas: datos });
+          //next();
+      }
+    });
   });
 });
 //all routes with this path use this middleware for refactor code
@@ -157,6 +199,8 @@ function Regis_Orden(req,callback){
   var now = Date.now();
   var date = dateFormat(now, "d/m/yyyy");
   var hora = dateFormat(now, "d/m/yyyy, h:MM:ss TT");
+  var prod = req.body.fecha_prod.replace(/-/g, '\/');
+  var ent = req.body.fecha_ent.replace(/-/g, '\/');
   const data=
   {
   	fecha : date,
@@ -166,8 +210,8 @@ function Regis_Orden(req,callback){
     pesoCrud : req.body.pesoCrud,
   	cantidad : req.body.cantidad,
     ord_comp : req.body.ord_comp,
-    fecha_prod: req.body.fecha_prod,
-    fecha_ent: req.body.fecha_ent,
+    fecha_prod: dateFormat(prod, "d/m/yyyy"),
+    fecha_ent: dateFormat(ent, "d/m/yyyy"),
     estado: "pendiente",
     client: req.body.client,
     prod: req.body.prod
@@ -194,11 +238,13 @@ function Regis_totalIngr(req,res,orden){
     ingredientes.forEach(function(ingrediente){
       // se calcula la cantidad necesaria de cada ingrediente para hacer el la cantidad del producto
       var totalProduccion = ingrediente.cantidadG * req.body.cantidad * req.body.pesoCrud;
-      totalProduccion =  Math.trunc(totalProduccion * 1.10);
+      var totalSolicitado =  Math.trunc(totalProduccion * 1.10);
+      totalProduccion = Math.trunc(totalProduccion);
       console.log(totalProduccion);
       const data=
       {
         totalProd: totalProduccion,
+        totalSolid: totalSolicitado,
         ord: orden,
         prod: req.body.prod,
         inv: ingrediente.inv
@@ -218,6 +264,7 @@ function Regis_totalIngr(req,res,orden){
 
 // Metodo  para guardar registros del total de cada ingrediente para la orden de materia prima
 function Regis_ordMp(req,res,orden){
+  var prod = req.body.fecha_prod.replace(/-/g, '\/');
   var done = 0;
   TotalIngr.find({"ord": orden})
   .populate("prod inv")
@@ -227,19 +274,48 @@ function Regis_ordMp(req,res,orden){
     totalIngr.forEach(function(ingrediente){
       // se calcula la cantidad necesaria de cada ingrediente para hacer el la cantidad del producto
       Inventario.findOne({"mp": ingrediente.inv.mp, "bodega": "principal"},function(err,principal){
-        Inventario.findOne({"mp": ingrediente.inv.mp, "bodega": "pedido"},function(err,pedido){
-        	pedido.cantidadTotal = pedido.cantidadTotal + (ingrediente.totalProd/pedido.presentacion),
-        	pedido.valorUni = principal.valorUni,
-        	pedido.valorG = principal.valorG,
-        	pedido.stock = pedido.stock + ingrediente.totalProd,
-          pedido.valorTotalG = pedido.stock * pedido.valorG ,
-          pedido.estado = "activo";
-          pedido.save(function(err,result){
-            done++;
-            if(done === totalIngr.length){
-              res.redirect("/app/ordenMp");
-            }
-          });
+        Inventario.findOne({"mp": ingrediente.inv.mp, "bodega": "pedido", "fecha_prod": dateFormat(prod, "d/m/yyyy")},function(err,pedido){
+          console.log(pedido);
+          if(pedido !== null){
+            pedido.cantidadTotal = pedido.cantidadTotal + (ingrediente.totalSolid/pedido.presentacion),
+          	pedido.valorUni = principal.valorUni,
+          	pedido.valorG = principal.valorG,
+          	pedido.stock = pedido.stock + ingrediente.totalSolid,
+            pedido.valorTotalG = pedido.stock * pedido.valorG ,
+            pedido.estado = "activo";
+            pedido.save(function(err,result){
+              done++;
+              if(done === totalIngr.length){
+                res.redirect("/app/ordenMp");
+              }
+            });
+          }else{
+            //crea doble materia prima una para la principal y otra para auxiliar
+            const data = {
+              mp : ingrediente.inv.mp,
+              cantidadTotal : ingrediente.totalProd/ingrediente.inv.presentacion,
+              presentacion : principal.presentacion,
+              valorUni : principal.valorUni,
+              valorG : principal.valorG,
+              stock :  ingrediente.totalSolid,
+              valorTotalG : ingrediente.totalSolid * principal.valorG,
+              stockReal: 0,
+              diferencia: 0,
+              valorDif: 0,
+              rango: 0,
+              bodega : "pedido",
+              estado: "activo",
+              fecha_prod: dateFormat(prod, "d/m/yyyy"),
+              }
+
+              var newpedido = new Inventario(data)
+              newpedido.save(function(err,result){
+                done++;
+                if(done === totalIngr.length){
+                  res.redirect("/app/ordenMp");
+                }
+              });
+          }
         });
       });
     });

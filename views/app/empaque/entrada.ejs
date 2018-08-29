@@ -46,10 +46,10 @@
         <% if(producciones.length > 0){ %>
           <% producciones.forEach(function(produccion){ %>
     				<tr>
-              <td><%= produccion.prod.nombre %> X <%= produccion.peso %></td>
+              <td><%= produccion.prod.nombre %> X <%= produccion.ord.peso %></td>
               <td><%= produccion.lote %></td>
               <td><%= produccion.fecha_ven %></td>
-              <td><%= produccion.cantidad %></td>
+              <td><%= produccion.ord.cantidad %></td>
               <td><%= produccion.empacado %></td>
               <td><%= produccion.averias %></td>
               <td><%= produccion.averiasPor %></td>

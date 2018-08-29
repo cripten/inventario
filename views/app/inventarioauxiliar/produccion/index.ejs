@@ -39,6 +39,7 @@
             <th>Cantidad</th>
             <th>Peso</th>
             <th>Peso crudo</th>
+            <th>Lote</th>
             <th>Acciones</th>
           </tr>
         </thead>
@@ -49,9 +50,9 @@
                 <td><%= cont %> </td>
                 <td><%= salida.hora %></td>
                 <td><%= salida.prod.nombre %></td>
-                <td><%= salida.cantidad %></td>
-                <td><%= salida.peso %></td>
-                <td><%= salida.pesoCrud %></td>
+                <td><%= salida.ord.cantidad %></td>
+                <td><%= salida.ord.peso %></td>
+                <td><%= salida.ord.pesoCrud %></td>
                 <td><%= salida.lote %></td>
                 <td>
                   ninguna
@@ -59,7 +60,7 @@
               </tr>
       			<% cont++; }); %>
           <% } else{ %>
-            <td colspan="7" class="text-center"> No hay salidas para mostrar</td>
+            <td colspan="8" class="text-center"> No hay salidas para mostrar</td>
           <% } %>
         </tbody>
       </table>

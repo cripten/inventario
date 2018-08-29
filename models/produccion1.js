@@ -6,6 +6,9 @@ var produccion_schema = new Schema({
   fecha:{type: String, required: true},
   hora: {type: String},
   fecha_ven:{type: String},
+  cantidad: {type: Number, required: true},
+  peso: {type: Number, required: true},
+  pesoCrud:{type: Number, required: true},
   lote:{type: Number},
   empacado:{type: Number, required: true},
   averias:{type: Number, required: true},
@@ -14,7 +17,6 @@ var produccion_schema = new Schema({
   diferenciaPor:{type: Number, required: true},
   estado: {type: String},
   turno:{type: Number, required: true},
-  ord: {type: Schema.Types.ObjectId, ref: "Orden"},//ref al id de la collecion inventario
   prod: {type: Schema.Types.ObjectId, ref: "Producto"},//ref al id de la collecion inventario
 
 });

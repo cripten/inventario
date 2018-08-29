@@ -20,7 +20,7 @@
           <select name="proc" required>
             <option value="" class="form-control">SELECCIONAR
             <% producciones.forEach(function(produccion){ %>
-              <option value="<%= produccion._id %>" class="form-control"><%= produccion.prod.nombre %>
+              <option value="<%= produccion._id %>" class="form-control"><%= produccion.ord.codigo %> / <%= produccion.prod.nombre %> X <%= produccion.ord.peso %>
             <% }); %>
           </select>
         </div>

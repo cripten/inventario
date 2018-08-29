@@ -12,6 +12,7 @@ var elaborado_schema = new Schema({
   diferencia:{type: Number, required: true},
   diferenciaPor:{type: Number, required: true},
   turno:{type: Number, required: true},
+  ord: {type: Schema.Types.ObjectId, ref: "Orden"},
   proc: {type: Schema.Types.ObjectId, ref: "Produccion"},
   prod: {type: Schema.Types.ObjectId, ref: "Producto"}
 });

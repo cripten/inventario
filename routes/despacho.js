@@ -64,7 +64,7 @@ router.route("/despacho")
     if(err){res.redirect("/"); return;}
     var cont = 1;
     var totalGeneral = 0;
-    if(despachos){
+    if(despachos.length > 0){
       despachos.forEach(function(despacho){
         cont++;
         totalGeneral = totalGeneral + despacho.total;

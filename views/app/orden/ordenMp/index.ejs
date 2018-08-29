@@ -1,7 +1,7 @@
 <% include ../../../partials/layout.ejs %>
 <div class="container-fluid">
   <div class="col-md-12">
-      <h1 class="text-center pacifico"> Panel de administración Bodega Pedido</h1>
+      <h1 class="text-center pacifico"> Orden de materia prima</h1>
       <hr class="cust-hr">
       <ul class="nav nav-tabs nav-justified">
         <li class="nav-item">
@@ -23,6 +23,20 @@
     </div>
 
     <br>
+    <% if(fechas.length > 0){ %>
+      <form action="/app/proyeccionMp" method="GET" class="link mx-auto">
+        <div class="form-group">
+          <label>Orden de Mp:</label>
+          <select name="fecha_prod" required>
+            <option value="" class="form-control">SELECCIONAR
+            <% fechas.forEach(function(fecha){ %>
+              <option value="<%= fecha %>" class="form-control"><%= fecha %>
+            <% }); %>
+          </select>
+          <button type="submit" class="btn btn-success btn-sm">Consultar</button>
+        </div>
+      </form>
+    <% } %>
     <p  class="money"><i class="fas fa-dollar-sign"></i>Valor del inventario: <span class="badge badge-success">$<%= valorTotal%></span></p>
 
     <br>
@@ -30,14 +44,12 @@
     <br>
     <br>
     <br>
-    <caption>Inventario actual</caption>
+    <caption>Orden de Mp  actual del <% if(inventarios.length > 0){ %> <%= inventarios[0].fecha_prod %><% } %> </caption>
     <table class="table">
       <thead class="header" id="myHeader">
         <tr>
           <th>Producto</th>
-          <th>Bodega Principal</th>
           <th>Presentacion(G)</th>
-          <th>Valor Unitario($)</th>
           <th>Valor/Gramo($)</th>
           <th>Stock</th>
           <th>Valor Total G($)</th>
@@ -65,9 +77,7 @@
                 <tr class="alert alert-danger">
               <% } %>
                 <td><%= inventario.mp %> </td>
-                <td><%= inventario.cantidadTotal %></td>
                 <td><%= inventario.presentacion %></td>
-                <td><%= inventario.valorUni %></td>
                 <td><%= inventario.valorG %></td>
                 <td><%= inventario.stock %></td>
                 <td>$ <%= inventario.valorTotalG %></td>

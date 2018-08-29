@@ -18,7 +18,7 @@ var mongoose = require('mongoose');
 // Nuevo elaborado
 router.get("/elaborado/new",function(req,res,next){
   Produccion.find({})
-  .populate("ord prod")
+  .populate("prod")
   .sort({nombre:1})
   .exec(function(err,producciones){
     if(err){ console.log(err); return; }
@@ -28,7 +28,7 @@ router.get("/elaborado/new",function(req,res,next){
 //entradas aprobadas para el producto terminado
 router.get("/elaborado/entrada",function(req,res,next){
   Produccion.find({})
-  .populate("ord prod")
+  .populate("prod")
   .sort({estado:-1})
   .exec(function(err,producciones){
     if(err){ console.log(err); return; }
@@ -38,16 +38,16 @@ router.get("/elaborado/entrada",function(req,res,next){
 //ruta para aprobar entradas de produccion y llenar el inventario de producto terminado
 router.post("/elaborado/allow",function(req,res,next){
   Produccion.findById(req.body.allow)
-  .populate("ord prod")
+  .populate("prod")
   .sort({estado:1})
   .exec(function(err,produccion){
     if(produccion.estado == "pendiente"){
       produccion.estado = "aprobado";
       produccion.save(function(err){
-        var productoTer = produccion.prod.nombre+" X "+produccion.ord.peso;
+        var productoTer = produccion.prod.nombre+" X "+produccion.peso;
         ProductoTer.findOne({"nombre":productoTer},function(err,producto){
           if(err){ res.redirect("/app"); return; }
-          producto.stock = parseInt(producto.stock) + parseInt(produccion.empacado);
+          producto.stock = parseInt(producto.stock) + parseInt(producto.stock) + parseInt(produccion.empacado);
           producto.averias = parseInt(producto.averias) + parseInt(produccion.averias);
           producto.averiasPor = parseInt(producto.averiasPor) + parseInt(produccion.averiasPor);
           producto.diferencia = parseInt(producto.diferencia) + parseInt(produccion.diferencia);
@@ -96,7 +96,7 @@ router.route("/produccion/:id")
 //ENTRADAS Y SALIDAS COLLECTION ================
 router.get("/elaborado",function(req,res,next){
   Elaborado.find({})
-  .populate("ord proc prod")
+  .populate("proc prod")
   .exec(function(err,elaborados){
     if(err){ res.redirect("/app"); return; }
 		res.render("app/empaque/elaborado/index.ejs", { messages: req.flash("error"), elaborados:elaborados });
@@ -125,9 +125,10 @@ module.exports = router;
 function Empacado_Regis(req,callback){
 
   Produccion.findById(req.body.proc)
-  .populate("ord prod")
+  .populate("prod")
   .exec(function(err,produccion){
     if(err){ res.redirect("/app"); return; }
+
     var elaborado = parseInt(req.body.empacado) + parseInt(req.body.averias);
     var PrediferenciaPor = produccion.diferenciaPor * produccion.turno;
     var PreaveriasPor =   produccion.averiasPor * produccion.turno;
@@ -138,7 +139,7 @@ function Empacado_Regis(req,callback){
     produccion.turno = produccion.turno + 1;
     produccion.empacado = produccion.empacado + parseInt(req.body.empacado);
     produccion.averias = produccion.averias + parseInt(req.body.averias);
-    produccion.diferencia = produccion.diferencia == 0 ? parseInt(produccion.ord.cantidad) - elaborado : parseInt(produccion.diferencia) - elaborado ;
+    produccion.diferencia = produccion.diferencia == 0 ? parseInt(produccion.cantidad) - elaborado : parseInt(produccion.diferencia) - elaborado ;
     // produccion.empacado = req.body.empacado;
     // produccion.averias = req.body.averias;
     // produccion.averiasPor = 0;
@@ -146,8 +147,8 @@ function Empacado_Regis(req,callback){
     // produccion.diferenciaPor = 0;
     // produccion.turno = 0;
     // produccion.fecha_ven = "vacio";
-    produccion.averiasPor = Prediferencia == 0 ? Number(((req.body.averias / produccion.ord.cantidad)* 100).toFixed(1)) : ((req.body.averias / Prediferencia)* 100 ).toFixed(1);
-    produccion.diferenciaPor = Prediferencia == 0 ? Number(((produccion.diferencia / produccion.ord.cantidad)* 100).toFixed(1)) : ((produccion.diferencia / Prediferencia)* 100 ).toFixed(1);
+    produccion.averiasPor = Prediferencia == 0 ? Number(((req.body.averias / produccion.cantidad)* 100).toFixed(1)) : ((req.body.averias / Prediferencia)* 100 ).toFixed(1);
+    produccion.diferenciaPor = Prediferencia == 0 ? Number(((produccion.diferencia / produccion.cantidad)* 100).toFixed(1)) : ((produccion.diferencia / Prediferencia)* 100 ).toFixed(1);
     produccion.fecha_ven = fecha_ven;
     if(produccion.diferencia >= 0 && produccion.turno <= 3){
       var now = Date.now();
@@ -164,18 +165,14 @@ function Empacado_Regis(req,callback){
         diferencia: produccion.diferencia,
         diferenciaPor: produccion.diferenciaPor,
         turno : produccion.turno,
-        ord: produccion.ord._id,
         proc: req.body.proc,
         prod: produccion.prod._id
         }
-        console.log(data);
       var elaborado = new Elaborado(data);
       elaborado.save(function(err){
         if(!err){
           produccion.averiasPor = Number(((produccion.averiasPor +  PreaveriasPor) / produccion.turno).toFixed(1));
           produccion.diferenciaPor = Number(((produccion.diferenciaPor +  PrediferenciaPor) / produccion.turno).toFixed(1));
-          console.log(produccion.averiasPor);
-          console.log(produccion.diferenciaPor);
           produccion.save(function(err){
             if(!err){
               return callback(true);

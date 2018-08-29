@@ -16,13 +16,25 @@
     	<!-- LOGIN FORM -->
     	<form action="/app/produccion" method="post">
         <div class="form-group">
-          <label>orden:</label>
-          <select name="ord" required>
+          <label>Producto</label>
+          <select name="prod" required>
             <option value="" class="form-control">Seleccionar
-            <% ordenes.forEach(function(orden){ %>
-              <option value="<%= orden._id %>" class="form-control"><%= orden.codigo %>
+            <% productos.forEach(function(producto){ %>
+              <option value="<%= producto._id %>" class="form-control"><%= producto.nombre %>
             <% }); %>
           </select>
+        </div>
+        <div class="form-group">
+          <label>Cantidad</label>
+          <input type="number" placeholder="Cantidad en unidades"class="form-control" name="cantidad">
+        </div>
+        <div class="form-group">
+          <label>Peso</label>
+          <input type="number" placeholder="Peso en gramos" class="form-control" name="peso">
+        </div>
+        <div class="form-group">
+          <label>Peso crudo</label>
+          <input type="number" placeholder="Peso en gramos" class="form-control" name="pesoCrud">
         </div>
         <div class="form-group">
           <label>Lote</label>
